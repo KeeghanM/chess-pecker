@@ -12,8 +12,10 @@
 <script>
   import ChessBoard from "chessboardjs-vue"
   import Chess from 'chess.js'
+  
 
   let board
+  let playerMoves = []
   let puzzle = {
             "puzzleid":"HxxIU",
             "fen":"2r2rk1/3nqp1p/p3p1p1/np1p4/3P4/P1NBP3/1PQ2PPP/2R2RK1 w - - 0 18",
@@ -33,6 +35,10 @@
         (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
       return false
     }
+
+    // Dont allow dragging if puzzle completed
+    if(playerMoves.length == puzzle.moves.length) return false
+
   }
 
   function onDrop (source, target, piece) {
@@ -62,7 +68,6 @@
       // TODO: Show promotion dialogue
       console.log("IS PROMOTION")
       move_cfg.promotion = 'n'
-      console.log(move_cfg)
     }
 
     move = game.move(move_cfg)
@@ -72,24 +77,27 @@
   // for castling, en passant, pawn promotion
   function onSnapEnd () {
     board.position(game.fen())
-    let movesList = []
+    playerMoves = []
     for(let move of game.history({verbose:true})){
       let moveStr = move.from+move.to
-      movesList.push(moveStr)
+      if(move.promotion) {
+        moveStr+=move.promotion
+      }
+      playerMoves.push(moveStr)
     }
     
     // Now Validate this move against the puzzle
-    if(validateMoves(movesList)) {
+    if(validateMoves(playerMoves)) {
       // Moves so far are correct
       // check if puzzle finished
-      if(movesList.length == puzzle.moves.length){
+      if(playerMoves.length == puzzle.moves.length){
         // TODO: LOAD NEXT PUZZLE
         console.log("FINISHED AND CORRECT")
         return
       }
 
       // if more moves, make the next move
-      makeMove(movesList.length)
+      makeMove(playerMoves.length)
     } else {
       // Incorrect move made
       console.log("WRONG MOVE")

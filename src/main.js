@@ -24,7 +24,6 @@ Vue.config.productionTip = false
 
 Vue.use(VueRouter)
 
-
 new Vue({
   vuetify,
   router,
