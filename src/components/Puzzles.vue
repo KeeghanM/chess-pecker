@@ -101,7 +101,9 @@
     let to = puzzle.moves[x].substring(2,4)
 
     game.move({from,to})
-    setTimeout(() => {board.position(game.fen())},500)
+    setTimeout(() => {
+      board.position(game.fen())
+      },500)
   }
 
   function validateMoves(moveList){
