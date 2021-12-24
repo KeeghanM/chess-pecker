@@ -13,7 +13,9 @@
   import ChessBoard from "chessboardjs-vue"
   import Chess from 'chess.js'
 
+  let board
   const game = new Chess()
+  
 
 function onDragStart (source, piece, position, orientation) {
   // do not pick up pieces if the game is over
@@ -69,7 +71,7 @@ function onDrop (source, target, piece) {
 // update the board position after the piece snap
 // for castling, en passant, pawn promotion
 function onSnapEnd () {
-  // ChessBoard.position(game.fen()) //ERRORS SAYING UNAVAILABLE??
+  board.position(game.fen()) //ERRORS SAYING UNAVAILABLE??
   let movesList = []
   for(let move of game.history({verbose:true})){
     let moveStr = move.from+move.to
@@ -80,8 +82,8 @@ function onSnapEnd () {
 
   export default {
     name: 'Puzzles',
-    mounted(){
-      ChessBoard('puzzleBoard',{
+    mounted() {
+      board = ChessBoard('puzzleBoard',{
         draggable: true,
         position: 'start',
         onDragStart: onDragStart,
