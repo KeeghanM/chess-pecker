@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Center from './Center'
-import Sidebar from './Sidebar'
+import Footer from './Footer'
+import Header from './Header'
 
 const Layout = (props) => (
   <>
@@ -8,15 +9,13 @@ const Layout = (props) => (
       <title>ChessPecker</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
+    <div className="flex flex-col h-screen justify-between overflow-x-hidden">
+        <Header />
 
-    <div className="h-screen overflow-hidden bg-light text-dark">
-      <main className='flex'>
-        <Sidebar />
-        <Center name={props.name}>{props.children}</Center>
-      </main> 
-    </div>
+        <Center>{props.children}</Center>
 
-    
+        <Footer />  
+    </div>  
   </>
 )
 
