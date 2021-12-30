@@ -1,12 +1,11 @@
-import Sidebar from '../components/Sidebar'
+import Layout from "../components/Layout";
 
 export default function Home() {
   return (
-    <div className="bg-dark h-screen overflow-hidden">
-      <main>
-        <Sidebar />
-        {/* Center Panel */}
-      </main> 
-    </div>
+    <Layout name="ChessPecker">
+      <div>
+        Welcome to ChessPecker
+      </div>
+    </Layout>
   )
 }
