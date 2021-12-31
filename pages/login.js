@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 
 function Login() {
     return (
-        <Layout>
+        <Layout noCTA>
             <section class="py-20 2xl:py-40 overflow-hidden"><div class="container px-4 mx-auto">
             <div class="max-w-5xl mx-auto">
                 <div class="flex flex-wrap items-center -mx-10">
