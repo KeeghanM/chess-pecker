@@ -6,7 +6,7 @@ import { useUser } from '../lib/hooks'
 import { Magic } from 'magic-sdk'
 
 const Login = () => {
-  useUser({ redirectTo: '/', redirectIfFound: true })
+  useUser({ redirectTo: '/profile', redirectIfFound: true })
 
   const [errorMsg, setErrorMsg] = useState('')
 

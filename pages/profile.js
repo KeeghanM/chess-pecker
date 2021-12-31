@@ -1,16 +1,17 @@
 import { HeartIcon } from "@heroicons/react/solid"
 import Layout from "../components/Layout"
-import {useUser} from '../lib/hooks'
+import { useUser } from "../lib/hooks"
 
-const tactics = () => {
+const profile = () => {
     const user = useUser({ redirectTo: '/login' })
+
     return (
         <div>
             <Layout>
-            Tactics <HeartIcon className="w-5 h-5" />
+            Profile of user {user && (<p>{user.email}</p>)}
             </Layout>
         </div>
     )
 }
 
-export default tactics
+export default profile

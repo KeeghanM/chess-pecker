@@ -6,8 +6,11 @@ import {
   EyeIcon,
   PuzzleIcon,
 } from '@heroicons/react/solid'
+import { useUser } from '../lib/hooks'
 
-const Header = (props) => (
+const Header = (props) => {
+  const user = useUser()
+  return (
   <div>
     <section className="py-8 px-4 lg:px-10 bg-dark">
       <nav className="relative flex justify-between items-center">
@@ -36,15 +39,25 @@ const Header = (props) => (
           </ul>
         </div>
         <div>
-          <button style={{display: props.noCTA?"none":"inline-block"}} className="inline-block py-2 px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200">
+        {!props.noCTA && !user && (
+          <button className="inline-block py-2 px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200">
             <Link href="/login">
               Log In / Sign Up
             </Link>
           </button>
+          )}
+          {user && (
+            <button className="inline-block py-2 px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200">
+            <a href="/api/logout">
+              Log Out
+            </a>
+          </button>
+          )}
         </div>
       </nav>
     </section>
   </div>
 )
+}
 
 export default Header
