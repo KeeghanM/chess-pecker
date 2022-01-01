@@ -13,6 +13,7 @@
     "cookie": "0.4.0",
     "magic-sdk": "1.0.1",
     "next": "latest",
+    "next-chess-board": "^0.4.9",
     "react": "^17.0.2",
     "react-chessground": "^1.5.0",
     "react-dom": "^17.0.2",
