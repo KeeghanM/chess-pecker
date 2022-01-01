@@ -1,5 +1,6 @@
 import { HeartIcon } from '@heroicons/react/solid'
 import Layout from '../components/Layout'
+import Chessboard from "../components/Chessboard"
 
 function knights() {
   return (
@@ -10,6 +11,7 @@ function knights() {
           <div className="space-y-1 pb-6">
             <p>Coming Soon</p>
           </div>
+            <Chessboard />
         </div>
       </Layout>
     </div>
