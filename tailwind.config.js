@@ -7,22 +7,19 @@ module.exports = {
   ],
   theme: {
     extend: {
-    colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
-      'primary':'#DB673A',
-      'light':'#f2f0ef',
-      'dark':'#2c2732',
-      'accent-light':'#98a7a8',
-      'accent-dark':'#a28075',
-      'info':'#2c2732',
-      'success':'#789949',
-      'warning':'#f58811',
-      'danger':'#f44336'
+      colors: {
+        transparent: 'transparent',
+        current: 'currentColor',
+        primary: '#DB673A',
+        light: '#f2f0ef',
+        dark: '#2c2732',
+        'accent-light': '#98a7a8',
+        'accent-dark': '#a28075',
+        info: '#2c2732',
+        success: '#789949',
+        warning: '#f58811',
+        danger: '#f44336',
+      },
     },
-  }
-},
-  plugins: [
-    require("tailwind-scrollbar-hide")
-  ],
+  },
 }
