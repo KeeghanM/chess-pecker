@@ -1,6 +1,5 @@
 import Image from 'next/image'
 
-
 const LoginForm = ({ errorMessage, onSubmit }) => (
   <div className="w-full lg:w-1/2 px-10">
     <div className="px-6 lg:px-20 pt-12 lg:pt-20 bg-dark text-light shadow-2xl rounded-lg">
@@ -55,7 +54,10 @@ const LoginForm = ({ errorMessage, onSubmit }) => (
           />
         </div>
         <div className="my-5">
-          <button type="submit" class="inline-block w-full py-2 px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200">
+          <button
+            type="submit"
+            className="inline-block w-full py-2 px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200"
+          >
             Log In / Sign Up
           </button>
         </div>
