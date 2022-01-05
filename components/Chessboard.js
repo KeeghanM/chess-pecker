@@ -6,7 +6,7 @@ const Chessground = dynamic(() => import('react-chessground'), { ssr: false })
 import 'react-chessground/dist/styles/chessground.css'
 import Chess from '../lib/chess.js'
 
-const ChessComponent = (props) => {
+const Chessboard = (props) => {
   const [chess, setChess] = useState(new Chess(props.fen))
   const [pendingMove, setPendingMove] = useState()
   const [promotionVisible, setPromotionVisible] = useState(false)
@@ -19,7 +19,6 @@ const ChessComponent = (props) => {
     for (let i = 0, len = moves.length; i < len; i++) {
       /* eslint-disable-line */
       if (moves[i].flags.indexOf('p') !== -1 && moves[i].from === from) {
-        console.log('promotion')
         setPendingMove([from, to])
         setPromotionVisible(true)
         return
@@ -28,6 +27,7 @@ const ChessComponent = (props) => {
     if (chess.move({ from, to, promotion: 'q' })) {
       setFen(chess.fen())
       setLastMove([from, to])
+      props.moveCheck()
       setTimeout(randomMove, 500)
     }
   }
@@ -43,13 +43,13 @@ const ChessComponent = (props) => {
   }
 
   const promotion = (e) => {
-    console.log(e)
     const from = pendingMove[0]
     const to = pendingMove[1]
     chess.move({ from, to, promotion: e })
     setFen(chess.fen())
     setLastMove([from, to])
     setPromotionVisible(false)
+    props.moveCheck()
     setTimeout(randomMove, 500)
   }
 
@@ -75,7 +75,7 @@ const ChessComponent = (props) => {
   }
 
   return (
-    <div className="overflow-hidden">
+    <div className="p-6 overflow-hidden">
       <Chessground
         width="24vw"
         height="24vw"
@@ -115,4 +115,4 @@ const ChessComponent = (props) => {
   )
 }
 
-export default ChessComponent
+export default Chessboard
