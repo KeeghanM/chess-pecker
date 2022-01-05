@@ -56,7 +56,7 @@ const Login = () => {
                     Log in or create an account to start improving your chess
                     today
                   </h2>
-                  <p className="text-xl pb-2 text-accent-dark">
+                  <p className="text-xl pb-2 text-primary font-bold">
                     Our main features are always free. Forever.
                   </p>
                   <p className="text-lg">
