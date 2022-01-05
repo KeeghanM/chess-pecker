@@ -3,9 +3,9 @@ import Image from 'next/image'
 const Logo = (props) => (
   <div className="flex items-center space-x-5">
     <Image
-      src="/CHESSPECKER_LOGO.svg"
-      alt="ChessPecker Logo"
-      width="100px"
+      src="/chesstrainingapplogo.png"
+      alt="ChessTraining.app Logo"
+      width="130px"
       height="130px"
     />
     <p

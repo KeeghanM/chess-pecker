@@ -33,9 +33,12 @@ const Header = (props) => {
               </Link>
             )}
             {user && (
-              <button className="inline-block text-sm md:text-lg py-1 px-2 md:py-2 md:px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200">
-                <a href="/api/logout">Log Out</a>
-              </button>
+              <div className="flex flex-col">
+                <div className="text-light pb-2">Welcome {user.email}</div>
+                <button className="inline-block text-sm md:text-lg py-1 px-2 md:py-2 md:px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200">
+                  <a href="/api/logout">Log Out</a>
+                </button>
+              </div>
             )}
           </div>
         </nav>
