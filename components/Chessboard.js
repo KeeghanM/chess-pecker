@@ -6,11 +6,11 @@ const Chessground = dynamic(() => import('react-chessground'), { ssr: false })
 import 'react-chessground/dist/styles/chessground.css'
 import Chess from '../lib/chess.js'
 
-const ChessComponent = () => {
-  const [chess, setChess] = useState(new Chess())
+const ChessComponent = (props) => {
+  const [chess, setChess] = useState(new Chess(props.fen))
   const [pendingMove, setPendingMove] = useState()
   const [promotionVisible, setPromotionVisible] = useState(false)
-  const [fen, setFen] = useState('')
+  const [fen, setFen] = useState(props.fen)
   const [lastMove, setLastMove] = useState()
   let queenRef = useRef(null)
 
@@ -25,7 +25,7 @@ const ChessComponent = () => {
         return
       }
     }
-    if (chess.move({ from, to, promotion: 'x' })) {
+    if (chess.move({ from, to, promotion: 'q' })) {
       setFen(chess.fen())
       setLastMove([from, to])
       setTimeout(randomMove, 500)
@@ -75,7 +75,7 @@ const ChessComponent = () => {
   }
 
   return (
-    <div>
+    <div className="overflow-hidden">
       <Chessground
         width="24vw"
         height="24vw"
@@ -84,7 +84,6 @@ const ChessComponent = () => {
         lastMove={lastMove}
         fen={fen}
         onMove={onMove}
-        style={{ margin: 'auto' }}
       />
       <Dialog
         initialFocus={queenRef}
