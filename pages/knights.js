@@ -61,47 +61,49 @@ function knights() {
               By using our Knight Vision trainer, you will greatly improve your
               chess abilities
             </div>
-            <div className="p-4 bg-dark text-light">
-              Move your Knight in as few a moves as possible.
-              <ul
-                className="font-bold transition-all"
+            <div className="flex flex-col-reverse md:flex-col">
+              <div className="p-4 bg-dark text-light">
+                Move your Knight in as few a moves as possible.
+                <ul
+                  className="font-bold transition-all"
+                  style={{ color: colorFlash ? '#84cc16' : '' }}
+                >
+                  <li>
+                    From:{' '}
+                    <span
+                      className="text-primary transition-all"
+                      style={{ color: colorFlash ? '#84cc16' : '' }}
+                    >
+                      {startSquare}
+                    </span>
+                  </li>
+                  <li>
+                    To:{' '}
+                    <span
+                      className="text-primary transition-all"
+                      style={{ color: colorFlash ? '#84cc16' : '' }}
+                    >
+                      {endSquare}
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <div
+                className="font-bold text-xl transition-all"
                 style={{ color: colorFlash ? '#84cc16' : '' }}
               >
-                <li>
-                  From:{' '}
-                  <span
-                    className="text-primary transition-all"
-                    style={{ color: colorFlash ? '#84cc16' : '' }}
-                  >
-                    {startSquare}
-                  </span>
-                </li>
-                <li>
-                  To:{' '}
-                  <span
-                    className="text-primary transition-all"
-                    style={{ color: colorFlash ? '#84cc16' : '' }}
-                  >
-                    {endSquare}
-                  </span>
-                </li>
-              </ul>
-            </div>
-            <div
-              className="font-bold text-xl transition-all"
-              style={{ color: colorFlash ? '#84cc16' : '' }}
-            >
-              Current Streak: {streak}
-            </div>
-            <div className="flex flex-row items-center space-x-4 w-fit">
-              <button
-                className="bg-accent-light p-2 rounded-lg "
-                onClick={() => showHint(!hint)}
-              >
-                {hint ? 'Hide Hint' : 'Show Hint'}
-              </button>
-              <div style={{ display: hint ? 'block' : 'none' }}>
-                Min Moves: {minJumps}
+                Current Streak: {streak}
+              </div>
+              <div className="flex flex-row items-center space-x-4 w-fit">
+                <button
+                  className="bg-accent-light p-2 rounded-lg "
+                  onClick={() => showHint(!hint)}
+                >
+                  {hint ? 'Hide Hint' : 'Show Hint'}
+                </button>
+                <div style={{ display: hint ? 'block' : 'none' }}>
+                  Min Moves: {minJumps}
+                </div>
               </div>
             </div>
           </div>

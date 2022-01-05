@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic.js'
-import { useState } from 'react'
 const Chessground = dynamic(() => import('react-chessground'), { ssr: false })
 import 'react-chessground/dist/styles/chessground.css'
+import { useWindowSize } from '../lib/windowSize'
 import Chess from '../lib/chess'
 
 const KnightsChess = (props) => {
@@ -9,6 +9,7 @@ const KnightsChess = (props) => {
   chess.clear()
   chess.put({ type: 'n', color: 'w' }, props.knightSquare)
   let fen = chess.fen()
+  let windowSize = useWindowSize()
 
   const calcMovable = () => {
     const dests = new Map()
@@ -32,10 +33,22 @@ const KnightsChess = (props) => {
   }
 
   return (
-    <div className="p-6 overflow-hidden">
+    <div className="py-6 md:px-6 overflow-hidden">
       <Chessground
-        // width="24vw"
-        // height="24vw"
+        width={
+          windowSize.width < 1024
+            ? windowSize.width < 768
+              ? '85vw'
+              : '65vw'
+            : '25vw'
+        }
+        height={
+          windowSize.width < 1024
+            ? windowSize.width < 768
+              ? '85vw'
+              : '65vw'
+            : '25vw'
+        }
         turnColor="white"
         movable={calcMovable()}
         fen={fen}
