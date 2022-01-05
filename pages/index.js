@@ -25,9 +25,31 @@ export default function Home() {
           </Link>
         </div>
         <div className="hover:bg-accent-light border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-light">
-          <Link href="/tactics" className="hover:bg-accent-light">
+          <Link href="/knights">
             <div className="p-6 md:p-8 lg:p-10 space-y-2">
-              <h1 className="text-4xl font-bold">Tactics Training</h1>
+              <h1 className="text-4xl font-bold">Knight Vision</h1>
+              <p>
+                Whether you are a beginner, intermediate, or even experienced
+                player - board vision is <i>crucial</i> to the game of Chess.
+              </p>
+              <p>
+                We have devised a very simple method of improving your board
+                vision through the use of knights.
+              </p>
+              <p>
+                Simply put, you have to calculate the fastest way a knight can
+                get to a given square. You can tailor the difficulty through the
+                available hints (or lack thereof).
+              </p>
+            </div>
+          </Link>
+        </div>
+        <div className="hover:bg-accent-light border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-slate-400 text-slate-600">
+          <Link href="/tactics">
+            <div className="p-6 md:p-8 lg:p-10 space-y-2">
+              <h1 className="text-4xl font-bold">
+                Tactics Training - <i>Coming Soon</i>
+              </h1>
               <p>
                 Train tactics using the WoodPecker Method developed by GM's Axel
                 Smith, and Hans Tikkanen.
@@ -48,11 +70,11 @@ export default function Home() {
             </div>
           </Link>
         </div>
-        <div className="hover:bg-accent-light border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-light">
-          <Link href="/visualise" className="hover:bg-accent-light">
+        <div className="hover:bg-accent-light border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-slate-400 text-slate-600">
+          <Link href="/visualise">
             <div className="p-6 md:p-8 lg:p-10 space-y-2">
               <h1 className="text-4xl font-bold">
-                Visualisation & Calculation
+                Visualisation & Calculation - <i>Coming Soon</i>
               </h1>
               <p>
                 Do you struggle to see past two or three moves? Find long
@@ -67,26 +89,6 @@ export default function Home() {
                 All you need to do is play the given sequence of moves in your
                 head, decide on your final move and then check if you were
                 correct.
-              </p>
-            </div>
-          </Link>
-        </div>
-        <div className="hover:bg-accent-light border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-light">
-          <Link href="/knights" className="hover:bg-accent-light">
-            <div className="p-6 md:p-8 lg:p-10 space-y-2">
-              <h1 className="text-4xl font-bold">Knight Vision</h1>
-              <p>
-                Beginners often struggle with Knights, as their movement can be
-                complicated
-              </p>
-              <p>
-                We have devised a very simple method of quickly improving your
-                ability to see knight moves, routes, and tactics.
-              </p>
-              <p>
-                SImply put, you have to calculate the fastest way a knight can
-                get to a given square. The difficulty can ramp up with other
-                pieces involved.
               </p>
             </div>
           </Link>

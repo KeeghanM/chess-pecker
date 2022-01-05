@@ -1,7 +1,9 @@
-import { HeartIcon } from '@heroicons/react/solid'
+import Chessboard from '../components/Chessboard'
 import Layout from '../components/Layout'
 
 function visualise() {
+  function visualiseMoveCheck() {}
+
   return (
     <div>
       <Layout name="Visualisation & Calculation">
@@ -10,7 +12,11 @@ function visualise() {
             Visualisation & Calculation
           </h1>
           <div className="space-y-1 pb-6">
-            <p>Coming Soon</p>
+            {/* <Chessboard
+              fen="8/6PP/4k3/8/8/4K3/6pp/8 w - - 0 1"
+              moveCheck={visualiseMoveCheck}
+            /> */}
+            Coming Soon
           </div>
         </div>
       </Layout>
