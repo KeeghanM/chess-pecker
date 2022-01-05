@@ -13,10 +13,12 @@ const Header = (props) => {
             <div>
               <Logo text={props.name} />
             </div>
-            <div className="text-light text-2xl md:text-4xl font-bold flex items-center space-x-2">
-              <ArrowCircleLeftIcon className="w-5 h-5 md:w-10 md:h-10" />
-              <p>Back</p>
-            </div>
+            <Link href="/">
+              <div className="text-light text-2xl md:text-4xl font-bold flex items-center space-x-2">
+                <ArrowCircleLeftIcon className="w-5 h-5 md:w-10 md:h-10" />
+                <p>Back</p>
+              </div>
+            </Link>
           </div>
           <div className="">
             {!props.noCTA && !user && (
