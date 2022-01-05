@@ -6,16 +6,16 @@ import Header from './Header'
 const Layout = (props) => (
   <>
     <Head>
-      <title>ChessPecker</title>
+      <title>ChessTraining.app - {props.name}</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <div className="flex flex-col h-screen justify-between overflow-x-hidden">
-        <Header noCTA={props.noCTA} />
+      <Header noCTA={props.noCTA} name={props.name} />
 
-        <Center>{props.children}</Center>
+      <Center>{props.children}</Center>
 
-        <Footer />  
-    </div>  
+      <Footer />
+    </div>
   </>
 )
 
