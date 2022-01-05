@@ -45,14 +45,14 @@ const Login = () => {
 
   return (
     <Layout noCTA name="Login">
-      <section class="py-20 2xl:py-40 overflow-hidden">
-        <div class="container px-4 mx-auto">
-          <div class="max-w-5xl mx-auto">
-            <div class="flex flex-wrap items-center -mx-10">
+      <section className="py-20 2xl:py-40 overflow-hidden">
+        <div className="container px-4 mx-auto">
+          <div className="max-w-5xl mx-auto">
+            <div className="flex flex-wrap items-center -mx-10">
               <LoginForm errorMessage={errorMsg} onSubmit={handleSubmit} />
-              <div class="w-full lg:w-1/2 px-10 mb-16 lg:mb-0 order-first lg:order-last">
-                <div class="max-w-md">
-                  <h2 class="mt-8 mb-12 text-5xl font-bold font-heading">
+              <div className="w-full lg:w-1/2 px-10 mb-16 lg:mb-0 order-first lg:order-last">
+                <div className="max-w-md">
+                  <h2 className="mt-8 mb-12 text-5xl font-bold font-heading">
                     Log in or create an account to start improving your chess
                     today
                   </h2>
