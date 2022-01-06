@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic.js'
 const Chessground = dynamic(() => import('react-chessground'), { ssr: false })
 import 'react-chessground/dist/styles/chessground.css'
-import { useWindowSize } from '../lib/windowSize'
+import { useWindowSize } from '../lib/hooks'
 import Chess from '../lib/chess'
 
 const KnightsChess = (props) => {
@@ -33,21 +33,21 @@ const KnightsChess = (props) => {
   }
 
   return (
-    <div className="py-6 md:px-6 overflow-y-hidden">
+    <div className="overflow-y-hidden">
       <Chessground
         width={
           windowSize.width < 1024
             ? windowSize.width < 768
               ? '85vw'
               : '65vw'
-            : '25vw'
+            : '60vh'
         }
         height={
           windowSize.width < 1024
             ? windowSize.width < 768
               ? '85vw'
               : '65vw'
-            : '25vw'
+            : '60vh'
         }
         turnColor="white"
         movable={calcMovable()}
