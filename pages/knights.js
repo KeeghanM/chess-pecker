@@ -4,6 +4,7 @@ import KnightsChess from '../components/KnightsChess'
 import { Switch } from '@headlessui/react'
 import { minKnightJumps } from '../lib/knightJumps'
 import { useTimer } from 'react-timer-hook'
+import useSound from 'use-sound'
 
 function knights() {
   // Helper function to generate squares for the puzzle
@@ -38,6 +39,11 @@ function knights() {
     setbestStreak(storedBest)
   })
 
+  // Setup SFX
+  const [playCorrect] = useSound('/sounds/correct.mp3', { volume: 0.25 })
+  const [playIncorrect] = useSound('/sounds/incorrect.mp3', { volume: 0.25 })
+  const [playHighScore] = useSound('/sounds/highscore.mp3', { volume: 0.25 })
+
   // Setup the timer with 60 seconds
   const {
     seconds,
@@ -52,7 +58,7 @@ function knights() {
   } = useTimer({
     expiryTimestamp: () => {
       const time = new Date()
-      time.setSeconds(time.getSeconds() + 60)
+      time.setSeconds(time.getSeconds() + 10)
       return time
     },
     onExpire: endTimer,
@@ -67,6 +73,7 @@ function knights() {
     setMoveSquare(to)
     if (to == endSquare) {
       // Puzzle Finished - Make a new one
+      playCorrect()
       setStartSquare(to)
       let newEnd = generateSquare()
       setEndSquare(newEnd)
@@ -81,6 +88,7 @@ function knights() {
     }
     if (moveCount + 1 >= minJumps) {
       // Too many moves - reset to starting
+      playIncorrect()
       setMoveSquare(startSquare)
       setmoveCount(0)
       setStreak(0)
@@ -102,6 +110,7 @@ function knights() {
     let currentSavedStreak =
       JSON.parse(localStorage.getItem('best-knight-vision-streak')) || 0
     if (streak > currentSavedStreak) {
+      playHighScore()
       showhighScoreFlash(true)
       let hideFlash = setTimeout(() => {
         showhighScoreFlash(false)
@@ -113,6 +122,7 @@ function knights() {
     // Generate a new end square
     let newEnd = generateSquare()
     setEndSquare(newEnd)
+    setMinJumps(minKnightJumps(startSquare, newEnd))
 
     // Finally reset the timer
     resetTimer()
@@ -130,7 +140,7 @@ function knights() {
       <Layout name="Knight Vision">
         <div
           className="flex flex-col lg:flex-row p-4 md:p-6 lg:p-12 space-4 lg:space-x-6 text-lg text-dark"
-          style={{ background: colorFlash ? '#84cc16' : '' }}
+          style={{ background: highScoreFlash ? '#84cc16' : '' }}
         >
           <div className="space-y-2 lg:w-1/3">
             <h1 className="text-4xl font-bold text-primary">Knight Vision</h1>
