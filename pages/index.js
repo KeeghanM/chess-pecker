@@ -37,9 +37,9 @@ export default function Home() {
                 vision through the use of knights.
               </p>
               <p>
-                Simply put, you have to calculate the fastest way a knight can
-                get to a given square. You can tailor the difficulty through the
-                available hints (or lack thereof).
+                Simply put, race against the clock to calculate the fastest way
+                a knight can get to a given square. Rack up a streak and try to
+                beat your own high score.
               </p>
             </div>
           </Link>

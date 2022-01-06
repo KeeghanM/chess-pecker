@@ -150,9 +150,9 @@ function knights() {
               chess abilities.
             </div>
             <div className="">
-              Coordinates have been intentially left off to help reinforce your
-              own internalisation of the squares. The board is setup from Whites
-              perspective, so remember:{' '}
+              Coordinates have been intentionally left off to help reinforce
+              your own internalisation of the squares. The board is setup from
+              Whites perspective, so remember:{' '}
               <span className="font-bold">A to H, 1 to 8</span>
             </div>
             <div className="flex flex-col space-y-2">

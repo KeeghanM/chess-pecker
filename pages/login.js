@@ -59,11 +59,6 @@ const Login = () => {
                   <p className="text-xl pb-2 text-primary font-bold">
                     Our main features are always free. Forever.
                   </p>
-                  <p className="text-lg">
-                    If you want to maintain multiple Tactics sets, we offer that
-                    for a small subscription fee (this helps fuel our coffee
-                    addiction, and keep the servers running)
-                  </p>
                 </div>
               </div>
             </div>
