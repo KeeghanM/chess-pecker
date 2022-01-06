@@ -33,7 +33,7 @@ const KnightsChess = (props) => {
   }
 
   return (
-    <div className="py-6 md:px-6 overflow-hidden">
+    <div className="py-6 md:px-6 overflow-y-hidden">
       <Chessground
         width={
           windowSize.width < 1024
@@ -53,7 +53,7 @@ const KnightsChess = (props) => {
         movable={calcMovable()}
         fen={fen}
         onMove={onMove}
-        coordinates={true}
+        coordinates={props.coords}
       />
     </div>
   )

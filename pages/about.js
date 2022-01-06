@@ -11,14 +11,14 @@ function about() {
           </h1>
           <div className="space-y-1 pb-6">
             <p>
-              ChessTraining.app is designed to be a super easy to use, but
-              incredibly <i>poweful</i> training tool to improve your chess.
+              <span className="font-bold">ChessTraining.app</span> is designed
+              to be a super easy to use, but incredibly <i>powerful</i> training
+              tool to improve your chess.
             </p>
             <p>
-              When
-              <a className="group font-bold text-accent-dark">
-                {' '}
-                I (Keeghan){' '}
+              When{' '}
+              <a className="group font-bold text-accent-dark underline hover:text-primary">
+                I (Keeghan)
                 <div className="absolute hidden group-visited:block group-hover:block border-4 border-primary w-[240px] h-[240px] rounded-2xl overflow-hidden">
                   <Image
                     priority
@@ -27,7 +27,7 @@ function about() {
                     height="240px"
                   />
                 </div>
-              </a>
+              </a>{' '}
               started working on this site, I focused on building tools that:
               <ul className="list-disc pl-8">
                 <li>I personally needed in my chess journery</li>
@@ -40,7 +40,7 @@ function about() {
             <p>
               As a huge fan of (and big relier on) OpenSource projects my aim is
               to always offer{' '}
-              <span className="text-primary">ChessTraining.app</span> for free.
+              <span className="font-bold">ChessTraining.app</span> for free.
               However, there are overheads to running websites like this,
               namely:
               <ul className="list-disc pl-8">
@@ -56,7 +56,7 @@ function about() {
               <a
                 href="https://rapidapi.com/KeeghanM/api/chess-puzzles/details"
                 target="_blank"
-                className="text-accent-dark font-bold hover:text-primary hover:underline"
+                className="text-accent-dark font-bold hover:text-primary underline"
               >
                 Puzzle API
               </a>{' '}
@@ -69,7 +69,11 @@ function about() {
             </p>
             <p>
               If you would like to donate to the site, you can{' '}
-              <a href="https://www.buymeacoffee.com/KeeghanM" target="_blank">
+              <a
+                href="https://www.buymeacoffee.com/KeeghanM"
+                target="_blank"
+                className="text-accent-dark font-bold hover:text-primary underline"
+              >
                 do so here
               </a>
               .
