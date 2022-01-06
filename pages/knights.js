@@ -87,11 +87,9 @@ function knights() {
       return
     }
     if (moveCount + 1 >= minJumps) {
-      // Too many moves - reset to starting
+      // Too many moves - reset game
       playIncorrect()
-      setMoveSquare(startSquare)
-      setmoveCount(0)
-      setStreak(0)
+      endTimer()
     }
   }
 
@@ -119,10 +117,13 @@ function knights() {
       localStorage.setItem('best-knight-vision-streak', JSON.stringify(streak))
     }
 
-    // Generate a new end square
+    // Generate the next sequence
+    let newStart = generateSquare()
     let newEnd = generateSquare()
+    setStartSquare(newStart)
+    setMoveSquare(newStart)
     setEndSquare(newEnd)
-    setMinJumps(minKnightJumps(startSquare, newEnd))
+    setMinJumps(minKnightJumps(newStart, newEnd))
 
     // Finally reset the timer
     resetTimer()
