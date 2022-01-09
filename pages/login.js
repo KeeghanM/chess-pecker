@@ -2,6 +2,7 @@ import Layout from '../components/Layout'
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth } from '../lib/firebase'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 const Login = () => {
   return (
@@ -40,17 +41,13 @@ const Login = () => {
 export default Login
 
 function GoogleSignInButton() {
+  const router = useRouter()
   const provider = new GoogleAuthProvider()
   const signInWithGoogle = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        console.log(result.user)
-      })
-      .catch((error) => {
-        const credential = GoogleAuthProvider.credentialFromError(error)
-        // TODO: Proper error handling
-        console.log({ error, credential })
-      })
+    signInWithPopup(auth, provider).then((result) => {
+      // Successful login! Go to profile page
+      router.push('/profile')
+    })
   }
 
   return (
