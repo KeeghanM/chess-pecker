@@ -44,10 +44,14 @@ function GoogleSignInButton() {
   const router = useRouter()
   const provider = new GoogleAuthProvider()
   const signInWithGoogle = () => {
-    signInWithPopup(auth, provider).then((result) => {
-      // Successful login! Go to profile page
-      router.push('/profile')
-    })
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // Successful login! Go to profile page
+        router.push('/profile')
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   return (

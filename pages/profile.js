@@ -6,14 +6,7 @@ import { UserContext } from '../lib/context'
 
 const profile = () => {
   const { user } = useContext(UserContext)
-  const [userDetails, setuserDetails] = useState({
-    firstName: user ? user.firstName : '',
-    lastName: user ? user.lastName : '',
-    email: user ? user.email : '',
-    chessRating: user ? user.chessRating : 1500,
-    puzzleDifficulty: user ? user.puzzleDifficulty : 1,
-  })
-  let selectedDifficulty = userDetails.puzzleDifficulty
+  let selectedDifficulty = user ? user.puzzleDifficulty : 1
 
   function saveDetails(e) {
     e.preventDefault()
@@ -37,10 +30,10 @@ const profile = () => {
   return (
     <div>
       <Layout>
-        {!user ? (
-          <div></div>
-        ) : (
-          <div className="flex flex-col items-center p-6 text-lg text-dark">
+        <div className="flex flex-col items-center p-6 text-lg text-dark">
+          {!user ? (
+            <p>You must be signed in to view your profile</p>
+          ) : (
             <form onSubmit={saveDetails} className="w-full max-w-sm">
               <div className="space-y-2">
                 <h1 className="text-4xl font-bold text-primary">
@@ -60,7 +53,7 @@ const profile = () => {
                       className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                       id="firstName"
                       type="text"
-                      defaultValue={userDetails.firstName}
+                      defaultValue={user.firstName}
                     />
                   </div>
                 </div>
@@ -78,7 +71,7 @@ const profile = () => {
                       className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                       id="lastName"
                       type="text"
-                      defaultValue={userDetails.lastName}
+                      defaultValue={user.lastName}
                     />
                   </div>
                 </div>
@@ -119,7 +112,7 @@ const profile = () => {
                       className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                       id="chessRating"
                       type="number"
-                      defaultValue={userDetails.chessRating}
+                      defaultValue={user.chessRating}
                     />
                   </div>
                 </div>
@@ -135,7 +128,7 @@ const profile = () => {
                   <Tab.Group
                     className="md:w-2/3"
                     id="puzzleDifficulty"
-                    defaultIndex={userDetails.puzzleDifficulty || 1}
+                    defaultIndex={user.puzzleDifficulty || 1}
                     onChange={(index) => {
                       selectedDifficulty = index
                     }}
@@ -184,8 +177,8 @@ const profile = () => {
                 </button>
               </div>
             </form>
-          </div>
-        )}
+          )}
+        </div>
       </Layout>
     </div>
   )
