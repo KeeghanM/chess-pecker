@@ -1,8 +1,9 @@
 import { Tab } from '@headlessui/react'
 import Layout from '../components/Layout'
-import { useState } from 'react'
 import { useContext } from 'react'
 import { UserContext } from '../lib/context'
+import { setDoc, doc } from 'firebase/firestore'
+import { firestore } from '../lib/firebase'
 
 const profile = () => {
   const { user } = useContext(UserContext)
@@ -19,12 +20,9 @@ const profile = () => {
       chessRating: form.chessRating.value,
       puzzleDifficulty: selectedDifficulty,
     }
-
-    // Use the details in the local form
-    setuserDetails(newDetails)
-
     // Ship the details off to Firebase
-    // setUser(newDetails)
+    const userRef = doc(firestore, 'users', user.uid)
+    setDoc(userRef, newDetails, { merge: true })
   }
 
   return (
