@@ -1,10 +1,8 @@
 import { Tab } from '@headlessui/react'
 import Layout from '../components/Layout'
 import { useState } from 'react'
-import { useUser } from '../lib/hooks'
 
 const profile = () => {
-  const user = useUser({ redirectTo: '/login' })
   const [userDetails, setuserDetails] = useState({
     firstName: user ? user.firstName : '',
     lastName: user ? user.lastName : '',

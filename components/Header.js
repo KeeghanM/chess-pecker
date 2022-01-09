@@ -1,11 +1,10 @@
 import Link from 'next/link'
 import Logo from './Logo'
 import { ArrowCircleLeftIcon } from '@heroicons/react/solid'
-import { useUser } from '../lib/hooks'
 import { useRouter } from 'next/router'
 
 const Header = (props) => {
-  const user = useUser()
+  const user = null
   const router = useRouter()
   return (
     <div>

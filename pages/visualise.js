@@ -1,4 +1,3 @@
-import Chessboard from '../components/Chessboard'
 import Layout from '../components/Layout'
 
 function visualise() {

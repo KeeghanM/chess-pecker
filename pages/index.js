@@ -1,6 +1,4 @@
-import { EyeIcon, LightningBoltIcon, PuzzleIcon } from '@heroicons/react/solid'
 import Layout from '../components/Layout'
-import { Tab } from '@headlessui/react'
 import Link from 'next/link'
 
 export default function Home() {
