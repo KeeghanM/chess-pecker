@@ -1,55 +1,30 @@
-import LoginForm from '../components/LoginForm'
 import Layout from '../components/Layout'
-import { useState } from 'react'
-import Router from 'next/router'
-import { useUser } from '../lib/hooks'
-import { Magic } from 'magic-sdk'
+import { useRouter } from 'next/router'
+import { auth, googleAuthProvider } from '../lib/firebase'
+import { signInWithPopup } from 'firebase/auth'
 
-const Login = () => {
-  useUser({ redirectTo: '/profile', redirectIfFound: true })
-
-  const [errorMsg, setErrorMsg] = useState('')
-
-  async function handleSubmit(e) {
-    e.preventDefault()
-
-    if (errorMsg) setErrorMsg('')
-
-    const body = {
-      email: e.currentTarget.email.value,
-    }
-
-    try {
-      const magic = new Magic(process.env.NEXT_PUBLIC_MAGIC_PUB_KEY)
-      const didToken = await magic.auth.loginWithMagicLink({
-        email: body.email,
-      })
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + didToken,
-        },
-        body: JSON.stringify(body),
-      })
-      if (res.status === 200) {
-        Router.push('/')
-      } else {
-        throw new Error(await res.text())
-      }
-    } catch (error) {
-      console.error('An unexpected error happened occurred:', error)
-      setErrorMsg(error.message)
-    }
-  }
-
+export default function Login(props) {
+  const router = useRouter()
+  const user = null
+  const username = null
+  // 1. user signed out, <SignInForm />
+  // 2. user signed in, but missing username <UsernameForm />
+  // 3. user signed in, has username => Redirect to Profile
   return (
     <Layout noCTA name="Login">
       <section className="py-20 2xl:py-40 overflow-hidden">
         <div className="container px-4 mx-auto">
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-wrap items-center -mx-10">
-              <LoginForm errorMessage={errorMsg} onSubmit={handleSubmit} />
+              {user ? (
+                !username ? (
+                  <UsernameForm />
+                ) : (
+                  router.push('/profile')
+                )
+              ) : (
+                <SignInForm />
+              )}
               <div className="w-full lg:w-1/2 px-10 mb-16 lg:mb-0 order-first lg:order-last">
                 <div className="max-w-md">
                   <h2 className="mt-8 mb-12 text-5xl font-bold font-heading">
@@ -69,4 +44,29 @@ const Login = () => {
   )
 }
 
-export default Login
+function SignInForm() {
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleAuthProvider).then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        const token = credential.accessToken
+        // The signed-in user info.
+        const user = result.user
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return (
+    <div className="w-full lg:w-1/2 px-10">
+      <div className="px-6 lg:px-20 pt-12 lg:pt-20 bg-dark text-light shadow-2xl rounded-lg">
+        <button onClick={signInWithGoogle}>Sign in with Google</button>
+      </div>
+    </div>
+  )
+}
+
+function UsernameForm() {
+  return null
+}
