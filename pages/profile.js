@@ -1,8 +1,11 @@
 import { Tab } from '@headlessui/react'
 import Layout from '../components/Layout'
 import { useState } from 'react'
+import { useContext } from 'react'
+import { UserContext } from '../lib/context'
 
 const profile = () => {
+  const { user, username } = useContext(UserContext)
   const [userDetails, setuserDetails] = useState({
     firstName: user ? user.firstName : '',
     lastName: user ? user.lastName : '',

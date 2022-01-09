@@ -2,10 +2,12 @@ import Link from 'next/link'
 import Logo from './Logo'
 import { ArrowCircleLeftIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
+import { useContext } from 'react'
+import { UserContext } from '../lib/context'
 import { auth } from '../lib/firebase'
 
 const Header = (props) => {
-  let user = null
+  const { user, username } = useContext(UserContext)
   const router = useRouter()
   return (
     <div>
@@ -34,9 +36,12 @@ const Header = (props) => {
             )}
             {user && (
               <div className="flex flex-col">
-                <div className="text-light pb-2">Welcome {user.email}</div>
+                <div className="text-light pb-2">Welcome {username}</div>
                 <button
-                  onClick={() => auth.signOut()}
+                  onClick={() => {
+                    auth.signOut()
+                    router.push('/')
+                  }}
                   className="inline-block text-sm md:text-lg py-1 px-2 md:py-2 md:px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200"
                 >
                   Log Out
