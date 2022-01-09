@@ -57,18 +57,8 @@ export default function Login(props) {
 }
 
 function SignInButtons() {
-  const { user, username } = useContext(UserContext)
   const signInWithGoogle = async () => {
-    try {
-      await signInWithPopup(auth, googleAuthProvider).then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result)
-        const token = credential.accessToken
-        user = result.user
-        console.log(user)
-      })
-    } catch (error) {
-      console.log(error)
-    }
+    await signInWithPopup(auth, googleAuthProvider)
   }
 
   return (
