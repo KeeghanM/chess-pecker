@@ -4,7 +4,7 @@ import { ArrowCircleLeftIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 
 const Header = (props) => {
-  const user = null
+  let user = null
   const router = useRouter()
   return (
     <div>

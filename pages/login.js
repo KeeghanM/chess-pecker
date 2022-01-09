@@ -1,5 +1,7 @@
-import LoginForm from '../components/LoginForm'
 import Layout from '../components/Layout'
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { auth } from '../lib/firebase'
+import Image from 'next/image'
 
 const Login = () => {
   return (
@@ -8,7 +10,14 @@ const Login = () => {
         <div className="container px-4 mx-auto">
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-wrap items-center -mx-10">
-              <LoginForm errorMessage={errorMsg} onSubmit={handleSubmit} />
+              <div className="w-full lg:w-1/2 px-10">
+                <div className="px-6 lg:px-20 py-12 lg:py-20 bg-dark text-light shadow-2xl rounded-lg space-y-6">
+                  <p className="text-4xl font-bold text-primary">
+                    Account Registration
+                  </p>
+                  <GoogleSignInButton />
+                </div>
+              </div>
               <div className="w-full lg:w-1/2 px-10 mb-16 lg:mb-0 order-first lg:order-last">
                 <div className="max-w-md">
                   <h2 className="mt-8 mb-12 text-5xl font-bold font-heading">
@@ -29,3 +38,27 @@ const Login = () => {
 }
 
 export default Login
+
+function GoogleSignInButton() {
+  const provider = new GoogleAuthProvider()
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        console.log(result.user)
+      })
+      .catch((error) => {
+        const credential = GoogleAuthProvider.credentialFromError(error)
+        // TODO: Proper error handling
+        console.log({ error, credential })
+      })
+  }
+
+  return (
+    <button onClick={signInWithGoogle}>
+      <div className="flex flex-row items-center p-2 bg-white rounded-md text-dark pr-6 space-x-2">
+        <Image src="/g-logo.png" width="50px" height="50px" alt="Google Logo" />
+        <p>Sign in with Google</p>
+      </div>
+    </button>
+  )
+}
