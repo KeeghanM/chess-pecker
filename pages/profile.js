@@ -7,15 +7,14 @@ import { firestore } from '../lib/firebase'
 
 const profile = () => {
   const { user } = useContext(UserContext)
-  let selectedDifficulty = user ? user.puzzleDifficulty : 1
+  let selectedDifficulty
 
   function saveDetails(e) {
     e.preventDefault()
     let form = e.target
     // TODO: Validate and secure form values
     let newDetails = {
-      firstName: form.firstName.value,
-      lastName: form.lastName.value,
+      displayName: form.displayName.value,
       email: form.email.value,
       chessRating: form.chessRating.value,
       puzzleDifficulty: selectedDifficulty,
@@ -41,35 +40,17 @@ const profile = () => {
                   <div className="md:w-1/3">
                     <label
                       className="block font-bold md:text-right mb-1 md:mb-0 pr-4"
-                      htmlFor="firstName"
+                      htmlFor="displayName"
                     >
-                      First Name
+                      Display Name
                     </label>
                   </div>
                   <div className="md:w-2/3">
                     <input
                       className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
-                      id="firstName"
+                      id="displayName"
                       type="text"
-                      defaultValue={user.firstName}
-                    />
-                  </div>
-                </div>
-                <div className="md:flex md:items-center">
-                  <div className="md:w-1/3">
-                    <label
-                      className="block font-bold md:text-right mb-1 md:mb-0 pr-4"
-                      htmlFor="lastName"
-                    >
-                      Last Name
-                    </label>
-                  </div>
-                  <div className="md:w-2/3">
-                    <input
-                      className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
-                      id="lastName"
-                      type="text"
-                      defaultValue={user.lastName}
+                      defaultValue={user.displayName}
                     />
                   </div>
                 </div>
@@ -126,7 +107,7 @@ const profile = () => {
                   <Tab.Group
                     className="md:w-2/3"
                     id="puzzleDifficulty"
-                    defaultIndex={user.puzzleDifficulty || 1}
+                    defaultIndex={user.puzzleDifficulty}
                     onChange={(index) => {
                       selectedDifficulty = index
                     }}
