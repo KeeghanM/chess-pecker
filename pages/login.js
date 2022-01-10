@@ -1,7 +1,6 @@
 import Layout from '../components/Layout'
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth } from '../lib/firebase'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 const Login = () => {
@@ -57,7 +56,7 @@ function GoogleSignInButton() {
   return (
     <button onClick={signInWithGoogle}>
       <div className="flex flex-row items-center p-2 bg-white rounded-md text-dark pr-6 space-x-2">
-        <Image src="/g-logo.png" width="50px" height="50px" alt="Google Logo" />
+        <img src="/g-logo.png" width="50px" height="50px" alt="Google Logo" />
         <p>Sign in with Google</p>
       </div>
     </button>

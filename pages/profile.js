@@ -50,7 +50,7 @@ const profile = () => {
                       className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                       id="displayName"
                       type="text"
-                      defaultValue={user.displayName}
+                      value={user.displayName}
                     />
                   </div>
                 </div>
@@ -68,7 +68,7 @@ const profile = () => {
                       className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                       id="email"
                       type="email"
-                      defaultValue={user.email}
+                      value={user.email}
                     />
                   </div>
                 </div>
@@ -91,7 +91,7 @@ const profile = () => {
                       className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                       id="chessRating"
                       type="number"
-                      defaultValue={user.chessRating}
+                      value={user.chessRating}
                     />
                   </div>
                 </div>

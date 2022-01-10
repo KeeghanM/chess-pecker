@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Logo from './Logo'
-import { ArrowCircleLeftIcon } from '@heroicons/react/solid'
+import { ArrowCircleLeftIcon, CogIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { UserContext } from '../lib/context'
@@ -42,9 +42,16 @@ const Header = (props) => {
             )}
             {user && (
               <div className="flex flex-col">
-                <div className="text-light pb-2">
-                  Welcome {user.displayName}
+                <div className="text-light pb-2 flex flex-row items-center space-x-2">
+                  <div className="transition-all duration-200">
+                    Welcome {user.displayName}
+                  </div>
+
+                  <Link href="/profile">
+                    <CogIcon className="w-5 h-5 hover:cursor-pointer hover:text-primary hover:h-10 hover:w-10 transition-all duration-200" />
+                  </Link>
                 </div>
+
                 <button
                   onClick={signOutNow}
                   className="inline-block text-sm md:text-lg py-1 px-2 md:py-2 md:px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200"
