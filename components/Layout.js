@@ -8,7 +8,7 @@ const Layout = (props) => (
       <title>ChessTraining.app - {props.name}</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <div className="flex flex-col h-screen justify-between overflow-x-hidden">
+    <div className="flex flex-col h-screen justify-between overflow-x-hidden overflow-y-scroll">
       <div className="bg-white">
         <Header noCTA={props.noCTA} name={props.name} />
         <div>{props.children}</div>

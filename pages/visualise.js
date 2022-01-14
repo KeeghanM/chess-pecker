@@ -1,35 +1,26 @@
-import Chessboard from '../components/Chessboard'
-import { Chess } from '../lib/chess'
 import { useState, useEffect } from 'react'
 import Layout from '../components/Layout'
 import getPuzzle from '../components/PuzzleHandler'
 import { Tab } from '@headlessui/react'
 import Spinner from '../components/Spinner'
+import VisualiseChess from '../components/VisualiseChess'
 
 export default function visualise() {
   const [puzzles, setpuzzles] = useState([])
-  const [fen, setfen] = useState('')
-  const [movesList, setmovesList] = useState('')
-  const [rating, setrating] = useState()
-  const [playerMoves, setplayerMoves] = useState()
-
-  useEffect(() => {
-    if (puzzles.length > 0) showPuzzle()
-  }, [puzzles])
+  const [currentPuzzle, setcurrentPuzzle] = useState()
 
   function formSubmit(e) {
     e.preventDefault()
     let form = e.target
-
-    setrating(
-      form.chessRating.value * difficultyAdjuster(form.puzzleDifficulty.value)
-    )
-    setplayerMoves(parseInt(form.puzzleLength.value))
     let count = puzzles.length > 0 ? 1 : 2
-    fetchPuzzles(count)
+    let rating =
+      form.chessRating.value * difficultyAdjuster(form.puzzleDifficulty.value)
+    let playerMoves = parseInt(form.puzzleLength.value)
+    fetchPuzzles(count, rating, playerMoves)
   }
 
-  function fetchPuzzles(count) {
+  function fetchPuzzles(count, rating, playerMoves) {
+    console.log()
     getPuzzle({ rating, playerMoves, count })
       .then((response) => {
         setpuzzles([...puzzles, ...response.data.puzzles])
@@ -39,17 +30,28 @@ export default function visualise() {
       })
   }
 
-  function showPuzzle() {
-    let puzzle = puzzles[0]
-    setmovesList(JSON.stringify(puzzle.moves))
-    console.log(puzzle)
-    setfen(puzzle.fen)
-  }
+  useEffect(() => {
+    // First time puzzles are loaded we need to kick start the process
+    // but once we are going, current puzzle is handled eslewhere
+    if (puzzles.length > 0 && !currentPuzzle) setcurrentPuzzle(puzzles[0])
+  }, [puzzles])
 
   function nextPuzzle() {
-    let id = puzzles[0].puzzleId
-    setPuzzles(puzzles.filter((puzzle) => puzzle.puzzleId !== id))
+    setcurrentPuzzle(puzzles[1])
+    let id = puzzles[0].puzzleid
+    let newPuzzles = puzzles.filter((puzzle) => puzzle.puzzleid !== id)
+    setpuzzles(newPuzzles)
     fetchPuzzles(1)
+  }
+
+  function puzzleSuccess() {
+    console.log('Success')
+    nextPuzzle()
+  }
+
+  function puzzleError() {
+    console.log('Skipped')
+    nextPuzzle()
   }
 
   function difficultyAdjuster(d) {
@@ -70,8 +72,12 @@ export default function visualise() {
             </div>
             <div>
               You'll be presented with a position, and a list of moves.
-              Visualise the moves in your head, and when you're ready - type in
-              your answer!
+              Visualise the given moves in your head, and try to find the
+              correct move in that position.
+            </div>
+            <div>
+              When you think you've found the correct move to finish the puzzle
+              off, simply type it in!
             </div>
             <div>
               If you're correct, brilliant! Move on to the next one, if not then
@@ -79,13 +85,14 @@ export default function visualise() {
             </div>
           </div>
           <div>
-            {puzzles.length === 0 ? (
+            {puzzles.length === 0 || !currentPuzzle ? (
               <PuzzleSetupForm submit={formSubmit} />
             ) : (
-              <div>
-                <Chessboard fen={fen} draggable={{ enabled: false }} />
-                <div>{movesList}</div>
-              </div>
+              <VisualiseChess
+                puzzle={currentPuzzle}
+                onSuccess={puzzleSuccess}
+                onError={puzzleError}
+              />
             )}
           </div>
         </div>
