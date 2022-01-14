@@ -102,8 +102,8 @@ export default function visualise() {
 }
 
 function PuzzleSetupForm(props) {
-  const [selectedDifficulty, setselectedDifficulty] = useState(1)
-  const [moves, setmoves] = useState(2)
+  const [selectedDifficulty, setselectedDifficulty] = useState(0)
+  const [moves, setmoves] = useState(3)
   const [disable, setdisable] = useState(false)
 
   return (
@@ -117,9 +117,6 @@ function PuzzleSetupForm(props) {
       >
         <fieldset disabled={disable}>
           <div className="space-y-2">
-            <h1 className="text-2xl font-bold text-primary">
-              Setup Your Puzzles
-            </h1>
             <div className="md:flex md:items-center">
               <div className="md:w-1/2">
                 <label
@@ -211,7 +208,7 @@ function PuzzleSetupForm(props) {
                   type="range"
                   defaultValue={moves}
                   min={1}
-                  max={5}
+                  max={7}
                   onChange={(x) => setmoves(x.target.value)}
                 />
               </div>
@@ -229,7 +226,7 @@ function PuzzleSetupForm(props) {
       </form>
 
       <div className="pt-4" style={{ display: disable ? 'block' : 'none' }}>
-        <Spinner />
+        <Spinner text="Fetching your puzzles..." />
       </div>
     </div>
   )
