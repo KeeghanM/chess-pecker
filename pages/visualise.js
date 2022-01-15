@@ -99,7 +99,7 @@ export default function visualise() {
             </div>
             <div>
               If you're correct, brilliant! Move on to the next one, if not then
-              the puzzle will step forward one move, and you can try again.
+              you can keep trying - or skip the puzzle and move to the next one.
             </div>
             <div className="italic">
               Please note: Answers need to be entered in Algebraic Notation.
