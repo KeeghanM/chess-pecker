@@ -13,6 +13,7 @@ export default function visualise() {
   const [errorMsg, seterrorMsg] = useState(false)
 
   function fetchPuzzles(c, r, pm) {
+    console.log({ c, r, pm })
     getPuzzle({ rating: r, playerMoves: pm, count: c })
       .then((response) => {
         setpuzzles([...puzzles, ...response.data.puzzles])
@@ -25,8 +26,10 @@ export default function visualise() {
   useEffect(() => {
     let saved =
       JSON.parse(localStorage.getItem('visualisation-puzzle-list')) || []
-    // On first load, grab from Local
-    if (saved.length > 0 && !currentPuzzle) setpuzzles(saved)
+    if (saved.length > 0 && !currentPuzzle) {
+      // On first load, grab from Local
+      setpuzzles(saved)
+    }
 
     if (puzzles.length > 0) {
       localStorage.setItem('visualisation-puzzle-list', JSON.stringify(puzzles))
@@ -70,6 +73,7 @@ export default function visualise() {
 
   function reset() {
     localStorage.setItem('visualisation-puzzle-list', JSON.stringify([]))
+    setcurrentPuzzle()
     setpuzzles([])
   }
 
@@ -109,7 +113,7 @@ export default function visualise() {
               )}
             </div>
           </div>
-          <div className="md:pl-12">
+          <div className="md:pl-12 w-2/3 md:w-1/3 align-middle m-auto lg:m-0">
             {puzzles.length === 0 || !currentPuzzle ? (
               <>
                 <PuzzleSetupForm submit={formSubmit} error={errorMsg} />
@@ -138,7 +142,7 @@ export default function visualise() {
 }
 
 function PuzzleSetupForm(props) {
-  const [selectedDifficulty, setselectedDifficulty] = useState(0)
+  const [selectedDifficulty, setselectedDifficulty] = useState(1)
   const [moves, setmoves] = useState(3)
   const [disable, setdisable] = useState(false)
 
@@ -149,13 +153,13 @@ function PuzzleSetupForm(props) {
   }, [props.error])
 
   return (
-    <div className="flex flex-col m-0 items-center text-lg text-dark">
+    <div className="flex flex-col items-center text-lg text-dark">
       <form
         onSubmit={(e) => {
           setdisable(true)
           props.submit(e)
         }}
-        className="w-full max-w-sm"
+        className="w-full md:w-fit"
       >
         <fieldset disabled={disable}>
           <div className="space-y-2">
@@ -180,7 +184,7 @@ function PuzzleSetupForm(props) {
               </div>
             </div>
             <div className="md:flex md:items-center">
-              <div className="md:w-1/2">
+              <div className="md:w-1/3">
                 <label
                   className="block font-bold md:text-right mb-1 md:mb-0 pr-4"
                   htmlFor="puzzleDifficulty"
@@ -195,7 +199,7 @@ function PuzzleSetupForm(props) {
                 hidden
               />
               <Tab.Group
-                className="md:w-2/3"
+                className="w-fit flex flex-row"
                 defaultIndex={selectedDifficulty}
                 onChange={(index) => {
                   setselectedDifficulty(index)
@@ -207,7 +211,7 @@ function PuzzleSetupForm(props) {
                       (selected
                         ? ' border-primary bg-white  '
                         : ' border-accent-light bg-gray-200 ') +
-                      'appearance-none border-2 border-r-0 rounded-r-none rounded w-1/3 py-2 leading-tight focus:outline-none focus:border-primary'
+                      'appearance-none border-2 border-r-0 rounded-r-none rounded  w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary'
                     }
                   >
                     Easy
@@ -217,7 +221,7 @@ function PuzzleSetupForm(props) {
                       (selected
                         ? ' border-primary bg-white '
                         : ' border-accent-light bg-gray-200 ') +
-                      'appearance-none border-y-2 rounded-y w-1/3 py-2 leading-tight focus:outline-none focus:border-primary'
+                      'appearance-none border-y-2 rounded-y w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary'
                     }
                   >
                     Medium
@@ -227,7 +231,7 @@ function PuzzleSetupForm(props) {
                       (selected
                         ? ' border-primary bg-white '
                         : ' border-accent-light bg-gray-200 ') +
-                      'appearance-none border-2 border-l-0 rounded-l-none rounded w-1/3 py-2 leading-tight focus:outline-none focus:border-primary'
+                      'appearance-none border-2 border-l-0 rounded-l-none rounded  w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary'
                     }
                   >
                     Hard
