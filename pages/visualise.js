@@ -23,9 +23,16 @@ export default function visualise() {
   }
 
   useEffect(() => {
+    let saved =
+      JSON.parse(localStorage.getItem('visualisation-puzzle-list')) || []
+    // On first load, grab from Local
+    if (saved.length > 0 && !currentPuzzle) setpuzzles(saved)
+
     if (puzzles.length > 0) {
+      localStorage.setItem('visualisation-puzzle-list', JSON.stringify(puzzles))
       if (!currentPuzzle) setcurrentPuzzle(puzzles[0])
-      if (puzzles.length < 5) fetchPuzzles(5, rating, playerMoves)
+      if (puzzles.length < 5 && saved.length < 5)
+        fetchPuzzles(5, rating, playerMoves)
     }
   }, [puzzles])
 
