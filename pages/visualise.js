@@ -64,7 +64,7 @@ export default function visualise() {
   return (
     <div>
       <Layout name="Visualisation & Calculation">
-        <div className="flex flex-col lg:flex-row space-y-12 space-x-12 p-4 md:p-6 lg:p-12 text-lg text-dark">
+        <div className="flex flex-col lg:flex-row space-y-12 p-4 md:p-6 lg:p-12 text-lg text-dark">
           <div className="space-y-4 lg:w-1/3">
             <h1 className="text-4xl font-bold text-primary">
               Visualisation & Calculation
@@ -87,7 +87,7 @@ export default function visualise() {
               the puzzle will step forward one move, and you can try again.
             </div>
           </div>
-          <div className="pl-12">
+          <div className="md:pl-12">
             {puzzles.length === 0 || !currentPuzzle ? (
               <PuzzleSetupForm submit={formSubmit} />
             ) : (

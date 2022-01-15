@@ -3,18 +3,23 @@ const Chessground = dynamic(() => import('react-chessground'), { ssr: false })
 import 'react-chessground/dist/styles/chessground.css'
 import { useWindowSize } from '../lib/hooks'
 import Chess from '../lib/chess'
-import { useState } from 'react'
-import { useEffect } from 'react/cjs/react.development'
+import { useState, useEffect } from 'react'
+import useSound from 'use-sound'
 
 export default function VisualiseChess(props) {
+  // Setup SFX
+  const [playCorrect] = useSound('/sounds/correct.mp3', { volume: 0.25 })
+  const [playIncorrect] = useSound('/sounds/incorrect.mp3', { volume: 0.25 })
+
   let puzzle = props.puzzle
   let chess = new Chess(puzzle.fen)
   const [orientation, setorientation] = useState('')
   const [fen, setFen] = useState('puzzle.fen')
   const [finalMove, setfinalMove] = useState('')
   const [movesList, setmovesList] = useState('')
-  const [status, setstatus] = useState('')
   let clicked = ''
+  const [colorFlash, showFlash] = useState(false)
+  const [errorFlash, showError] = useState(false)
 
   useEffect(() => {
     chess.load(puzzle.fen)
@@ -30,11 +35,21 @@ export default function VisualiseChess(props) {
     if (clicked === 'check') {
       let checkMove = e.target.move.value
       if (checkMove == finalMove) {
+        playCorrect()
         e.target.move.value = ''
-        setstatus('Success!')
+
+        showFlash(true)
+        let hideFlash = setTimeout(() => {
+          showFlash(false)
+        }, 500)
+
         props.onSuccess()
       } else {
-        setstatus('Wrong Move - Try Again')
+        playIncorrect()
+        showError(true)
+        let hideFlash = setTimeout(() => {
+          showError(false)
+        }, 500)
       }
     } else if (clicked === 'skip') {
       e.target.move.value = ''
@@ -73,10 +88,17 @@ export default function VisualiseChess(props) {
         >
           Skip Puzzle
         </button>
-        <p>{status}</p>
       </form>
 
-      <div className="">
+      <div
+        className={
+          colorFlash
+            ? 'shadow-xl shadow-[#84cc16] transition-all'
+            : errorFlash
+            ? 'shadow-xl shadow-[#cc2b16] transition-all'
+            : ''
+        }
+      >
         <Chessground
           width={
             windowSize.width < 1024
