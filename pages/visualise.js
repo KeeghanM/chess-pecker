@@ -57,7 +57,7 @@ export default function visualise() {
   }
 
   function difficultyAdjuster(d) {
-    return d == 0 ? 0.6 : d == 1 ? 0.75 : 0.9
+    return d == 0 ? 0.8 : d == 1 ? 1 : 1.2
   }
 
   function formSubmit(e) {
@@ -101,6 +101,19 @@ export default function visualise() {
             <div>
               If you're correct, brilliant! Move on to the next one, if not then
               the puzzle will step forward one move, and you can try again.
+            </div>
+            <div className="italic">
+              Please note: Answers need to be entered in Algebraic Notation.
+              This includes + for "check" and # for "checkmate". Learn more
+              about Algebraic Notation{' '}
+              <a
+                href="https://www.ichess.net/wp-content/uploads/2021/10/chess-notation-infographic-906x2048.jpg"
+                className="text-accent-dark underline hover:text-primary"
+                target="_blank"
+              >
+                here
+              </a>
+              . An example is "1. f3 e6 2. g4 Qh4#" - the famous "Fools Mate"
             </div>
             <div className="">
               {puzzles.length > 0 && (
@@ -178,7 +191,7 @@ function PuzzleSetupForm(props) {
                   id="chessRating"
                   type="number"
                   defaultValue={1500}
-                  min={950}
+                  min={600}
                   max={2900}
                 />
               </div>

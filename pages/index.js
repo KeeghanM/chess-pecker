@@ -42,6 +42,29 @@ export default function Home() {
             </div>
           </Link>
         </div>
+        <div className="hover:bg-accent-light border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-light">
+          <Link href="/visualise">
+            <div className="p-6 md:p-8 lg:p-10 space-y-2">
+              <h1 className="text-4xl font-bold">
+                Visualisation & Calculation
+              </h1>
+              <p>
+                Do you struggle to see past two or three moves? Find long
+                calculations difficult? So did we.
+              </p>
+              <p>
+                With our visualisation trainer you are presented with a board
+                position, and a list of moves at the end of which will be a
+                simple tactic.
+              </p>
+              <p>
+                All you need to do is play the given sequence of moves in your
+                head, decide on your final move and then check if you were
+                correct.
+              </p>
+            </div>
+          </Link>
+        </div>
         <div className=" border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-slate-400 text-slate-600">
           <Link href="/visualise">
             <div className="p-6 md:p-8 lg:p-10 space-y-2">
@@ -64,29 +87,6 @@ export default function Home() {
                 But the reward can be re-programming your unconscious mind.
                 Benefits include sharper tactical vision, fewer blunders, better
                 play when in time trouble and improved intuition.
-              </p>
-            </div>
-          </Link>
-        </div>
-        <div className="hover:bg-accent-light border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-light">
-          <Link href="/visualise">
-            <div className="p-6 md:p-8 lg:p-10 space-y-2">
-              <h1 className="text-4xl font-bold">
-                Visualisation & Calculation
-              </h1>
-              <p>
-                Do you struggle to see past two or three moves? Find long
-                calculations difficult? So did we.
-              </p>
-              <p>
-                With our visualisation trainer you are presented with a board
-                position, and a list of moves at the end of which will be a
-                simple tactic.
-              </p>
-              <p>
-                All you need to do is play the given sequence of moves in your
-                head, decide on your final move and then check if you were
-                correct.
               </p>
             </div>
           </Link>
