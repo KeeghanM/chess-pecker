@@ -10,6 +10,7 @@ export default function visualise() {
   const [currentPuzzle, setcurrentPuzzle] = useState()
   const [rating, setrating] = useState()
   const [playerMoves, setplayermoves] = useState()
+  const [errorMsg, seterrorMsg] = useState(false)
 
   function fetchPuzzles(c, r, pm) {
     getPuzzle({ rating: r, playerMoves: pm, count: c })
@@ -17,8 +18,7 @@ export default function visualise() {
         setpuzzles([...puzzles, ...response.data.puzzles])
       })
       .catch((err) => {
-        // TODO: Handle Error
-        console.log(err.message)
+        seterrorMsg(true)
       })
   }
 
@@ -89,7 +89,18 @@ export default function visualise() {
           </div>
           <div className="md:pl-12">
             {puzzles.length === 0 || !currentPuzzle ? (
-              <PuzzleSetupForm submit={formSubmit} />
+              <>
+                <PuzzleSetupForm submit={formSubmit} error={errorMsg} />
+                <div
+                  className="pt-4 italic text-danger"
+                  style={{ display: errorMsg ? 'block' : 'none' }}
+                >
+                  <p>
+                    Error: Please try again. If the error persists, please
+                    contact us
+                  </p>
+                </div>
+              </>
             ) : (
               <VisualiseChess
                 puzzle={currentPuzzle}
@@ -108,6 +119,12 @@ function PuzzleSetupForm(props) {
   const [selectedDifficulty, setselectedDifficulty] = useState(0)
   const [moves, setmoves] = useState(3)
   const [disable, setdisable] = useState(false)
+
+  useEffect(() => {
+    if (props.error && disable) {
+      setdisable(false)
+    }
+  }, [props.error])
 
   return (
     <div className="flex flex-col m-0 items-center text-lg text-dark">
@@ -135,6 +152,8 @@ function PuzzleSetupForm(props) {
                   id="chessRating"
                   type="number"
                   defaultValue={1500}
+                  min={950}
+                  max={2900}
                 />
               </div>
             </div>
@@ -200,7 +219,7 @@ function PuzzleSetupForm(props) {
                   className="block font-bold md:text-right mb-1 md:mb-0 pr-4"
                   htmlFor="chessRating"
                 >
-                  Moves to Visualise
+                  Length
                 </label>
               </div>
               <div className="md:w-2/3 flex flex-row items-center">
@@ -211,7 +230,7 @@ function PuzzleSetupForm(props) {
                   type="range"
                   defaultValue={moves}
                   min={3}
-                  max={8}
+                  max={6}
                   onChange={(x) => setmoves(x.target.value)}
                 />
               </div>
