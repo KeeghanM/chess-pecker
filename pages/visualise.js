@@ -13,7 +13,6 @@ export default function visualise() {
   const [errorMsg, seterrorMsg] = useState(false)
 
   function fetchPuzzles(c, r, pm) {
-    console.log({ c, r, pm })
     getPuzzle({ rating: r, playerMoves: pm, count: c })
       .then((response) => {
         setpuzzles([...puzzles, ...response.data.puzzles])
@@ -126,9 +125,9 @@ export default function visualise() {
               )}
             </div>
           </div>
-          <div className="md:pl-12 w-2/3 md:w-1/3 align-middle m-auto lg:m-0">
+          <div className="lg:pl-12">
             {puzzles.length === 0 || !currentPuzzle ? (
-              <>
+              <div className="w-2/3 lg:w-1/3 align-middle m-auto lg:m-0">
                 <PuzzleSetupForm submit={formSubmit} error={errorMsg} />
                 <div
                   className="pt-4 italic text-danger"
@@ -139,7 +138,7 @@ export default function visualise() {
                     contact us
                   </p>
                 </div>
-              </>
+              </div>
             ) : (
               <VisualiseChess
                 puzzle={currentPuzzle}
@@ -166,13 +165,12 @@ function PuzzleSetupForm(props) {
   }, [props.error])
 
   return (
-    <div className="flex flex-col items-center text-lg text-dark">
+    <div>
       <form
         onSubmit={(e) => {
           setdisable(true)
           props.submit(e)
         }}
-        className="w-full md:w-fit"
       >
         <fieldset disabled={disable}>
           <div className="space-y-2">
