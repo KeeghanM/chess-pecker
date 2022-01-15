@@ -8,32 +8,25 @@ import VisualiseChess from '../components/VisualiseChess'
 export default function visualise() {
   const [puzzles, setpuzzles] = useState([])
   const [currentPuzzle, setcurrentPuzzle] = useState()
+  const [rating, setrating] = useState()
+  const [playerMoves, setplayermoves] = useState()
 
-  function formSubmit(e) {
-    e.preventDefault()
-    let form = e.target
-    let count = puzzles.length > 0 ? 1 : 2
-    let rating =
-      form.chessRating.value * difficultyAdjuster(form.puzzleDifficulty.value)
-    let playerMoves = parseInt(form.puzzleLength.value)
-    fetchPuzzles(count, rating, playerMoves)
-  }
-
-  function fetchPuzzles(count, rating, playerMoves) {
-    console.log()
-    getPuzzle({ rating, playerMoves, count })
+  function fetchPuzzles(c, r, pm) {
+    getPuzzle({ rating: r, playerMoves: pm, count: c })
       .then((response) => {
         setpuzzles([...puzzles, ...response.data.puzzles])
       })
       .catch((err) => {
+        // TODO: Handle Error
         console.log(err.message)
       })
   }
 
   useEffect(() => {
-    // First time puzzles are loaded we need to kick start the process
-    // but once we are going, current puzzle is handled eslewhere
-    if (puzzles.length > 0 && !currentPuzzle) setcurrentPuzzle(puzzles[0])
+    if (puzzles.length > 0) {
+      if (!currentPuzzle) setcurrentPuzzle(puzzles[0])
+      if (puzzles.length < 5) fetchPuzzles(5, rating, playerMoves)
+    }
   }, [puzzles])
 
   function nextPuzzle() {
@@ -41,16 +34,15 @@ export default function visualise() {
     let id = puzzles[0].puzzleid
     let newPuzzles = puzzles.filter((puzzle) => puzzle.puzzleid !== id)
     setpuzzles(newPuzzles)
-    fetchPuzzles(1)
   }
 
   function puzzleSuccess() {
-    console.log('Success')
+    // TODO: Increment some counter on the User Account
     nextPuzzle()
   }
 
   function puzzleError() {
-    console.log('Skipped')
+    // TODO: Display puzzle solution and a "Move On" button
     nextPuzzle()
   }
 
@@ -58,11 +50,22 @@ export default function visualise() {
     return d == 0 ? 0.6 : d == 1 ? 0.75 : 0.9
   }
 
+  function formSubmit(e) {
+    e.preventDefault()
+    let form = e.target
+    let r =
+      form.chessRating.value * difficultyAdjuster(form.puzzleDifficulty.value)
+    let pm = parseInt(form.puzzleLength.value) - 1
+    fetchPuzzles(5, r, pm)
+    setrating(r)
+    setplayermoves(pm)
+  }
+
   return (
     <div>
       <Layout name="Visualisation & Calculation">
         <div className="flex flex-col lg:flex-row space-y-12 space-x-12 p-4 md:p-6 lg:p-12 text-lg text-dark">
-          <div className="space-y-2 lg:w-1/3">
+          <div className="space-y-4 lg:w-1/3">
             <h1 className="text-4xl font-bold text-primary">
               Visualisation & Calculation
             </h1>
@@ -84,7 +87,7 @@ export default function visualise() {
               the puzzle will step forward one move, and you can try again.
             </div>
           </div>
-          <div>
+          <div className="pl-12">
             {puzzles.length === 0 || !currentPuzzle ? (
               <PuzzleSetupForm submit={formSubmit} />
             ) : (
@@ -207,8 +210,8 @@ function PuzzleSetupForm(props) {
                   id="puzzleLength"
                   type="range"
                   defaultValue={moves}
-                  min={1}
-                  max={7}
+                  min={3}
+                  max={8}
                   onChange={(x) => setmoves(x.target.value)}
                 />
               </div>

@@ -4,62 +4,41 @@ import 'react-chessground/dist/styles/chessground.css'
 import { useWindowSize } from '../lib/hooks'
 import Chess from '../lib/chess'
 import { useState } from 'react'
+import { useEffect } from 'react/cjs/react.development'
 
 export default function VisualiseChess(props) {
   let puzzle = props.puzzle
-  console.log(puzzle)
-  //   let puzzle = {
-  //     puzzleid: 'sHRlZ',
-  //     fen: '1r2k1nr/p4pb1/1pB1p1pp/1p2Pb2/3R1B2/6P1/P6P/3R2K1 b k - 1 24',
-  //     rating: 1556,
-  //     ratingdeviation: 75,
-  //     moves: ['e8f8', 'd4d8', 'b8d8', 'd1d8', 'f8e7', 'd8e8'],
-  //     themes: ['long', 'mate', 'mateIn3', 'middlegame'],
-  //   }
-
   let chess = new Chess(puzzle.fen)
-  const [orientation, setorientation] = useState(
-    chess.turn() === 'w' ? 'black' : 'white'
-  )
-  puzzle.moves.map((move) => chess.move(move, { sloppy: true }))
-
-  const [fen, setFen] = useState(puzzle.fen)
-  const [finalMove, setfinalMove] = useState(chess.undo().san)
-  const [movesList, setmovesList] = useState(
-    chess.pgn({ newline_char: ' ' }).split(']')[2]
-  )
+  const [orientation, setorientation] = useState('')
+  const [fen, setFen] = useState('puzzle.fen')
+  const [finalMove, setfinalMove] = useState('')
+  const [movesList, setmovesList] = useState('')
   const [status, setstatus] = useState('')
+  let clicked = ''
+
+  useEffect(() => {
+    chess.load(puzzle.fen)
+    setFen(puzzle.fen)
+    setorientation(chess.turn() === 'w' ? 'black' : 'white')
+    puzzle.moves.map((move) => chess.move(move, { sloppy: true }))
+    setfinalMove(chess.undo()?.san)
+    setmovesList(chess.pgn({ newline_char: ' ' }).split(']')[2])
+  }, [puzzle])
 
   function moveCheck(e) {
     e.preventDefault()
-    let move = e.target.move.value
-
-    try {
-      let checkMove = chess.move(move, { sloppy: true }).san
-      // let checkMove = chess.undo().san
+    if (clicked === 'check') {
+      let checkMove = e.target.move.value
       if (checkMove == finalMove) {
+        e.target.move.value = ''
         setstatus('Success!')
         props.onSuccess()
       } else {
-        // Wrong move, so apply first move to the board
-        // and then get them to guess agin
         setstatus('Wrong Move - Try Again')
-
-        chess.load(fen)
-        chess.move(puzzle.moves[0], { sloppy: true })
-        setFen(chess.fen())
-
-        let newChess = new Chess(chess.fen())
-        puzzle.moves.shift()
-        puzzle.moves.map((move) => newChess.move(move, { sloppy: true }))
-        newChess.undo()
-        let newList = newChess.pgn({ newline_char: ' ' }).split(']')[2]
-        setmovesList(newList)
       }
-    } catch (e) {
-      // Wrong format
-      console.log(e.message)
-      setstatus('Invalid Move Format')
+    } else if (clicked === 'skip') {
+      e.target.move.value = ''
+      props.onError()
     }
   }
 
@@ -83,13 +62,13 @@ export default function VisualiseChess(props) {
           className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-32 py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
         />
         <button
-          type="submit"
+          onClick={() => (clicked = 'check')}
           className="inline-block w-fit py-2 px-12 text-light font-bold bg-primary hover:bg-accent-dark hover:text-light rounded-full transition duration-200"
         >
           Check
         </button>
         <button
-          onClick={() => props.onError()}
+          onClick={() => (clicked = 'skip')}
           className="text-sm inline-block w-fit py-2 px-6 text-dark font-bold bg-accent-light hover:bg-accent-dark hover:text-light rounded-full transition duration-200"
         >
           Skip Puzzle
@@ -114,10 +93,9 @@ export default function VisualiseChess(props) {
               : '60vh'
           }
           turnColor={orientation}
+          orientation={orientation}
           fen={fen}
           viewOnly={true}
-          drawable={{ enabled: true }}
-          disableContextMenu={true}
         />
       </div>
     </div>
