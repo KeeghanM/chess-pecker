@@ -59,35 +59,34 @@ export default function VisualiseChess(props) {
 
   let windowSize = useWindowSize()
   return (
-    <div>
-      <div className="flex flex-row items-center space-x-2 text-2xl">
-        <p>Visualise These Moves:</p>
-        <div className="font-bold flex flex-row items-center space-x-2 ">
-          {movesList}
-        </div>
-      </div>
+    <div className="mb-10">
+      <div className="text-2xl font-bold max-w-2xl mb-4">{movesList}</div>
       <form
         onSubmit={moveCheck}
-        className="py-4 space-x-2 flex flex-row items-center"
+        className="flex flex-col md:flex-row md:items-center space-y-2 space-x-4 mb-4"
       >
-        <p>Your Answer:</p>
-        <input
-          type="text"
-          id="move"
-          className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-32 py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
-        />
-        <button
-          onClick={() => (clicked = 'check')}
-          className="inline-block w-fit py-2 px-12 text-light font-bold bg-primary hover:bg-accent-dark hover:text-light rounded-full transition duration-200"
-        >
-          Check
-        </button>
-        <button
-          onClick={() => (clicked = 'skip')}
-          className="text-sm inline-block w-fit py-2 px-6 text-dark font-bold bg-accent-light hover:bg-accent-dark hover:text-light rounded-full transition duration-200"
-        >
-          Skip Puzzle
-        </button>
+        <div className="flex flex-row items-center space-x-2">
+          <p>Your Answer:</p>
+          <input
+            type="text"
+            id="move"
+            className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-32 py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
+          />
+        </div>
+        <div className="flex flex-row items-center space-x-2">
+          <button
+            onClick={() => (clicked = 'check')}
+            className="inline-block w-fit py-2 px-12 text-light font-bold bg-primary hover:bg-accent-dark hover:text-light rounded-full transition duration-200"
+          >
+            Check
+          </button>
+          <button
+            onClick={() => (clicked = 'skip')}
+            className="text-sm inline-block w-fit py-2 px-6 text-dark font-bold bg-accent-light hover:bg-accent-dark hover:text-light rounded-full transition duration-200"
+          >
+            Skip Puzzle
+          </button>
+        </div>
       </form>
 
       <div
