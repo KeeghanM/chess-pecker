@@ -64,10 +64,12 @@ export default function VisualiseChess(props) {
       <form
         onSubmit={moveCheck}
         className="flex flex-col md:flex-row md:items-center space-y-2 space-x-4 mb-4"
+        autoComplete="off"
       >
         <div className="flex flex-row items-center space-x-2">
           <p>Your Answer:</p>
           <input
+            autoComplete="off"
             type="text"
             id="move"
             className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-32 py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"

@@ -68,6 +68,11 @@ export default function visualise() {
     setplayermoves(pm)
   }
 
+  function reset() {
+    localStorage.setItem('visualisation-puzzle-list', JSON.stringify([]))
+    setpuzzles([])
+  }
+
   return (
     <div>
       <Layout name="Visualisation & Calculation">
@@ -92,6 +97,16 @@ export default function visualise() {
             <div>
               If you're correct, brilliant! Move on to the next one, if not then
               the puzzle will step forward one move, and you can try again.
+            </div>
+            <div className="">
+              {puzzles.length > 0 && (
+                <button
+                  onClick={reset}
+                  className="inline-block w-fit py-2 px-12 text-light font-bold bg-accent-dark hover:bg-accent-light hover:text-dark rounded-full transition duration-200"
+                >
+                  Reset Puzzle Settings
+                </button>
+              )}
             </div>
           </div>
           <div className="md:pl-12">
