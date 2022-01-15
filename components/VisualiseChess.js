@@ -7,24 +7,24 @@ import { useState, useEffect } from 'react'
 import useSound from 'use-sound'
 
 export default function VisualiseChess(props) {
-  // Setup SFX
   const [playCorrect] = useSound('/sounds/correct.mp3', { volume: 0.25 })
   const [playIncorrect] = useSound('/sounds/incorrect.mp3', { volume: 0.25 })
 
-  let puzzle = props.puzzle
-  let chess = new Chess(puzzle.fen)
-  const [orientation, setorientation] = useState('')
-  const [fen, setFen] = useState('puzzle.fen')
-  const [finalMove, setfinalMove] = useState('')
-  const [movesList, setmovesList] = useState('')
-  let clicked = ''
+  const [orientation, setorientation] = useState()
+  const [fen, setFen] = useState()
+  const [finalMove, setfinalMove] = useState()
+  const [movesList, setmovesList] = useState()
   const [colorFlash, showFlash] = useState(false)
   const [errorFlash, showError] = useState(false)
+
+  let puzzle = props.puzzle
+  let chess = new Chess()
+  let clicked = ''
 
   useEffect(() => {
     chess.load(puzzle.fen)
     setFen(puzzle.fen)
-    setorientation(chess.turn() === 'w' ? 'black' : 'white')
+    setorientation(puzzle.fen.split(' ')[1] === 'w' ? 'black' : 'white')
     puzzle.moves.map((move) => chess.move(move, { sloppy: true }))
     setfinalMove(chess.undo()?.san)
     setmovesList(chess.pgn({ newline_char: ' ' }).split(']')[2])
