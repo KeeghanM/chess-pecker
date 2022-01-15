@@ -45,7 +45,7 @@ export default function Home() {
           </Link>
         </div>
         <div className=" border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-slate-400 text-slate-600">
-          <Link href="/">
+          <Link href="/visualise">
             <div className="p-6 md:p-8 lg:p-10 space-y-2">
               <h1 className="text-4xl font-bold">
                 Tactics Training - <i>Coming Soon</i>
@@ -70,11 +70,11 @@ export default function Home() {
             </div>
           </Link>
         </div>
-        <div className="border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-slate-400 text-slate-600">
-          <Link href="/">
+        <div className="hover:bg-accent-light border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-light">
+          <Link href="/visualise">
             <div className="p-6 md:p-8 lg:p-10 space-y-2">
               <h1 className="text-4xl font-bold">
-                Visualisation & Calculation - <i>Coming Soon</i>
+                Visualisation & Calculation
               </h1>
               <p>
                 Do you struggle to see past two or three moves? Find long
