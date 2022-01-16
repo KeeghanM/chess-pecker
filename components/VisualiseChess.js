@@ -27,7 +27,19 @@ export default function VisualiseChess(props) {
     setorientation(puzzle.fen.split(' ')[1] === 'w' ? 'black' : 'white')
     puzzle.moves.map((move) => chess.move(move, { sloppy: true }))
     setfinalMove(chess.undo()?.san)
-    setmovesList(chess.pgn({ newline_char: ' ' }).split(']')[2])
+    let pgnUnits = chess.pgn({ newline_char: ' ' }).split(']')[2].split(' ')
+    let moves = []
+    pgnUnits.map((u) => {
+      moves.push(
+        isNaN(parseInt(u)) ? (
+          <p className="font-bold text-2xl">{u}</p>
+        ) : (
+          <p className="text-lg">{u}</p>
+        )
+      )
+    })
+
+    setmovesList(moves)
   }, [puzzle])
 
   function moveCheck(e) {
@@ -60,7 +72,9 @@ export default function VisualiseChess(props) {
   let windowSize = useWindowSize()
   return (
     <div className="mb-10">
-      <div className="text-2xl font-bold max-w-2xl mb-4">{movesList}</div>
+      <div className="flex flex-row items-baseline space-x-2 max-w-2xl mb-4">
+        {movesList}
+      </div>
       <form
         onSubmit={moveCheck}
         className="flex flex-col md:flex-row md:items-center space-y-2 space-x-4 mb-4"
