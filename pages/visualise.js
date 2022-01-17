@@ -5,8 +5,12 @@ import { Tab } from '@headlessui/react'
 import Spinner from '../components/Spinner'
 import VisualiseChess from '../components/VisualiseChess'
 import { UserContext } from '../lib/context'
+import { collection, addDoc, Timestamp } from 'firebase/firestore'
+import { firestore } from '../lib/firebase'
 
 export default function visualise() {
+  const { user } = useContext(UserContext)
+
   const [puzzles, setpuzzles] = useState([])
   const [currentPuzzle, setcurrentPuzzle] = useState()
   const [rating, setrating] = useState()
@@ -47,11 +51,22 @@ export default function visualise() {
   }
 
   function puzzleSuccess() {
-    // TODO: Increment some counter on the User Account
+    if (user) {
+      addDoc(collection(firestore, 'users', user.uid, 'vis-success'), {
+        date: Timestamp.fromDate(new Date()),
+        puzzleRating: currentPuzzle.rating.toString(),
+      })
+    }
     nextPuzzle()
   }
 
   function puzzleError() {
+    if (user) {
+      addDoc(collection(firestore, 'users', user.uid, 'vis-skips'), {
+        date: Timestamp.fromDate(new Date()),
+        puzzleRating: currentPuzzle.rating.toString(),
+      })
+    }
     // TODO: Display puzzle solution and a "Move On" button
     nextPuzzle()
   }
