@@ -51,24 +51,28 @@ export default function visualise() {
   }
 
   function puzzleSuccess() {
-    if (user) {
-      addDoc(collection(firestore, 'users', user.uid, 'vis-success'), {
-        date: Timestamp.fromDate(new Date()),
-        puzzleRating: currentPuzzle.rating.toString(),
-      })
-    }
+    logPuzzle('success')
     nextPuzzle()
   }
 
   function puzzleError() {
-    if (user) {
-      addDoc(collection(firestore, 'users', user.uid, 'vis-skips'), {
-        date: Timestamp.fromDate(new Date()),
-        puzzleRating: currentPuzzle.rating.toString(),
-      })
-    }
+    logPuzzle('error')
+  }
+
+  function puzzleSkip() {
+    logPuzzle('skip')
     // TODO: Display puzzle solution and a "Move On" button
     nextPuzzle()
+  }
+
+  function logPuzzle(type) {
+    if (user) {
+      addDoc(collection(firestore, 'users', user.uid, 'vis-' + type), {
+        date: Timestamp.fromDate(new Date()),
+        puzzleRating: currentPuzzle.rating.toString(),
+        puzzleId: currentPuzzle.puzzleid,
+      })
+    }
   }
 
   function difficultyAdjuster(d) {
@@ -160,6 +164,7 @@ export default function visualise() {
                 puzzle={currentPuzzle}
                 onSuccess={puzzleSuccess}
                 onError={puzzleError}
+                onSkip={puzzleSkip}
               />
             )}
           </div>

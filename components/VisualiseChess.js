@@ -66,10 +66,12 @@ export default function VisualiseChess(props) {
         let hideFlash = setTimeout(() => {
           showError(false)
         }, 500)
+
+        props.onError()
       }
     } else if (clicked === 'skip') {
       e.target.move.value = ''
-      props.onError()
+      props.onSkip()
     }
   }
 
