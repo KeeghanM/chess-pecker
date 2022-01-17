@@ -76,7 +76,7 @@ export default function VisualiseChess(props) {
   let windowSize = useWindowSize()
   return (
     <div className="mb-10">
-      <div className="flex flex-row items-baseline space-x-2 max-w-2xl mb-4">
+      <div className="flex flex-row items-baseline space-x-2 max-w-2xl mb-4 flex-wrap">
         {movesList}
       </div>
       <form
