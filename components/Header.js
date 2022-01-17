@@ -32,7 +32,7 @@ const Header = (props) => {
               </Link>
             </div>
           </div>
-          <div className="">
+          <div className="ml-6">
             {!props.noCTA && !user && (
               <Link href="/login">
                 <button className="inline-block text-sm md:text-lg py-1 px-2 md:py-2 md:px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200">
@@ -48,7 +48,9 @@ const Header = (props) => {
                   </div>
 
                   <Link href="/profile">
-                    <CogIcon className="w-5 h-5 hover:cursor-pointer hover:text-primary hover:h-10 hover:w-10 transition-all duration-200" />
+                    <div>
+                      <CogIcon className="w-5 h-5 hover:cursor-pointer hover:text-primary hover:h-10 hover:w-10 transition-all duration-200" />
+                    </div>
                   </Link>
                 </div>
 

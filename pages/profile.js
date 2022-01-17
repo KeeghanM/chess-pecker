@@ -21,7 +21,9 @@ const profile = () => {
     }
     // Ship the details off to Firebase
     const userRef = doc(firestore, 'users', user.uid)
-    setDoc(userRef, newDetails, { merge: true })
+    setDoc(userRef, newDetails, { merge: true }).then(() => {
+      // TODO: Handle the saving
+    })
   }
 
   return (
@@ -50,7 +52,7 @@ const profile = () => {
                       className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                       id="displayName"
                       type="text"
-                      value={user.displayName}
+                      defaultValue={user.displayName}
                     />
                   </div>
                 </div>
@@ -68,7 +70,7 @@ const profile = () => {
                       className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                       id="email"
                       type="email"
-                      value={user.email}
+                      defaultValue={user.email}
                     />
                   </div>
                 </div>
@@ -91,7 +93,7 @@ const profile = () => {
                       className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                       id="chessRating"
                       type="number"
-                      value={user.chessRating}
+                      defaultValue={user.chessRating}
                     />
                   </div>
                 </div>
