@@ -1,12 +1,17 @@
 import Layout from '../components/Layout'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import KnightsChess from '../components/KnightsChess'
 import { Switch } from '@headlessui/react'
 import { minKnightJumps } from '../lib/knightJumps'
 import { useTimer } from 'react-timer-hook'
 import useSound from 'use-sound'
+import { UserContext } from '../lib/context'
+import { setDoc, doc } from 'firebase/firestore'
+import { firestore } from '../lib/firebase'
 
 function knights() {
+  const { user } = useContext(UserContext)
+
   // Helper function to generate squares for the puzzle
   function generateSquare() {
     let rows = '12345678'
@@ -32,10 +37,18 @@ function knights() {
   const [moveHint, setMoveHint] = useState(false)
   const [bestStreak, setbestStreak] = useState(0)
 
-  // Setup best streak in LocalStorage
+  // Setup best streak in sessionStorage
   useEffect(() => {
-    let storedBest =
-      JSON.parse(localStorage.getItem('best-knight-vision-streak')) || 0
+    let storedBest = 0
+    if (!user) {
+      storedBest =
+        JSON.parse(sessionStorage.getItem('best-knight-vision-streak')) || 0
+    } else {
+      let localBest =
+        JSON.parse(sessionStorage.getItem('best-knight-vision-streak')) || 0
+      let dbBest = user.knightHighscore
+      storedBest = Math.max(localBest, dbBest)
+    }
     setbestStreak(storedBest)
   })
 
@@ -106,7 +119,7 @@ function knights() {
     // Check if current streak is better than the
     // best streak in local storage
     let currentSavedStreak =
-      JSON.parse(localStorage.getItem('best-knight-vision-streak')) || 0
+      JSON.parse(sessionStorage.getItem('best-knight-vision-streak')) || 0
     if (streak > currentSavedStreak) {
       playHighScore()
       showhighScoreFlash(true)
@@ -114,7 +127,17 @@ function knights() {
         showhighScoreFlash(false)
       }, 1000)
       setbestStreak(streak)
-      localStorage.setItem('best-knight-vision-streak', JSON.stringify(streak))
+
+      // Always store locally, because we use that for display
+      // but also update the database
+      sessionStorage.setItem(
+        'best-knight-vision-streak',
+        JSON.stringify(streak)
+      )
+      if (user) {
+        const userRef = doc(firestore, 'users', user.uid)
+        setDoc(userRef, { knightHighscore: streak }, { merge: true })
+      }
     }
 
     // Generate the next sequence

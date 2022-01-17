@@ -28,7 +28,7 @@ const profile = () => {
 
   return (
     <div>
-      <Layout>
+      <Layout name="Profile">
         <div className="flex flex-col items-center p-6 text-lg text-dark">
           {!user ? (
             <p>You must be signed in to view your profile</p>
