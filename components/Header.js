@@ -12,7 +12,7 @@ const Header = (props) => {
 
   function signOutNow() {
     auth.signOut()
-    router.push('/')
+    if (router.pathname == '/profile') router.push('/')
   }
 
   return (

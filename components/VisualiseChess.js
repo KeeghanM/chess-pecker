@@ -29,12 +29,16 @@ export default function VisualiseChess(props) {
     setfinalMove(chess.undo()?.san)
     let pgnUnits = chess.pgn({ newline_char: ' ' }).split(']')[2].split(' ')
     let moves = []
-    pgnUnits.map((u) => {
+    pgnUnits.map((unit, index) => {
       moves.push(
-        isNaN(parseInt(u)) ? (
-          <p className="font-bold text-2xl">{u}</p>
+        isNaN(parseInt(unit)) ? (
+          <p className="font-bold text-2xl" key={index}>
+            {unit}
+          </p>
         ) : (
-          <p className="text-lg">{u}</p>
+          <p className="text-lg" key={index}>
+            {unit}
+          </p>
         )
       )
     })
