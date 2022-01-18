@@ -1,7 +1,8 @@
 import Layout from '../components/Layout'
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
-import { auth } from '../lib/firebase'
+import { auth,firestore } from '../lib/firebase'
 import { useRouter } from 'next/router'
+import { setDoc, doc } from 'firebase/firestore'
 
 const Login = () => {
   return (
@@ -45,7 +46,8 @@ function GoogleSignInButton() {
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        // Successful login! Go to profile page
+        const userRef = doc(firestore, 'users', result.user.uid)
+        setDoc(userRef, {}, { merge: true })
         router.push('/profile')
       })
       .catch((error) => {

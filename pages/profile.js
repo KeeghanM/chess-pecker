@@ -7,7 +7,7 @@ import { firestore } from '../lib/firebase'
 
 const profile = () => {
   const { user } = useContext(UserContext)
-  let selectedDifficulty
+  let selectedDifficulty = user ? user.puzzleDifficulty : 1
 
   function saveDetails(e) {
     e.preventDefault()
@@ -109,7 +109,7 @@ const profile = () => {
                   <Tab.Group
                     className="md:w-2/3"
                     id="puzzleDifficulty"
-                    defaultIndex={user.puzzleDifficulty}
+                    defaultIndex={selectedDifficulty}
                     onChange={(index) => {
                       selectedDifficulty = index
                     }}
