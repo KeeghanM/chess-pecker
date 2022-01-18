@@ -29,12 +29,12 @@ function about() {
                 </div>
               </a>{' '}
               started working on this site, I focused on building tools that:
-              <ul className="list-disc pl-8">
-                <li>I personally needed in my chess journery</li>
-                <li>I would be happy to use on a daily basis</li>
-                <li>Didn't have equivalents elsewhere online</li>
-              </ul>
             </p>
+            <ul className="list-disc pl-8">
+              <li>I personally needed in my chess journery</li>
+              <li>I would be happy to use on a daily basis</li>
+              <li>Didn't have equivalents elsewhere online</li>
+            </ul>
           </div>
           <div>
             <p>

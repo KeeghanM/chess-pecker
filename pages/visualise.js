@@ -1,11 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Layout from '../components/Layout'
 import getPuzzle from '../components/PuzzleHandler'
 import { Tab } from '@headlessui/react'
 import Spinner from '../components/Spinner'
 import VisualiseChess from '../components/VisualiseChess'
+import { UserContext } from '../lib/context'
+import { collection, addDoc, Timestamp } from 'firebase/firestore'
+import { firestore } from '../lib/firebase'
 
 export default function visualise() {
+  const { user } = useContext(UserContext)
+
   const [puzzles, setpuzzles] = useState([])
   const [currentPuzzle, setcurrentPuzzle] = useState()
   const [rating, setrating] = useState()
@@ -46,13 +51,28 @@ export default function visualise() {
   }
 
   function puzzleSuccess() {
-    // TODO: Increment some counter on the User Account
+    logPuzzle('success')
     nextPuzzle()
   }
 
   function puzzleError() {
+    logPuzzle('error')
+  }
+
+  function puzzleSkip() {
+    logPuzzle('skip')
     // TODO: Display puzzle solution and a "Move On" button
     nextPuzzle()
+  }
+
+  function logPuzzle(type) {
+    if (user) {
+      addDoc(collection(firestore, 'users', user.uid, 'vis-' + type), {
+        date: Timestamp.fromDate(new Date()),
+        puzzleRating: currentPuzzle.rating.toString(),
+        puzzleId: currentPuzzle.puzzleid,
+      })
+    }
   }
 
   function difficultyAdjuster(d) {
@@ -144,6 +164,7 @@ export default function visualise() {
                 puzzle={currentPuzzle}
                 onSuccess={puzzleSuccess}
                 onError={puzzleError}
+                onSkip={puzzleSkip}
               />
             )}
           </div>
@@ -154,7 +175,11 @@ export default function visualise() {
 }
 
 function PuzzleSetupForm(props) {
-  const [selectedDifficulty, setselectedDifficulty] = useState(1)
+  const { user } = useContext(UserContext)
+
+  const [selectedDifficulty, setselectedDifficulty] = useState(
+    user ? user.puzzleDifficulty : 1
+  )
   const [moves, setmoves] = useState(3)
   const [disable, setdisable] = useState(false)
 
@@ -188,7 +213,7 @@ function PuzzleSetupForm(props) {
                   className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                   id="chessRating"
                   type="number"
-                  defaultValue={1500}
+                  defaultValue={user ? user.chessRating : 1500}
                   min={600}
                   max={2900}
                 />
