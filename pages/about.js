@@ -19,14 +19,14 @@ function about() {
               When{' '}
               <a className="group font-bold text-accent-dark underline hover:text-primary">
                 I (Keeghan)
-                <div className="absolute hidden group-visited:block group-hover:block border-4 border-primary w-[240px] h-[240px] rounded-2xl overflow-hidden">
+                <span className="absolute hidden group-visited:block group-hover:block border-4 border-primary w-[240px] h-[240px] rounded-2xl overflow-hidden">
                   <Image
                     priority
                     src="/keeghan.jpg"
                     width="240px"
                     height="240px"
                   />
-                </div>
+                </span>
               </a>{' '}
               started working on this site, I focused on building tools that:
             </p>
@@ -43,12 +43,12 @@ function about() {
               <span className="font-bold">ChessTraining.app</span> for free.
               However, there are overheads to running websites like this,
               namely:
+            </p>
               <ul className="list-disc pl-8">
                 <li>Website Hosting</li>
                 <li>Domain Registration</li>
                 <li>Database Storage</li>
               </ul>
-            </p>
             <p>
               Some of which I am happy to front myself (remember, I use this
               website myself every day). Some I recoup through offering publicly

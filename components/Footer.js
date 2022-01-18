@@ -10,10 +10,13 @@ function Footer() {
           </button>
         </a>
       </div>
-      <div className="text-lg hover:text-primary">
+      <div className="text-lg hover:text-primary hover:cursor-pointer">
         <Link href="/about">
           <p>Learn more about us</p>
         </Link>
+      </div>
+      <div className="text-lg hover:text-primary">
+        <a href="mailto:contact@chesstraining.app">Contact Us</a>
       </div>
     </div>
   )
