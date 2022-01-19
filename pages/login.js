@@ -1,8 +1,5 @@
 import Layout from '../components/Layout'
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
-import { auth,firestore } from '../lib/firebase'
-import { useRouter } from 'next/router'
-import { setDoc, doc } from 'firebase/firestore'
+import LoginForm from '../components/LoginForm'
 
 const Login = () => {
   return (
@@ -12,12 +9,7 @@ const Login = () => {
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-wrap items-center -mx-10">
               <div className="w-full lg:w-1/2 px-10">
-                <div className="px-6 lg:px-20 py-12 lg:py-20 bg-dark text-light shadow-2xl rounded-lg space-y-6">
-                  <p className="text-4xl font-bold text-primary">
-                    Account Registration
-                  </p>
-                  <GoogleSignInButton />
-                </div>
+                <LoginForm redirect={'/profile'} />
               </div>
               <div className="w-full lg:w-1/2 px-10 mb-16 lg:mb-0 order-first lg:order-last">
                 <div className="max-w-md">
@@ -39,28 +31,3 @@ const Login = () => {
 }
 
 export default Login
-
-function GoogleSignInButton() {
-  const router = useRouter()
-  const provider = new GoogleAuthProvider()
-  const signInWithGoogle = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const userRef = doc(firestore, 'users', result.user.uid)
-        setDoc(userRef, {}, { merge: true })
-        router.push('/profile')
-      })
-      .catch((error) => {
-        console.log(error.message)
-      })
-  }
-
-  return (
-    <button onClick={signInWithGoogle}>
-      <div className="flex flex-row items-center p-2 bg-white rounded-md text-dark pr-6 space-x-2">
-        <img src="/g-logo.png" width="50px" height="50px" alt="Google Logo" />
-        <p>Sign in with Google</p>
-      </div>
-    </button>
-  )
-}
