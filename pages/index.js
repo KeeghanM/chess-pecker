@@ -23,21 +23,25 @@ export default function Home() {
           </Link>
         </div>
         <div className="hover:bg-accent-light border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-light">
-          <Link href="/knights">
+          <Link href="/tactics">
             <div className="p-6 md:p-8 lg:p-10 space-y-2">
-              <h1 className="text-4xl font-bold">Knight Vision</h1>
+              <h1 className="text-4xl font-bold">Tactics Training</h1>
               <p>
-                Whether you are a beginner, intermediate, or even experienced
-                player - board vision is <i>crucial</i> to the game of Chess.
+                Train tactics using the WoodPecker Method developed by GM's Axel
+                Smith, and Hans Tikkanen.
               </p>
               <p>
-                We have devised a very simple method of improving your board
-                vision through the use of knights.
+                The quick explanation of the Woodpecker Method is that you need
+                to solve a large number of puzzles in a row; then solve the same
+                puzzles again and again, only faster.
               </p>
               <p>
-                Simply put, race against the clock to calculate the fastest way
-                a knight can get to a given square. Rack up a streak and try to
-                beat your own high score.
+                It’s not a lazy shortcut to success – hard work is required.
+              </p>
+              <p>
+                But the reward can be re-programming your unconscious mind.
+                Benefits include sharper tactical vision, fewer blunders, better
+                play when in time trouble and improved intuition.
               </p>
             </div>
           </Link>
@@ -66,27 +70,21 @@ export default function Home() {
           </Link>
         </div>
         <div className="hover:bg-accent-light border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-light">
-          <Link href="/tactics">
+          <Link href="/knights">
             <div className="p-6 md:p-8 lg:p-10 space-y-2">
-              <h1 className="text-4xl font-bold">
-                Tactics Training - <i>Coming Soon</i>
-              </h1>
+              <h1 className="text-4xl font-bold">Knight Vision</h1>
               <p>
-                Train tactics using the WoodPecker Method developed by GM's Axel
-                Smith, and Hans Tikkanen.
+                Whether you are a beginner, intermediate, or even experienced
+                player - board vision is <i>crucial</i> to the game of Chess.
               </p>
               <p>
-                The quick explanation of the Woodpecker Method is that you need
-                to solve a large number of puzzles in a row; then solve the same
-                puzzles again and again, only faster.
+                We have devised a very simple method of improving your board
+                vision through the use of knights.
               </p>
               <p>
-                It’s not a lazy shortcut to success – hard work is required.
-              </p>
-              <p>
-                But the reward can be re-programming your unconscious mind.
-                Benefits include sharper tactical vision, fewer blunders, better
-                play when in time trouble and improved intuition.
+                Simply put, race against the clock to calculate the fastest way
+                a knight can get to a given square. Rack up a streak and try to
+                beat your own high score.
               </p>
             </div>
           </Link>
