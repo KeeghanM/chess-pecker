@@ -26,7 +26,10 @@ export default function CreateSetForm(props) {
     )
     let c = form.setSize.value
     getPuzzle({ rating: r, count: c }).then((response) => {
-      props.saveSet({ puzzles: response.data.puzzles })
+      props.saveSet({
+        puzzles: response.data.puzzles,
+        name: form.setName.value,
+      })
       setdisable(false)
       setdialogOpen(false)
     })
@@ -54,8 +57,8 @@ export default function CreateSetForm(props) {
             <form onSubmit={createSet}>
               <fieldset disabled={disable}>
                 <div className="space-y-2">
-                  <div className="">
-                    <div className="">
+                  <div>
+                    <div>
                       <label
                         className="block font-bold mb-1 pr-4"
                         htmlFor="chessRating"
@@ -63,7 +66,7 @@ export default function CreateSetForm(props) {
                         Chess Rating
                       </label>
                     </div>
-                    <div className="">
+                    <div>
                       <input
                         className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                         id="chessRating"
@@ -74,8 +77,8 @@ export default function CreateSetForm(props) {
                       />
                     </div>
                   </div>
-                  <div className="">
-                    <div className="">
+                  <div>
+                    <div>
                       <label
                         className="block font-bold mb-1 pr-4"
                         htmlFor="puzzleDifficulty"
@@ -124,8 +127,8 @@ export default function CreateSetForm(props) {
                       </Tab.List>
                     </Tab.Group>
                   </div>
-                  <div className="">
-                    <div className="">
+                  <div>
+                    <div>
                       <label
                         className="block font-bold mb-1 pr-4"
                         htmlFor="chessRating"
@@ -144,6 +147,24 @@ export default function CreateSetForm(props) {
                         max={500}
                         step={50}
                         onChange={(x) => setsize(x.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <label
+                        className="block font-bold mb-1 pr-4"
+                        htmlFor="chessRating"
+                      >
+                        Set Name
+                      </label>
+                    </div>
+                    <div>
+                      <input
+                        className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
+                        id="setName"
+                        type="text"
+                        required
                       />
                     </div>
                   </div>
