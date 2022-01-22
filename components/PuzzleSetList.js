@@ -54,18 +54,20 @@ export default function PuzzleSetList(props) {
 
   return (
     <div>
-      <h2 className="text-4xl font-bold text-accent-dark">
-        Your Training Sets
-      </h2>
-      <div>
+      <div className="flex space-x-2">
+        <h2 className="text-4xl font-bold text-accent-dark">
+          Your Training Sets
+        </h2>
+        <div>
+          <CreateSetForm saveSet={createSet} />
+        </div>
+      </div>
+      <div className="overflow-y-auto max-h-[500px]">
         {puzzleSetList.map((set, index) => {
           return (
             <SetListItem set={set.set} key={index} onSelect={props.onSelect} />
           )
         })}
-      </div>
-      <div>
-        <CreateSetForm saveSet={createSet} />
       </div>
     </div>
   )
@@ -74,19 +76,41 @@ export default function PuzzleSetList(props) {
 function SetListItem(props) {
   let set = props.set
   return (
-    <div>
-      <p>{set.setName}</p>
-      <p>Contains {set.setSize} puzzles</p>
-      <p>
-        {set.rounds[set.rounds.length - 1].completed / set.setSize}% through
-        round {set.rounds.length}/8
+    <div className="p-2 rounded-lg my-2 bg-dark text-light">
+      <p className="text-lg font-bold">
+        {set.setName} - {set.rounds.length}/8
       </p>
-      <p>Current Round Time: {set.rounds[set.rounds.length - 1].timeSpent}</p>
       <p>
-        Current Round Accuracy: {set.rounds[set.rounds.length - 1].correct}/
-        {set.rounds[set.rounds.length - 1].completed} correct
+        {set.rounds[set.rounds.length - 1].completed / set.setSize}% through{' '}
+        {set.setSize} puzzles (
+        {percentOf(
+          set.rounds[set.rounds.length - 1].correct,
+          set.rounds[set.rounds.length - 1].completed
+        )}{' '}
+        Accuracy)
       </p>
-      <button onClick={props.onSelect}>Train Set</button>
+      <p>
+        Round Time: {secondsToTime(set.rounds[set.rounds.length - 1].timeSpent)}
+      </p>
+      <button
+        onClick={props.onSelect}
+        className="py-2 px-4 rounded bg-accent-dark hover:bg-accent-light text-dark font-bold"
+      >
+        Train Set
+      </button>
     </div>
   )
+}
+
+function secondsToTime(seconds) {
+  let time = new Date(1000 * seconds).toISOString().substr(11, 8)
+  return time
+}
+
+function percentOf(a, b) {
+  // if (b == 0) return '100%'
+  if (a == 0 || b == 0) return '0%'
+
+  let p = Math.round((a / b) * 100)
+  return p + '%'
 }
