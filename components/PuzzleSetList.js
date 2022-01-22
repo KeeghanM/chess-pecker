@@ -65,7 +65,11 @@ export default function PuzzleSetList(props) {
       <div className="overflow-y-auto max-h-[500px]">
         {puzzleSetList.map((set, index) => {
           return (
-            <SetListItem set={set.set} key={index} onSelect={props.onSelect} />
+            <SetListItem
+              set={set.set}
+              key={index}
+              onSelect={() => props.onSelect(set.id)}
+            />
           )
         })}
       </div>
