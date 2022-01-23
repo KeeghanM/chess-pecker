@@ -12,10 +12,12 @@ export default function TacticsChess(props) {
 
   const [playCorrect] = useSound('/sounds/correct.mp3', { volume: 0.25 })
   const [playIncorrect] = useSound('/sounds/incorrect.mp3', { volume: 0.25 })
+  const [playHighScore] = useSound('/sounds/highscore.mp3', { volume: 0.25 })
 
-  // let startTime = Date.now()
   const [startTime, setstartTime] = useState(Date.now())
   const [error, setError] = useState(false)
+  const [colorFlash, showFlash] = useState(false)
+  const [errorFlash, showError] = useState(false)
 
   const { user } = useContext(UserContext)
   const [currentSet, setcurrentSet] = useState(() => {
@@ -42,15 +44,28 @@ export default function TacticsChess(props) {
     let move = last.from + last.to + (last.promotion || '')
 
     if (move == puzzle.moves[moveIndex] || chess.in_checkmate()) {
-      playCorrect()
-      if (moveIndex != puzzle.moves.length - 1) return true
+      showFlash(true)
+      setTimeout(() => {
+        showFlash(false)
+      }, 500)
+
+      if (moveIndex != puzzle.moves.length - 1) {
+        playCorrect()
+        return 'next'
+      }
 
       currentSet.set.rounds[currentSet.set.rounds.length - 1].correct += 1
+      playHighScore()
       nextPuzzle()
+      return 'finished'
     } else {
       setError(true)
+      showError(true)
+      setTimeout(() => {
+        showError(false)
+      }, 500)
       playIncorrect()
-      return false
+      return 'error'
     }
   }
 
@@ -126,7 +141,15 @@ export default function TacticsChess(props) {
               )}
             </div>
           </div>
-          <div>
+          <div
+            className={
+              colorFlash
+                ? 'shadow-xl shadow-[#84cc16] transition-all'
+                : errorFlash
+                ? 'shadow-xl shadow-[#cc2b16] transition-all'
+                : ''
+            }
+          >
             <Chessboard puzzle={puzzle} moveCheck={moveCheck} />
           </div>
         </div>

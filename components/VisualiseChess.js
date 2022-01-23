@@ -55,7 +55,7 @@ export default function VisualiseChess(props) {
         e.target.move.value = ''
 
         showFlash(true)
-        let hideFlash = setTimeout(() => {
+        setTimeout(() => {
           showFlash(false)
         }, 500)
 
@@ -63,7 +63,7 @@ export default function VisualiseChess(props) {
       } else {
         playIncorrect()
         showError(true)
-        let hideFlash = setTimeout(() => {
+        setTimeout(() => {
           showError(false)
         }, 500)
 

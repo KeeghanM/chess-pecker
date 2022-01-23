@@ -61,11 +61,12 @@ const Chessboard = (props) => {
       setLastMove([from, to])
       setPromotionVisible(false)
       if (player) {
-        if (props.moveCheck(chess)) {
+        let check = props.moveCheck(chess)
+        if (check === 'next') {
           setTimeout(() => {
             puzzleMove(chess.history().length)
           }, moveDelay)
-        } else {
+        } else if (check === 'error') {
           let moveIndex = chess.history().length - 1
           chess.undo()
           setFen(chess.fen())
