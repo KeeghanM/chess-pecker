@@ -64,7 +64,6 @@ export default function PuzzleSetList(props) {
       </div>
       <div className="overflow-y-auto max-h-[500px]">
         {puzzleSetList.map((set, index) => {
-          console.log({ fromMap: set })
           return (
             <SetListItem
               set={set.set}

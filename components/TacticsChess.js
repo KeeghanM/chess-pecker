@@ -4,12 +4,17 @@ import Chessboard from './TacticsChessboard'
 import { firestore } from '../lib/firebase'
 import { doc, setDoc } from 'firebase/firestore'
 import useSound from 'use-sound'
+import { useStopwatch } from 'react-timer-hook'
 
 export default function TacticsChess(props) {
+  const { seconds, minutes, hours, days, isRunning, start, pause, reset } =
+    useStopwatch({ autoStart: true })
+
   const [playCorrect] = useSound('/sounds/correct.mp3', { volume: 0.25 })
   const [playIncorrect] = useSound('/sounds/incorrect.mp3', { volume: 0.25 })
 
-  let startTime = Date.now()
+  // let startTime = Date.now()
+  const [startTime, setstartTime] = useState(Date.now())
 
   const { user } = useContext(UserContext)
   const [currentSet, setcurrentSet] = useState(() => {
@@ -31,7 +36,6 @@ export default function TacticsChess(props) {
 
   function moveCheck(from, to, promotion, moveIndex) {
     let move = from + to + (promotion || '')
-    console.log({ player: move, actual: puzzle.moves[moveIndex] })
     if (move == puzzle.moves[moveIndex]) {
       playCorrect()
       if (moveIndex != puzzle.moves.length - 1) return true
@@ -40,11 +44,7 @@ export default function TacticsChess(props) {
       playIncorrect()
     }
 
-    let currentTime = Date.now()
-    let dif = (currentTime - startTime) / 1000
-
     currentSet.set.rounds[currentSet.set.rounds.length - 1].completed += 1
-    currentSet.set.rounds[currentSet.set.rounds.length - 1].timeSpent += dif
     changePuzzle(
       currentSet.set.rounds[currentSet.set.rounds.length - 1].completed
     )
@@ -58,6 +58,10 @@ export default function TacticsChess(props) {
   }
 
   function saveSet() {
+    let currentTime = Date.now()
+    let dif = (currentTime - startTime) / 1000
+    currentSet.set.rounds[currentSet.set.rounds.length - 1].timeSpent += dif
+
     let saved = JSON.parse(localStorage.getItem('tactics-set-list'))
     saved.forEach(function (set, i) {
       if (set.id == currentSet.id) {
@@ -72,6 +76,39 @@ export default function TacticsChess(props) {
   }
 
   return (
-    <div>{puzzle && <Chessboard puzzle={puzzle} moveCheck={moveCheck} />}</div>
+    <div>
+      {puzzle && (
+        <div className="flex flex-col items-center">
+          <div className="bg-dark rounded text-light p-4 space-y-2 h-fit flex flex-col">
+            <div className="flex flex-row space-x-4">
+              <p className="font-bold">
+                {puzzle.fen.split(' ')[1] == 'w' ? 'Black' : 'White'} to move
+              </p>
+              <p>
+                Puzzle{' '}
+                {currentSet.set.rounds[currentSet.set.rounds.length - 1]
+                  .completed + 1}
+                /{currentSet.set.setSize}
+              </p>
+            </div>
+            <p>
+              Session Timer: {minutes}:{seconds}
+            </p>
+            <button
+              className="py-2 px-4 rounded bg-accent-dark hover:bg-accent-light text-dark font-bold"
+              onClick={() => {
+                saveSet()
+                props.stopSession()
+              }}
+            >
+              End Session
+            </button>
+          </div>
+          <div>
+            <Chessboard puzzle={puzzle} moveCheck={moveCheck} />
+          </div>
+        </div>
+      )}
+    </div>
   )
 }

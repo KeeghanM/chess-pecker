@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic.js'
 const Chessground = dynamic(() => import('react-chessground'), { ssr: false })
 import 'react-chessground/dist/styles/chessground.css'
 import Chess from '../lib/chess.js'
+import { useWindowSize } from '../lib/hooks.js'
 
 const Chessboard = (props) => {
   let moveDelay = 600
@@ -17,13 +18,11 @@ const Chessboard = (props) => {
   let queenRef = useRef(null)
 
   useEffect(() => {
-    console.log('Puzzle Changed')
     setChess(new Chess(puzzle.fen))
     setFen(puzzle.fen)
   }, [puzzle])
 
   useEffect(() => {
-    console.log('Chess Changed')
     setTimeout(() => {
       puzzleMove(0)
     }, moveDelay)
@@ -100,14 +99,26 @@ const Chessboard = (props) => {
       color: turnColor(),
     }
   }
-
+  let windowSize = useWindowSize()
   return (
     <>
       {chess && (
         <div className="p-6 overflow-hidden">
           <Chessground
-            width="24vw"
-            height="24vw"
+            width={
+              windowSize.width < 1024
+                ? windowSize.width < 768
+                  ? '85vw'
+                  : '65vw'
+                : '60vh'
+            }
+            height={
+              windowSize.width < 1024
+                ? windowSize.width < 768
+                  ? '85vw'
+                  : '65vw'
+                : '60vh'
+            }
             turnColor={turnColor()}
             orientation={turnColor()}
             movable={calcMovable()}

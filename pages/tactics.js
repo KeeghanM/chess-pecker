@@ -36,40 +36,55 @@ const tactics = () => {
               patterns.
             </p>
           </div>
-          <div className="space-y-4 lg:w-1/3">
-            <h2 className="text-4xl font-bold text-accent-dark">Our Trainer</h2>
-            <p>
-              Using our tool, you can build a set of between 200-500 puzzles.
-              Each one tailored to your chess rating.
-            </p>
-            <p>
-              We will automatically track the time spent on each puzzle, and the
-              overall set. As well as your accuracy throughout your training.
-            </p>
-            <p>
-              This means all the admin work required in the WoodPecker method of
-              tracking your work is taken care of for you - you just focus on
-              solving puzzles.
-            </p>
-            <p>
-              Remember, these puzzles should be difficult to solve. For best
-              results, break your practice into 30-60 minute sessions once a
-              day. Your first time through a puzzle set should take 1-2 weeks.
-            </p>
-          </div>
-          <div className="min-w-fit max-w-md lg:w-1/3">
-            {!user ? (
-              <LoginForm redirect="/tactics" />
-            ) : !puzzleSetId ? (
-              <PuzzleSetList
-                onSelect={(id) => {
-                  setpuzzleSetId(id)
-                }}
-              />
-            ) : (
-              <TacticsChess setId={puzzleSetId} />
-            )}
-          </div>
+          {puzzleSetId ? (
+            <TacticsChess
+              setId={puzzleSetId}
+              stopSession={() => {
+                setpuzzleSetId(null)
+              }}
+            />
+          ) : (
+            <>
+              <div className="space-y-4 lg:w-1/3">
+                <h2 className="text-4xl font-bold text-accent-dark">
+                  Our Trainer
+                </h2>
+                <p>
+                  Using our tool, you can build a set of between 200-500
+                  puzzles. Each one tailored to your chess rating.
+                </p>
+                <p>
+                  We will automatically track the time spent on each puzzle, and
+                  the overall set. As well as your accuracy throughout your
+                  training.
+                </p>
+                <p>
+                  This means all the admin work required in the WoodPecker
+                  method of tracking your work is taken care of for you - you
+                  just focus on solving puzzles.
+                </p>
+                <p>
+                  Remember, these puzzles should be difficult to solve. For best
+                  results, break your practice into 30-60 minute sessions once a
+                  day. Your first time through a puzzle set should take 1-2
+                  weeks.
+                </p>
+              </div>
+              <div className="min-w-fit max-w-md lg:w-1/3">
+                {!user ? (
+                  <LoginForm redirect="/tactics" />
+                ) : (
+                  !puzzleSetId && (
+                    <PuzzleSetList
+                      onSelect={(id) => {
+                        setpuzzleSetId(id)
+                      }}
+                    />
+                  )
+                )}
+              </div>
+            </>
+          )}
         </div>
       </Layout>
     </div>
