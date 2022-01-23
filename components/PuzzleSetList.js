@@ -1,7 +1,14 @@
 import { useState, useContext, useEffect } from 'react'
 import { UserContext } from '../lib/context'
 import { firestore } from '../lib/firebase'
-import { collection, getDocs, addDoc, Timestamp } from 'firebase/firestore'
+import {
+  collection,
+  getDocs,
+  addDoc,
+  Timestamp,
+  doc,
+  deleteDoc,
+} from 'firebase/firestore'
 import CreateSetForm from './CreateSetForm'
 
 export default function PuzzleSetList(props) {
@@ -52,6 +59,17 @@ export default function PuzzleSetList(props) {
     )
   }
 
+  function deleteSet(id) {
+    let saved = JSON.parse(localStorage.getItem('tactics-set-list'))
+    let cleared = saved.filter((set) => {
+      return set.id != id
+    })
+    setpuzzleSetList(cleared)
+
+    localStorage.setItem('tactics-set-list', JSON.stringify(cleared))
+    deleteDoc(doc(firestore, 'users', user.uid, 'tactics-sets', id))
+  }
+
   return (
     <div>
       <div className="flex space-x-2">
@@ -69,6 +87,7 @@ export default function PuzzleSetList(props) {
               set={set.set}
               key={index}
               onSelect={() => props.onSelect(set.id)}
+              onDelete={() => deleteSet(set.id)}
             />
           )
         })}
@@ -96,12 +115,20 @@ function SetListItem(props) {
       <p>
         Round Time: {secondsToTime(set.rounds[set.rounds.length - 1].timeSpent)}
       </p>
-      <button
-        onClick={props.onSelect}
-        className="py-2 px-4 rounded bg-accent-dark hover:bg-accent-light text-dark font-bold"
-      >
-        Train Set
-      </button>
+      <div className="flex flex-row justify-between">
+        <button
+          onClick={props.onSelect}
+          className="py-2 px-4 rounded bg-accent-dark hover:bg-accent-light text-dark font-bold"
+        >
+          Train Set
+        </button>
+        <button
+          onClick={props.onDelete}
+          className="py-2 px-2 rounded bg-danger hover:bg-accent-light text-dark font-bold text-xs"
+        >
+          Delete
+        </button>
+      </div>
     </div>
   )
 }
