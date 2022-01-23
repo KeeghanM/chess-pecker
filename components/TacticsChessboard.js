@@ -48,9 +48,9 @@ const Chessboard = (props) => {
   }
 
   function puzzleMove(i) {
-    let from = props.puzzle.moves[i].substring(0, 2)
-    let to = props.puzzle.moves[i].substring(2, 4)
-    let promo = props.puzzle.moves[i].substring(4) || ''
+    let from = puzzle.moves[i].substring(0, 2)
+    let to = puzzle.moves[i].substring(2, 4)
+    let promo = puzzle.moves[i].substring(4) || ''
     makeMove(from, to, promo, false)
   }
 
@@ -61,18 +61,9 @@ const Chessboard = (props) => {
       setLastMove([from, to])
       setPromotionVisible(false)
       if (player) {
-        let history = chess.history({ verbose: true })
-        let last = history[history.length - 1]
-        if (
-          props.moveCheck(
-            last.from,
-            last.to,
-            last.promotion,
-            history.length - 1
-          )
-        ) {
+        if (props.moveCheck(chess)) {
           setTimeout(() => {
-            puzzleMove(history.length)
+            puzzleMove(chess.history().length)
           }, moveDelay)
         }
       }

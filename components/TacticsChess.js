@@ -34,9 +34,13 @@ export default function TacticsChess(props) {
     setpuzzle(currentSet.set.puzzles[i])
   }
 
-  function moveCheck(from, to, promotion, moveIndex) {
-    let move = from + to + (promotion || '')
-    if (move == puzzle.moves[moveIndex]) {
+  function moveCheck(chess) {
+    let history = chess.history({ verbose: true })
+    let moveIndex = history.length - 1
+    let last = history[moveIndex]
+    let move = last.from + last.to + (last.promotion || '')
+
+    if (move == puzzle.moves[moveIndex] || chess.in_checkmate()) {
       playCorrect()
       if (moveIndex != puzzle.moves.length - 1) return true
       currentSet.set.rounds[currentSet.set.rounds.length - 1].correct += 1
