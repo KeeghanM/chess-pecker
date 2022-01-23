@@ -8,18 +8,26 @@ import Chess from '../lib/chess.js'
 
 const Chessboard = (props) => {
   let moveDelay = 600
-  const [chess, setChess] = useState(new Chess(props.puzzle.fen))
-  const [pendingMove, setPendingMove] = useState()
+  let puzzle = props.puzzle
+  const [chess, setChess] = useState(null)
+  const [pendingMove, setPendingMove] = useState(null)
   const [promotionVisible, setPromotionVisible] = useState(false)
-  const [fen, setFen] = useState(props.puzzle.fen)
-  const [lastMove, setLastMove] = useState()
+  const [fen, setFen] = useState(null)
+  const [lastMove, setLastMove] = useState(null)
   let queenRef = useRef(null)
 
   useEffect(() => {
+    console.log('Puzzle Changed')
+    setChess(new Chess(puzzle.fen))
+    setFen(puzzle.fen)
+  }, [puzzle])
+
+  useEffect(() => {
+    console.log('Chess Changed')
     setTimeout(() => {
       puzzleMove(0)
     }, moveDelay)
-  }, [])
+  }, [chess])
 
   const onMove = (from, to) => {
     const moves = chess.moves({ verbose: true })
@@ -48,6 +56,7 @@ const Chessboard = (props) => {
   }
 
   function makeMove(from, to, promotion, player) {
+    if (!chess) return
     if (chess.move({ from, to, promotion })) {
       setFen(chess.fen())
       setLastMove([from, to])
@@ -93,17 +102,21 @@ const Chessboard = (props) => {
   }
 
   return (
-    <div className="p-6 overflow-hidden">
-      <Chessground
-        width="24vw"
-        height="24vw"
-        turnColor={turnColor()}
-        orientation={turnColor()}
-        movable={calcMovable()}
-        lastMove={lastMove}
-        fen={fen}
-        onMove={onMove}
-      />
+    <>
+      {chess && (
+        <div className="p-6 overflow-hidden">
+          <Chessground
+            width="24vw"
+            height="24vw"
+            turnColor={turnColor()}
+            orientation={turnColor()}
+            movable={calcMovable()}
+            lastMove={lastMove}
+            fen={fen}
+            onMove={onMove}
+          />
+        </div>
+      )}
       <Dialog
         initialFocus={queenRef}
         open={promotionVisible}
@@ -130,7 +143,7 @@ const Chessboard = (props) => {
           </div>
         </div>
       </Dialog>
-    </div>
+    </>
   )
 }
 
