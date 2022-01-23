@@ -65,6 +65,18 @@ const Chessboard = (props) => {
           setTimeout(() => {
             puzzleMove(chess.history().length)
           }, moveDelay)
+        } else {
+          let moveIndex = chess.history().length - 1
+          chess.undo()
+          setFen(chess.fen())
+
+          for (let i = 0; i < puzzle.moves.length; i++) {
+            if (i < moveIndex) continue
+
+            setTimeout(() => {
+              puzzleMove(i)
+            }, moveDelay * 2 * (i - moveIndex + 1))
+          }
         }
       }
     }

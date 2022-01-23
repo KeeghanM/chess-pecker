@@ -15,6 +15,7 @@ export default function TacticsChess(props) {
 
   // let startTime = Date.now()
   const [startTime, setstartTime] = useState(Date.now())
+  const [error, setError] = useState(false)
 
   const { user } = useContext(UserContext)
   const [currentSet, setcurrentSet] = useState(() => {
@@ -43,11 +44,18 @@ export default function TacticsChess(props) {
     if (move == puzzle.moves[moveIndex] || chess.in_checkmate()) {
       playCorrect()
       if (moveIndex != puzzle.moves.length - 1) return true
-      currentSet.set.rounds[currentSet.set.rounds.length - 1].correct += 1
-    } else {
-      playIncorrect()
-    }
 
+      currentSet.set.rounds[currentSet.set.rounds.length - 1].correct += 1
+      nextPuzzle()
+    } else {
+      setError(true)
+      playIncorrect()
+      return false
+    }
+  }
+
+  function nextPuzzle() {
+    setError(false)
     currentSet.set.rounds[currentSet.set.rounds.length - 1].completed += 1
     changePuzzle(
       currentSet.set.rounds[currentSet.set.rounds.length - 1].completed
@@ -98,15 +106,25 @@ export default function TacticsChess(props) {
             <p>
               Session Timer: {minutes}:{seconds}
             </p>
-            <button
-              className="py-2 px-4 rounded bg-accent-dark hover:bg-accent-light text-dark font-bold"
-              onClick={() => {
-                saveSet()
-                props.stopSession()
-              }}
-            >
-              End Session
-            </button>
+            <div className="flex flex-row space-x-2">
+              <button
+                className="py-2 px-4 rounded bg-accent-dark hover:bg-accent-light text-dark font-bold w-full"
+                onClick={() => {
+                  saveSet()
+                  props.stopSession()
+                }}
+              >
+                End Session
+              </button>
+              {error && (
+                <button
+                  className="py-2 px-4 rounded bg-primary hover:bg-accent-light text-dark font-bold"
+                  onClick={nextPuzzle}
+                >
+                  Next Puzzle
+                </button>
+              )}
+            </div>
           </div>
           <div>
             <Chessboard puzzle={puzzle} moveCheck={moveCheck} />
