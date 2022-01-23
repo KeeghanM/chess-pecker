@@ -33,7 +33,7 @@ export default function TacticsChess(props) {
   }, [currentSet])
 
   function changePuzzle(i) {
-    startTime = Date.now()
+    setstartTime(Date.now())
     setpuzzle(currentSet.set.puzzles[i])
   }
 
