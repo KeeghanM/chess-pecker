@@ -12,6 +12,7 @@ export default function CreateSetForm(props) {
   const [size, setsize] = useState(500)
   const [disable, setdisable] = useState(false)
   const [dialogOpen, setdialogOpen] = useState(false)
+  const [errorMsg, seterrorMsg] = useState(false)
 
   let attempts = 0
   let maxTries = 3
@@ -42,6 +43,7 @@ export default function CreateSetForm(props) {
           })
           setdisable(false)
           setdialogOpen(false)
+          attempts = 0
         }
       )
     } catch (err) {
@@ -49,7 +51,7 @@ export default function CreateSetForm(props) {
         attempts++
         loadPuzzles(settings)
       } else {
-        throw error
+        seterrorMsg(true)
       }
     }
   }
@@ -57,7 +59,9 @@ export default function CreateSetForm(props) {
   return (
     <>
       <button
-        onClick={() => setdialogOpen(true)}
+        onClick={() => {
+          setdialogOpen(true)
+        }}
         className="inline-block text-sm md:text-lg py-1 px-2 md:py-2 md:px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200"
       >
         Add Set
@@ -203,6 +207,15 @@ export default function CreateSetForm(props) {
               style={{ display: disable ? 'block' : 'none' }}
             >
               <Spinner text="Building your Puzzle Set..." />
+            </div>
+            <div
+              className="pt-4 italic text-danger"
+              style={{ display: errorMsg ? 'block' : 'none' }}
+            >
+              <p>
+                Error: Please try again. If the error persists, please contact
+                us
+              </p>
             </div>
           </div>
         </div>
