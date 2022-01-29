@@ -77,6 +77,12 @@ const Chessboard = (props) => {
             setTimeout(() => {
               puzzleMove(i)
             }, moveDelay * 2 * (i - moveIndex + 1))
+
+            if (i == puzzle.moves.length - 1) {
+              setTimeout(() => {
+                props.showNext()
+              }, moveDelay * 2 * (i - moveIndex + 1))
+            }
           }
         }
       }

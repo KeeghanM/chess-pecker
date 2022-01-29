@@ -59,7 +59,6 @@ export default function TacticsChess(props) {
       nextPuzzle()
       return 'finished'
     } else {
-      setError(true)
       showError(true)
       setTimeout(() => {
         showError(false)
@@ -67,6 +66,10 @@ export default function TacticsChess(props) {
       playIncorrect()
       return 'error'
     }
+  }
+
+  function showNextButton() {
+    setError(true)
   }
 
   function nextPuzzle() {
@@ -150,7 +153,11 @@ export default function TacticsChess(props) {
                 : ''
             }
           >
-            <Chessboard puzzle={puzzle} moveCheck={moveCheck} />
+            <Chessboard
+              puzzle={puzzle}
+              moveCheck={moveCheck}
+              showNext={showNextButton}
+            />
           </div>
         </div>
       )}
