@@ -126,7 +126,7 @@ export default function TacticsChess(props) {
             </p>
             <div className="flex flex-row space-x-2">
               <button
-                className="py-2 px-4 rounded bg-accent-dark hover:bg-accent-light text-dark font-bold w-full"
+                className="py-2 px-4 rounded bg-accent-dark hover:bg-accent-light text-dark font-bold w-full text-center"
                 onClick={() => {
                   saveSet()
                   props.stopSession()
@@ -135,12 +135,21 @@ export default function TacticsChess(props) {
                 End Session
               </button>
               {error && (
-                <button
-                  className="py-2 px-4 rounded bg-primary hover:bg-accent-light text-dark font-bold"
-                  onClick={nextPuzzle}
-                >
-                  Next Puzzle
-                </button>
+                <>
+                  <button
+                    className="py-2 px-4 rounded bg-primary hover:bg-accent-light text-dark font-bold w-full text-center"
+                    onClick={nextPuzzle}
+                  >
+                    Next Puzzle
+                  </button>
+                  <a
+                    href={'https://lichess.org/training/' + puzzle.puzzleid}
+                    className="py-2 px-4 rounded bg-accent-dark hover:bg-accent-light text-dark font-bold w-full  text-center"
+                    target="_blank"
+                  >
+                    Analysis Board
+                  </a>
+                </>
               )}
             </div>
           </div>

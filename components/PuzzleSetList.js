@@ -64,7 +64,7 @@ export default function PuzzleSetList(props) {
     let name = set.set.setName
     var result = prompt('Type set name "' + name + '" to confirm deletion')
 
-    if ((result = name)) {
+    if (result == name) {
       let saved = JSON.parse(localStorage.getItem('tactics-set-list'))
       let cleared = saved.filter((set) => {
         return set.id != id

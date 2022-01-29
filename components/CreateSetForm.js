@@ -62,7 +62,7 @@ export default function CreateSetForm(props) {
         onClick={() => {
           setdialogOpen(true)
         }}
-        className="inline-block text-sm md:text-lg py-1 px-2 md:py-2 md:px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200"
+        className="min-w-[100px] inline-block text-sm md:text-lg py-1 px-2 md:py-2 md:px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200"
       >
         Add Set
       </button>
