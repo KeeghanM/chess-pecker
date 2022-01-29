@@ -54,6 +54,7 @@ const KnightsChess = (props) => {
         fen={fen}
         onMove={onMove}
         coordinates={props.coords}
+        animation={{ enabled: false }}
       />
     </div>
   )
