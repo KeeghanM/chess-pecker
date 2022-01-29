@@ -3,6 +3,8 @@ import { UserContext } from '../lib/context'
 import { Dialog, Tab } from '@headlessui/react'
 import getPuzzle from './PuzzleHandler'
 import Spinner from './Spinner'
+import Select from 'react-select'
+import { themeOptions } from './data'
 
 export default function CreateSetForm(props) {
   const { user } = useContext(UserContext)
@@ -13,6 +15,7 @@ export default function CreateSetForm(props) {
   const [disable, setdisable] = useState(false)
   const [dialogOpen, setdialogOpen] = useState(false)
   const [errorMsg, seterrorMsg] = useState(false)
+  const [themesList, setthemes] = useState([])
 
   let attempts = 0
   let maxTries = 3
@@ -30,22 +33,30 @@ export default function CreateSetForm(props) {
     )
     let c = form.setSize.value
 
+    // console.log({ rating: r, count: c, form })
     loadPuzzles({ rating: r, count: c, form })
   }
 
   function loadPuzzles(settings) {
+    let themes = []
+    for (let theme of themesList) {
+      themes.push(theme.value)
+    }
+
     try {
-      getPuzzle({ rating: settings.rating, count: settings.count }).then(
-        (response) => {
-          props.saveSet({
-            puzzles: response.data.puzzles,
-            name: settings.form.setName.value,
-          })
-          setdisable(false)
-          setdialogOpen(false)
-          attempts = 0
-        }
-      )
+      getPuzzle({
+        rating: settings.rating,
+        count: settings.count,
+        themes,
+      }).then((response) => {
+        props.saveSet({
+          puzzles: response.data.puzzles,
+          name: settings.form.setName.value,
+        })
+        setdisable(false)
+        setdialogOpen(false)
+        attempts = 0
+      })
     } catch (err) {
       if (attempts < maxTries) {
         attempts++
@@ -61,6 +72,7 @@ export default function CreateSetForm(props) {
       <button
         onClick={() => {
           setdialogOpen(true)
+          setthemes([])
         }}
         className="min-w-[100px] inline-block text-sm md:text-lg py-1 px-2 md:py-2 md:px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200"
       >
@@ -71,12 +83,25 @@ export default function CreateSetForm(props) {
         onClose={() => {
           setdisable(false)
           setdialogOpen(false)
+          seterrorMsg(false)
         }}
         className="fixed z-10 inset-0 overflow-y-auto"
       >
         <div className="flex items-center justify-center min-h-screen">
           <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
-          <div className="relative bg-white rounded p-12 space-x-2 max-w-[330px] mx-auto">
+          <div className="relative bg-white rounded px-12 py-6 space-x-2 max-w-lg mx-auto">
+            <div className="w-full flex flex-row justify-end left-[-5px] top-[5px] absolute">
+              <button
+                className="rounded-lg text-xl font-bold text-dark py-1 px-2 hover:bg-accent-light text-center bg-accent-dark"
+                onClick={() => {
+                  setdisable(false)
+                  seterrorMsg(false)
+                  setdialogOpen(false)
+                }}
+              >
+                X
+              </button>
+            </div>
             <form onSubmit={createSet}>
               <fieldset disabled={disable}>
                 <div className="space-y-2">
@@ -199,6 +224,24 @@ export default function CreateSetForm(props) {
                   >
                     Create Set
                   </button>
+                </div>
+                <input
+                  hidden
+                  type="text"
+                  id="themes"
+                  defaultValue={themesList}
+                />
+                <div className="pt-6">
+                  <p className="font-bold text-xl">Themes To Include</p>
+                  <Select
+                    options={themeOptions}
+                    isMulti
+                    defaultValue={[]}
+                    onChange={(e) => {
+                      setthemes(e)
+                    }}
+                  />
+                  <p>Leave blank for a random mix of all</p>
                 </div>
               </fieldset>
             </form>
