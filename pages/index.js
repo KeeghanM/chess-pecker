@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <Layout name="Home">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-stretch p-4 md:p-6 lg:p-12">
-        <div className="hover:bg-accent-light border-b-2 md:border-2 border-primary hover:cursor-pointer shadow-lg rounded-2xl bg-light">
+        <div className="border-b-2 md:border-2 border-primary hover:cursor-pointer shadow-lg rounded-2xl bg-light flex flex-col justify-center">
           <Link href="/about">
             <div className="p-6 md:p-8 lg:p-10 space-y-4">
               <h1 className="text-4xl font-bold text-primary">
@@ -19,10 +19,13 @@ export default function Home() {
                 Master training methods, to shape up your chess and bring in the
                 wins!
               </p>
+              <button className="py-2 px-4 rounded bg-accent-light text-dark font-bold w-fit hover:bg-accent-dark ">
+                Read More
+              </button>
             </div>
           </Link>
         </div>
-        <div className="hover:bg-accent-light border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-light">
+        <div className="border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-light">
           <Link href="/tactics">
             <div className="p-6 md:p-8 lg:p-10 space-y-2">
               <h1 className="text-4xl font-bold">Tactics Training</h1>
@@ -43,10 +46,13 @@ export default function Home() {
                 Benefits include sharper tactical vision, fewer blunders, better
                 play when in time trouble and improved intuition.
               </p>
+              <button className="py-2 px-4 rounded bg-accent-light text-dark font-bold w-fit hover:bg-accent-dark ">
+                Train Now
+              </button>
             </div>
           </Link>
         </div>
-        <div className="hover:bg-accent-light border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-light">
+        <div className="border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-light">
           <Link href="/visualise">
             <div className="p-6 md:p-8 lg:p-10 space-y-2">
               <h1 className="text-4xl font-bold">
@@ -66,10 +72,13 @@ export default function Home() {
                 head, decide on your final move and then check if you were
                 correct.
               </p>
+              <button className="py-2 px-4 rounded bg-accent-light text-dark font-bold w-fit hover:bg-accent-dark ">
+                Train Now
+              </button>
             </div>
           </Link>
         </div>
-        <div className="hover:bg-accent-light border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-light">
+        <div className="border-b-2 md:border-2 border-dark hover:cursor-pointer shadow-lg rounded-2xl bg-light">
           <Link href="/knights">
             <div className="p-6 md:p-8 lg:p-10 space-y-2">
               <h1 className="text-4xl font-bold">Knight Vision</h1>
@@ -86,6 +95,9 @@ export default function Home() {
                 a knight can get to a given square. Rack up a streak and try to
                 beat your own high score.
               </p>
+              <button className="py-2 px-4 rounded bg-accent-light text-dark font-bold w-fit hover:bg-accent-dark ">
+                Train Now
+              </button>
             </div>
           </Link>
         </div>
