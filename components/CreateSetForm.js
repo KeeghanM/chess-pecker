@@ -13,6 +13,9 @@ export default function CreateSetForm(props) {
   const [disable, setdisable] = useState(false)
   const [dialogOpen, setdialogOpen] = useState(false)
 
+  let attempts = 0
+  let maxTries = 3
+
   function difficultyAdjuster(d) {
     return d == 0 ? 0.9 : d == 1 ? 1 : 1.2
   }
@@ -25,14 +28,30 @@ export default function CreateSetForm(props) {
       form.chessRating.value * difficultyAdjuster(selectedDifficulty)
     )
     let c = form.setSize.value
-    getPuzzle({ rating: r, count: c }).then((response) => {
-      props.saveSet({
-        puzzles: response.data.puzzles,
-        name: form.setName.value,
-      })
-      setdisable(false)
-      setdialogOpen(false)
-    })
+
+    loadPuzzles({ rating: r, count: c, form })
+  }
+
+  function loadPuzzles(settings) {
+    try {
+      getPuzzle({ rating: settings.rating, count: settings.count }).then(
+        (response) => {
+          props.saveSet({
+            puzzles: response.data.puzzles,
+            name: settings.form.setName.value,
+          })
+          setdisable(false)
+          setdialogOpen(false)
+        }
+      )
+    } catch (err) {
+      if (attempts < maxTries) {
+        attempts++
+        loadPuzzles(settings)
+      } else {
+        throw error
+      }
+    }
   }
 
   return (

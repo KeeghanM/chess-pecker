@@ -59,15 +59,21 @@ export default function PuzzleSetList(props) {
     )
   }
 
-  function deleteSet(id) {
-    let saved = JSON.parse(localStorage.getItem('tactics-set-list'))
-    let cleared = saved.filter((set) => {
-      return set.id != id
-    })
-    setpuzzleSetList(cleared)
+  function deleteSet(set) {
+    let id = set.id
+    let name = set.set.setName
+    var result = prompt('Type set name "' + name + '" to confirm deletion')
 
-    localStorage.setItem('tactics-set-list', JSON.stringify(cleared))
-    deleteDoc(doc(firestore, 'users', user.uid, 'tactics-sets', id))
+    if ((result = name)) {
+      let saved = JSON.parse(localStorage.getItem('tactics-set-list'))
+      let cleared = saved.filter((set) => {
+        return set.id != id
+      })
+      setpuzzleSetList(cleared)
+
+      localStorage.setItem('tactics-set-list', JSON.stringify(cleared))
+      deleteDoc(doc(firestore, 'users', user.uid, 'tactics-sets', id))
+    }
   }
 
   return (
@@ -87,7 +93,7 @@ export default function PuzzleSetList(props) {
               set={set.set}
               key={index}
               onSelect={() => props.onSelect(set.id)}
-              onDelete={() => deleteSet(set.id)}
+              onDelete={() => deleteSet(set)}
             />
           )
         })}
