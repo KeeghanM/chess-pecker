@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import Layout from '../components/Layout'
 import getPuzzle from '../components/PuzzleHandler'
-import { Tab } from '@headlessui/react'
+import { Tab, Switch } from '@headlessui/react'
 import Spinner from '../components/Spinner'
 import VisualiseChess from '../components/VisualiseChess'
 import { UserContext } from '../lib/context'
@@ -16,6 +16,7 @@ export default function visualise() {
   const [rating, setrating] = useState()
   const [playerMoves, setplayermoves] = useState()
   const [errorMsg, seterrorMsg] = useState(false)
+  const [strictMode, setstrictMode] = useState(true)
 
   function fetchPuzzles(c, r, pm) {
     getPuzzle({ rating: r, playerMoves: pm, count: c })
@@ -85,9 +86,10 @@ export default function visualise() {
     let r =
       form.chessRating.value * difficultyAdjuster(form.puzzleDifficulty.value)
     let pm = parseInt(form.puzzleLength.value) - 1
-    fetchPuzzles(5, r, pm)
     setrating(r)
     setplayermoves(pm)
+    setstrictMode(form.strictMode.checked)
+    fetchPuzzles(5, r, pm)
   }
 
   function reset() {
@@ -165,6 +167,7 @@ export default function visualise() {
                 onSuccess={puzzleSuccess}
                 onError={puzzleError}
                 onSkip={puzzleSkip}
+                strictMode={strictMode}
               />
             )}
           </div>
@@ -188,6 +191,8 @@ function PuzzleSetupForm(props) {
       setdisable(false)
     }
   }, [props.error])
+
+  const [strictModeEnabled, setStrictModeEnabled] = useState(true)
 
   return (
     <div>
@@ -297,7 +302,39 @@ function PuzzleSetupForm(props) {
                 />
               </div>
             </div>
+            <input
+              type="checkbox"
+              id="strictMode"
+              defaultChecked={strictModeEnabled}
+              hidden
+            />
+            <div className="flex flex-col">
+              <div className="flex flex-row justify-between">
+                <Switch.Group>
+                  <Switch.Label>
+                    <span className="font-bold">Use Strict Mode</span>
+                  </Switch.Label>
+                  <Switch
+                    checked={strictModeEnabled}
+                    onChange={() => setStrictModeEnabled(!strictModeEnabled)}
+                    className={`${
+                      strictModeEnabled ? 'bg-primary' : 'bg-gray-200'
+                    } relative inline-flex items-center h-6 rounded-full w-11`}
+                  >
+                    <span
+                      className={`${
+                        strictModeEnabled ? 'translate-x-6' : 'translate-x-1'
+                      } inline-block w-4 h-4 transform bg-white rounded-full`}
+                    />
+                  </Switch>
+                </Switch.Group>
+              </div>
+              <p className="text-sm">
+                Disable to not need # and + in your answer
+              </p>
+            </div>
           </div>
+
           <div className="pt-6">
             <button
               type="submit"

@@ -49,8 +49,15 @@ export default function VisualiseChess(props) {
   function moveCheck(e) {
     e.preventDefault()
     if (clicked === 'check') {
-      let checkMove = e.target.move.value
-      if (checkMove == finalMove) {
+      let playerMove = e.target.move.value
+      let checkMove = finalMove
+
+      if (!props.strictMode) {
+        playerMove = playerMove.replace(/[^0-9a-z]/gi, '')
+        checkMove = checkMove.replace(/[^0-9a-z]/gi, '')
+      }
+
+      if (playerMove == checkMove) {
         playCorrect()
         e.target.move.value = ''
 
