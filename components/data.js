@@ -4,6 +4,7 @@ export const themeOptions = [
   { value: 'skewer', label: 'Skewer' },
   { value: 'xRayAttack', label: 'X-Ray' },
   { value: 'discoveredAttack', label: 'Discovered attack' },
+  { value: 'sacrifice', label: 'Sacrifice' },
   { value: 'attraction', label: 'Attraction' },
   { value: 'deflection', label: 'Deflection' },
   { value: 'interference', label: 'Interference' },
