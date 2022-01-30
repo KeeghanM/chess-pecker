@@ -10,6 +10,7 @@ import {
   deleteDoc,
 } from 'firebase/firestore'
 import CreateSetForm from './CreateSetForm'
+import PuzzleSetSettings from './PuzzleSetSettings'
 
 export default function PuzzleSetList(props) {
   const { user } = useContext(UserContext)
@@ -90,7 +91,7 @@ export default function PuzzleSetList(props) {
         {puzzleSetList.map((set, index) => {
           return (
             <SetListItem
-              set={set.set}
+              set={set}
               key={index}
               onSelect={() => props.onSelect(set.id)}
               onDelete={() => deleteSet(set)}
@@ -103,12 +104,17 @@ export default function PuzzleSetList(props) {
 }
 
 function SetListItem(props) {
-  let set = props.set
+  let set = props.set.set
   return (
     <div className="p-2 rounded-lg my-2 bg-dark text-light">
-      <p className="text-lg font-bold">
-        {set.setName} - {set.rounds.length}/8
-      </p>
+      <div className="flex flex-row justify-between">
+        <p className="text-lg font-bold">
+          {set.setName} - {set.rounds.length}/8
+        </p>
+        <p>
+          <PuzzleSetSettings setId={props.set.id} />
+        </p>
+      </div>
       <p>
         Finished {set.rounds[set.rounds.length - 1].completed} of {set.setSize}{' '}
         puzzles (
@@ -128,12 +134,12 @@ function SetListItem(props) {
         >
           Train Set
         </button>
-        <button
+        {/* <button
           onClick={props.onDelete}
           className="py-2 px-2 rounded bg-danger hover:bg-accent-light text-dark font-bold text-xs"
         >
           Delete
-        </button>
+        </button> */}
       </div>
     </div>
   )
