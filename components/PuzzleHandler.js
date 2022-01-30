@@ -11,7 +11,7 @@ export default function getPuzzle(props) {
   if (props.playerMoves) {
     queryParams.playerMoves = props.playerMoves
   }
-  if (props.themes.length > 0) {
+  if (props.themes?.length > 0) {
     queryParams.themesType = 'ONE'
     queryParams.themes = JSON.stringify(props.themes)
   }
