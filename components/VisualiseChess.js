@@ -57,7 +57,7 @@ export default function VisualiseChess(props) {
         checkMove = checkMove.replace(/[^0-9a-z]/gi, '')
       }
 
-      if (playerMove == checkMove) {
+      if (playerMove.toLowerCase() == checkMove.toLowerCase()) {
         playCorrect()
         e.target.move.value = ''
 
