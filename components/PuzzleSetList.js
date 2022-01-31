@@ -26,13 +26,19 @@ export default function PuzzleSetList(props) {
           docs.forEach((doc) => {
             setList.push({ id: doc.id, set: doc.data() })
           })
-          localStorage.setItem('tactics-set-list', JSON.stringify(setList))
-          setpuzzleSetList(setList)
         }
       )
-    } else {
-      setpuzzleSetList(setList)
     }
+    for (let set of setList) {
+      if (
+        set.set.rounds.length < 8 &&
+        set.set.rounds[set.set.rounds.length - 1].completed == set.set.setSize
+      ) {
+        set.set.rounds.push({ completed: 0, correct: 0, timeSpent: 0 })
+      }
+    }
+    setpuzzleSetList(setList)
+    localStorage.setItem('tactics-set-list', JSON.stringify(setList))
   }
 
   function createSet(props) {
