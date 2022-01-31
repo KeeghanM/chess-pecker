@@ -19,26 +19,25 @@ export default function PuzzleSetList(props) {
   }, [])
 
   function getSetList() {
-    let setList = JSON.parse(localStorage.getItem('tactics-set-list')) || []
-    if (setList.length === 0) {
-      getDocs(collection(firestore, 'users', user.uid, 'tactics-sets')).then(
-        (docs) => {
-          docs.forEach((doc) => {
-            setList.push({ id: doc.id, set: doc.data() })
-          })
+    let setList = []
+    getDocs(collection(firestore, 'users', user.uid, 'tactics-sets')).then(
+      (docs) => {
+        docs.forEach((doc) => {
+          setList.push({ id: doc.id, set: doc.data() })
+        })
+        for (let set of setList) {
+          if (
+            set.set.rounds.length < 8 &&
+            set.set.rounds[set.set.rounds.length - 1].completed ==
+              set.set.setSize
+          ) {
+            set.set.rounds.push({ completed: 0, correct: 0, timeSpent: 0 })
+          }
         }
-      )
-    }
-    for (let set of setList) {
-      if (
-        set.set.rounds.length < 8 &&
-        set.set.rounds[set.set.rounds.length - 1].completed == set.set.setSize
-      ) {
-        set.set.rounds.push({ completed: 0, correct: 0, timeSpent: 0 })
+        setpuzzleSetList(setList)
+        localStorage.setItem('tactics-set-list', JSON.stringify(setList))
       }
-    }
-    setpuzzleSetList(setList)
-    localStorage.setItem('tactics-set-list', JSON.stringify(setList))
+    )
   }
 
   function createSet(props) {
