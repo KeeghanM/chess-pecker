@@ -4,6 +4,7 @@ import { UserContext } from '../lib/context'
 import { CogIcon } from '@heroicons/react/solid'
 import { firestore } from '../lib/firebase'
 import { doc, deleteDoc, setDoc } from 'firebase/firestore'
+import { saveAs } from 'file-saver'
 
 export default function PuzzleSetSettings(props) {
   const { user } = useContext(UserContext)
@@ -47,16 +48,19 @@ export default function PuzzleSetSettings(props) {
             </h3>
             <p>Current Round: {set.set.rounds.length}/8</p>
             <p>Previous Round Stats:</p>
-            <div>{prevRounds}</div>
+            {/* <div>{prevRounds}</div> */}
             <div className="flex flex-row space-x-2 pt-3">
-              <button className="py-2 px-4 rounded text-dark bg-accent-dark hover:bg-primary font-bold">
-                Export Set
-              </button>
               <button
                 className="py-2 px-4 rounded text-dark bg-accent-dark hover:bg-primary font-bold"
                 onClick={() => renameSet(set, user, props.updateList)}
               >
                 Rename Set
+              </button>
+              <button
+                className="py-2 px-4 rounded text-dark bg-accent-dark hover:bg-primary font-bold"
+                onClick={() => exportSet(set)}
+              >
+                Export Set
               </button>
               <button
                 className="py-2 px-4 rounded text-dark bg-danger hover:bg-accent-light font-bold"
@@ -109,4 +113,36 @@ function deleteSet(set, user, updateList) {
   } else {
     alert('Incorrect Name')
   }
+}
+
+function exportSet(set) {
+  let orderedPuzzles = []
+
+  for (let pzl of set.set.puzzles) {
+    orderedPuzzles.push(
+      Object.keys(pzl)
+        .sort()
+        .reduce(function (result, key) {
+          result[key] = pzl[key]
+          return result
+        }, {})
+    )
+  }
+
+  let exportStr = JSON.stringify(
+    {
+      setName: set.set.setName,
+      puzzles: orderedPuzzles,
+    },
+    null,
+    2
+  )
+  let fileName = set.set.setName
+    .trim()
+    .toLowerCase()
+    .replace(/([^A-Z0-9]+)(.)/gi, function (match) {
+      return arguments[2].toUpperCase()
+    })
+  var blob = new Blob([exportStr], { type: 'text/plain;charset=utf-8' })
+  saveAs(blob, fileName + '_chessTrainingApp.json')
 }
