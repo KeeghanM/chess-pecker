@@ -1,16 +1,9 @@
 import { useState, useContext, useEffect } from 'react'
 import { UserContext } from '../lib/context'
 import { firestore } from '../lib/firebase'
-import {
-  collection,
-  getDocs,
-  addDoc,
-  Timestamp,
-  doc,
-  deleteDoc,
-} from 'firebase/firestore'
+import { collection, getDocs, addDoc, Timestamp } from 'firebase/firestore'
 import CreateSetForm from './CreateSetForm'
-import PuzzleSetSettings from './PuzzleSetSettings'
+import SetListItem from './PuzzleSetListItem'
 
 export default function PuzzleSetList(props) {
   const { user } = useContext(UserContext)
@@ -65,23 +58,6 @@ export default function PuzzleSetList(props) {
     )
   }
 
-  function deleteSet(set) {
-    let id = set.id
-    let name = set.set.setName
-    var result = prompt('Type set name "' + name + '" to confirm deletion')
-
-    if (result == name) {
-      let saved = JSON.parse(localStorage.getItem('tactics-set-list'))
-      let cleared = saved.filter((set) => {
-        return set.id != id
-      })
-      setpuzzleSetList(cleared)
-
-      localStorage.setItem('tactics-set-list', JSON.stringify(cleared))
-      deleteDoc(doc(firestore, 'users', user.uid, 'tactics-sets', id))
-    }
-  }
-
   return (
     <div>
       <div className="flex space-x-2">
@@ -103,66 +79,11 @@ export default function PuzzleSetList(props) {
               set={set}
               key={index}
               onSelect={() => props.onSelect(set.id)}
-              onDelete={() => deleteSet(set)}
+              updateList={setpuzzleSetList}
             />
           )
         })}
       </div>
     </div>
   )
-}
-
-function SetListItem(props) {
-  let set = props.set.set
-  return (
-    <div className="p-2 rounded-lg my-2 bg-dark text-light">
-      <div className="flex flex-row justify-between">
-        <p className="text-lg font-bold">
-          {set.setName} - {set.rounds.length}/8
-        </p>
-        <p>
-          <PuzzleSetSettings setId={props.set.id} />
-        </p>
-      </div>
-      <p>
-        Finished {set.rounds[set.rounds.length - 1].completed} of {set.setSize}{' '}
-        puzzles (
-        {percentOf(
-          set.rounds[set.rounds.length - 1].correct,
-          set.rounds[set.rounds.length - 1].completed
-        )}{' '}
-        Accuracy)
-      </p>
-      <p>
-        Round Time: {secondsToTime(set.rounds[set.rounds.length - 1].timeSpent)}
-      </p>
-      <div className="flex flex-row justify-between">
-        <button
-          onClick={props.onSelect}
-          className="py-2 px-4 rounded bg-accent-dark hover:bg-accent-light text-dark font-bold"
-        >
-          Train Set
-        </button>
-        {/* <button
-          onClick={props.onDelete}
-          className="py-2 px-2 rounded bg-danger hover:bg-accent-light text-dark font-bold text-xs"
-        >
-          Delete
-        </button> */}
-      </div>
-    </div>
-  )
-}
-
-function secondsToTime(seconds) {
-  let time = new Date(1000 * seconds).toISOString().substr(11, 8)
-  return time
-}
-
-function percentOf(a, b) {
-  // if (b == 0) return '100%'
-  if (a == 0 || b == 0) return '0%'
-
-  let p = Math.round((a / b) * 100)
-  return p + '%'
 }
