@@ -20,20 +20,25 @@ export default function PuzzleSetList(props) {
   }, [])
 
   function getSetList() {
-    let setList = JSON.parse(localStorage.getItem('tactics-set-list')) || []
-    if (setList.length === 0) {
-      getDocs(collection(firestore, 'users', user.uid, 'tactics-sets')).then(
-        (docs) => {
-          docs.forEach((doc) => {
-            setList.push({ id: doc.id, set: doc.data() })
-          })
-          localStorage.setItem('tactics-set-list', JSON.stringify(setList))
-          setpuzzleSetList(setList)
+    let setList = []
+    getDocs(collection(firestore, 'users', user.uid, 'tactics-sets')).then(
+      (docs) => {
+        docs.forEach((doc) => {
+          setList.push({ id: doc.id, set: doc.data() })
+        })
+        for (let set of setList) {
+          if (
+            set.set.rounds.length < 8 &&
+            set.set.rounds[set.set.rounds.length - 1].completed ==
+              set.set.setSize
+          ) {
+            set.set.rounds.push({ completed: 0, correct: 0, timeSpent: 0 })
+          }
         }
-      )
-    } else {
-      setpuzzleSetList(setList)
-    }
+        setpuzzleSetList(setList)
+        localStorage.setItem('tactics-set-list', JSON.stringify(setList))
+      }
+    )
   }
 
   function createSet(props) {
@@ -83,9 +88,13 @@ export default function PuzzleSetList(props) {
         <h2 className="text-4xl font-bold text-accent-dark">
           Your Training Sets
         </h2>
-        <div>
-          <CreateSetForm saveSet={createSet} />
-        </div>
+        {puzzleSetList.length < 3 ? (
+          <div>
+            <CreateSetForm saveSet={createSet} />
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
       <div className="overflow-y-auto max-h-[500px]">
         {puzzleSetList.map((set, index) => {

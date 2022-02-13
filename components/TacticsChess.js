@@ -75,15 +75,19 @@ export default function TacticsChess(props) {
   function nextPuzzle() {
     setError(false)
     currentSet.set.rounds[currentSet.set.rounds.length - 1].completed += 1
-    changePuzzle(
-      currentSet.set.rounds[currentSet.set.rounds.length - 1].completed
-    )
-    saveSet()
+
     if (
       currentSet.set.rounds[currentSet.set.rounds.length - 1].completed ===
       currentSet.set.setSize
     ) {
-      setcurrentSet(null)
+      console.log('Add Set')
+      currentSet.set.rounds.push({ completed: 0, correct: 0, timeSpent: 0 })
+      saveSet()
+      props.stopSession()
+    } else {
+      changePuzzle(
+        currentSet.set.rounds[currentSet.set.rounds.length - 1].completed
+      )
     }
   }
 
