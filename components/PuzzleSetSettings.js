@@ -3,7 +3,7 @@ import { useState, useContext } from 'react'
 import { UserContext } from '../lib/context'
 import { CogIcon } from '@heroicons/react/solid'
 import { firestore } from '../lib/firebase'
-import { doc, deleteDoc } from 'firebase/firestore'
+import { doc, deleteDoc, setDoc } from 'firebase/firestore'
 
 export default function PuzzleSetSettings(props) {
   const { user } = useContext(UserContext)
@@ -72,12 +72,23 @@ export default function PuzzleSetSettings(props) {
   )
 }
 
-function renameSet(set, user) {
+function renameSet(set, user, updateList) {
   var result = prompt('Type the new set name:')
 
   if (result) {
     let id = set.id
+    set.set.setName = result
     let saved = JSON.parse(localStorage.getItem('tactics-set-list'))
+    let updated = saved.map((savedSet) => {
+      if (savedSet.id === id) {
+        savedSet = set
+      }
+      return savedSet
+    })
+    updateList(updated)
+
+    localStorage.setItem('tactics-set-list', JSON.stringify(updated))
+    setDoc(doc(firestore, 'users', user.uid, 'tactics-sets', id), set.set)
   }
 }
 
