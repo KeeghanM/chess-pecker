@@ -17,7 +17,7 @@ export default function Logo(props) {
           display: props.text && router.pathname != "/" ? "block" : "none",
         }}
       >
-        ChessTraining.app{props.text && " - " + props.text}
+        {props.text}
       </p>
     </div>
   )
