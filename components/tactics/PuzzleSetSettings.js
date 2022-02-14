@@ -1,15 +1,15 @@
-import { Dialog } from '@headlessui/react'
-import { useState, useContext } from 'react'
-import { UserContext } from '../lib/context'
-import { CogIcon } from '@heroicons/react/solid'
-import { firestore } from '../lib/firebase'
-import { doc, deleteDoc, setDoc } from 'firebase/firestore'
-import { saveAs } from 'file-saver'
+import { Dialog } from "@headlessui/react"
+import { useState, useContext } from "react"
+import { UserContext } from "../../lib/context"
+import { CogIcon } from "@heroicons/react/solid"
+import { firestore } from "../../lib/firebase"
+import { doc, deleteDoc, setDoc } from "firebase/firestore"
+import { saveAs } from "file-saver"
 
 export default function PuzzleSetSettings(props) {
   const { user } = useContext(UserContext)
   const [dialogOpen, setDialogOpen] = useState(false)
-  let set = JSON.parse(localStorage.getItem('tactics-set-list')).filter(
+  let set = JSON.parse(localStorage.getItem("tactics-set-list")).filter(
     (set) => {
       return set.id == props.setId
     }
@@ -78,12 +78,12 @@ export default function PuzzleSetSettings(props) {
 }
 
 function renameSet(set, user, updateList) {
-  var result = prompt('Type the new set name:')
+  var result = prompt("Type the new set name:")
 
   if (result) {
     let id = set.id
     set.set.setName = result
-    let saved = JSON.parse(localStorage.getItem('tactics-set-list'))
+    let saved = JSON.parse(localStorage.getItem("tactics-set-list"))
     let updated = saved.map((savedSet) => {
       if (savedSet.id === id) {
         savedSet = set
@@ -92,8 +92,8 @@ function renameSet(set, user, updateList) {
     })
     updateList(updated)
 
-    localStorage.setItem('tactics-set-list', JSON.stringify(updated))
-    setDoc(doc(firestore, 'users', user.uid, 'tactics-sets', id), set.set)
+    localStorage.setItem("tactics-set-list", JSON.stringify(updated))
+    setDoc(doc(firestore, "users", user.uid, "tactics-sets", id), set.set)
   }
 }
 
@@ -103,16 +103,16 @@ function deleteSet(set, user, updateList) {
   var result = prompt('Type set name "' + name + '" to confirm deletion')
 
   if (result.toLocaleLowerCase() == name.toLocaleLowerCase()) {
-    let saved = JSON.parse(localStorage.getItem('tactics-set-list'))
+    let saved = JSON.parse(localStorage.getItem("tactics-set-list"))
     let cleared = saved.filter((set) => {
       return set.id != id
     })
     updateList(cleared)
 
-    localStorage.setItem('tactics-set-list', JSON.stringify(cleared))
-    deleteDoc(doc(firestore, 'users', user.uid, 'tactics-sets', id))
+    localStorage.setItem("tactics-set-list", JSON.stringify(cleared))
+    deleteDoc(doc(firestore, "users", user.uid, "tactics-sets", id))
   } else {
-    alert('Incorrect Name')
+    alert("Incorrect Name")
   }
 }
 
@@ -144,6 +144,6 @@ function exportSet(set) {
     .replace(/([^A-Z0-9]+)(.)/gi, function (match) {
       return arguments[2].toUpperCase()
     })
-  var blob = new Blob([exportStr], { type: 'text/plain;charset=utf-8' })
-  saveAs(blob, fileName + '_chessTrainingApp.json')
+  var blob = new Blob([exportStr], { type: "text/plain;charset=utf-8" })
+  saveAs(blob, fileName + "_chessTrainingApp.json")
 }

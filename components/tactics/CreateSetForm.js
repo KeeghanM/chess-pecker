@@ -5,6 +5,7 @@ import getPuzzle from "../utils/PuzzleHandler"
 import Spinner from "../utils/Spinner"
 import Select from "react-select"
 import { themeOptions } from "../utils/data"
+import { XCircleIcon } from "@heroicons/react/outline"
 
 export default function CreateSetForm(props) {
   const { user } = useContext(UserContext)
@@ -74,7 +75,7 @@ export default function CreateSetForm(props) {
           setdialogOpen(true)
           setthemes([])
         }}
-        className="min-w-[100px] inline-block text-sm md:text-lg py-1 px-2 md:py-2 md:px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200"
+        className="px-4 py-2 bg-accent-light text-dark hover:bg-primary hover:text-light transition duration-200"
       >
         Add Set
       </button>
@@ -85,21 +86,21 @@ export default function CreateSetForm(props) {
           setdialogOpen(false)
           seterrorMsg(false)
         }}
-        className="fixed z-10 inset-0 overflow-y-auto"
+        className="fixed z-10 inset-0 overflow-y-auto font-serif"
       >
         <div className="flex items-center justify-center min-h-screen">
-          <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
-          <div className="relative bg-white rounded px-12 py-6 space-x-2 max-w-lg mx-auto">
-            <div className="w-full flex flex-row justify-end left-[-5px] top-[5px] absolute">
+          <Dialog.Overlay className="fixed inset-0 bg-black opacity-80" />
+          <div className="relative bg-white px-24 py-12 mx-auto">
+            <div className="w-full flex flex-row justify-end left-[-50px] md:left-[-5px] top-[5px] absolute">
               <button
-                className="rounded-lg text-xl font-bold text-dark py-1 px-2 hover:bg-accent-light text-center bg-accent-dark"
+                className="text-dark hover:text-primary"
                 onClick={() => {
                   setdisable(false)
                   seterrorMsg(false)
                   setdialogOpen(false)
                 }}
               >
-                X
+                <XCircleIcon className="w-10 h-10" />
               </button>
             </div>
             <form onSubmit={createSet}>
@@ -116,7 +117,7 @@ export default function CreateSetForm(props) {
                     </div>
                     <div>
                       <input
-                        className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
+                        className="bg-gray-200 appearance-none border-4 border-accent-light  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                         id="chessRating"
                         type="number"
                         defaultValue={user ? user.chessRating : 1500}
@@ -147,7 +148,7 @@ export default function CreateSetForm(props) {
                             (selected
                               ? " border-primary bg-white  "
                               : " border-accent-light bg-gray-200 ") +
-                            "appearance-none border-2 border-r-0 rounded-r-none rounded  w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary"
+                            "appearance-none border-4 border-r-0    w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary"
                           }
                         >
                           Easy
@@ -157,7 +158,7 @@ export default function CreateSetForm(props) {
                             (selected
                               ? " border-primary bg-white "
                               : " border-accent-light bg-gray-200 ") +
-                            "appearance-none border-y-2 rounded-y w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary"
+                            "appearance-none border-y-4 w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary"
                           }
                         >
                           Medium
@@ -167,7 +168,7 @@ export default function CreateSetForm(props) {
                             (selected
                               ? " border-primary bg-white "
                               : " border-accent-light bg-gray-200 ") +
-                            "appearance-none border-2 border-l-0 rounded-l-none rounded  w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary"
+                            "appearance-none border-4 border-l-0   w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary"
                           }
                         >
                           Hard
@@ -187,7 +188,7 @@ export default function CreateSetForm(props) {
                     <div className="flex flex-row items-center">
                       <div className="px-4 text-xl font-bold">{size}</div>
                       <input
-                        className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full px-4 focus:outline-none focus:bg-white focus:border-primary"
+                        className="bg-gray-200 appearance-none border-4 border-accent-light  w-full px-4 focus:outline-none focus:bg-white focus:border-primary"
                         id="setSize"
                         type="range"
                         defaultValue={size}
@@ -209,7 +210,7 @@ export default function CreateSetForm(props) {
                     </div>
                     <div>
                       <input
-                        className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
+                        className="bg-gray-200 appearance-none border-4 border-accent-light  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                         id="setName"
                         type="text"
                         required
@@ -220,7 +221,7 @@ export default function CreateSetForm(props) {
                 <div className="pt-6">
                   <button
                     type="submit"
-                    className="inline-block w-full py-2 px-12 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200"
+                    className="inline-block w-full py-2 px-12 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark -full transition duration-200"
                   >
                     Create Set
                   </button>
