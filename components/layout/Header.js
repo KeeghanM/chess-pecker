@@ -20,7 +20,7 @@ const Header = (props) => {
       <section className="py-2 bg-dark flex justify-center">
         <nav className="flex flex-row items-center w-full lg:max-w-[800px]">
           <div
-            className="basis-1/3 flex justify-center"
+            className="basis-1/2 md:basis-1/3 flex justify-center"
             style={{
               visibility: router.pathname == "/" ? "hidden" : "visible",
             }}
@@ -32,10 +32,10 @@ const Header = (props) => {
               </div>
             </Link>
           </div>
-          <div className="basis-1/2 flex justify-center">
-            <Logo text={props.name} />
+          <div className="basis-1/2 justify-center hidden md:flex">
+            <Logo />
           </div>
-          <div className="basis-1/3 flex justify-center">
+          <div className="basis-1/2 md:basis-1/3 flex justify-center">
             {!props.noCTA && !user && (
               <Link href="/login">
                 <button className="px-4 py-2 bg-primary text-light hover:bg-accent-light hover:text-dark transition duration-200">

@@ -4,7 +4,7 @@ import Image from "next/image"
 export default function HeroBanner(props) {
   return (
     <header className="h-[650px] text-light flex flex-col justify-center items-center relative text-center">
-      <div className="space-y-2 z-10 w-full">
+      <div className="space-y-2 z-10 w-full px-6">
         <h1 className="text-3xl md:text-5xl font-bold text-primary">
           {props.title}
         </h1>
