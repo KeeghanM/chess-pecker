@@ -8,6 +8,8 @@ import useSound from "use-sound"
 import { UserContext } from "../lib/context"
 import { setDoc, doc } from "firebase/firestore"
 import { firestore } from "../lib/firebase"
+import HeroBanner from "../components/utils/HeroBanner"
+import ContentBlock from "../components/utils/ContentBlock"
 
 function knights() {
   const { user } = useContext(UserContext)
@@ -120,7 +122,7 @@ function knights() {
     // best streak in local storage
     let currentSavedStreak =
       JSON.parse(sessionStorage.getItem("best-knight-vision-streak")) || 0
-    if (streak > currentSavedStreak) {
+    if (streak > bestStreak) {
       playHighScore()
       showhighScoreFlash(true)
       let hideFlash = setTimeout(() => {
@@ -162,116 +164,115 @@ function knights() {
   return (
     <div>
       <Layout name="Knight Vision">
-        <div
-          className="flex flex-col lg:flex-row p-4 md:p-6 lg:p-12 space-4 lg:space-x-6 text-lg text-dark"
-          style={{ background: highScoreFlash ? "#84cc16" : "" }}
+        <HeroBanner
+          title="Knight Vision"
+          image="/chessBackground.jpg"
+          cta="Start Now ↓"
+          target="#start"
         >
-          <div className="space-y-2 lg:w-1/3">
-            <h1 className="text-4xl font-bold text-primary">Knight Vision</h1>
-            <div>
-              Improve your board vision, and also master those tricky knights.
-              By using our Knight Vision trainer, you will greatly improve your
-              chess abilities.
-            </div>
-            <div className="">
-              Coordinates have been intentionally left off to help reinforce
-              your own internalisation of the squares. The board is setup from
-              Whites perspective, so remember:{" "}
-              <span className="font-bold">A to H, 1 to 8</span>
-            </div>
-            <div className="flex flex-col space-y-2">
-              <div
-                className="py-4 text-accent-dark font-bold text-xl"
-                style={{ color: highScoreFlash ? "#84cc16" : "" }}
-              >
-                Your Best Streak: {bestStreak}
-              </div>
-              <div className="p-4 bg-dark text-light">
-                {isRunning ? (
-                  // Timer is running, so show movement squares
-                  // and hide the prompt text/start button
-                  <div>
-                    <div className="flex flex-row items-center">
-                      <Switch.Group>
-                        <Switch
-                          checked={moveHint}
-                          onChange={setMoveHint}
-                          className={`${
-                            moveHint ? "bg-primary" : "bg-gray-200"
-                          } relative inline-flex items-center h-6 rounded-full w-11`}
-                        >
-                          <span
-                            className={`${
-                              moveHint ? "translate-x-6" : "translate-x-1"
-                            } inline-block w-4 h-4 transform bg-white rounded-full`}
-                          />
-                        </Switch>
-                        <Switch.Label className="ml-2 flex flex-row items-center space-x-2">
-                          <span>Show Move Hint:</span>
-                          <span className={moveHint ? "block" : "hidden"}>
-                            {minJumps} Moves
-                          </span>
-                        </Switch.Label>
-                      </Switch.Group>
-                    </div>
-                    <div>
-                      <span>
-                        Timer: 0{minutes}:{seconds == 0 ? "00" : seconds}
-                      </span>
-                    </div>
-                    <div
-                      className="transition-all"
-                      style={{ color: colorFlash ? "#84cc16" : "" }}
+          <p className="max-w-xl text-lg py-2 mx-auto">
+            Improve your board vision, and master those tricky knights.
+          </p>
+        </HeroBanner>
+        <ContentBlock title="How it works" color="dark">
+          <div>
+            Improve your board vision, and also master those tricky knights. By
+            using our Knight Vision trainer, you will greatly improve your chess
+            abilities.
+          </div>
+          <div className="">
+            Coordinates have been intentionally left off to help reinforce your
+            own internalisation of the squares. The board is setup from Whites
+            perspective, so remember:{" "}
+            <span className="font-bold">A to H, 1 to 8</span>
+          </div>
+          <div
+            className="py-4 text-accent-dark font-bold text-xl"
+            style={{ color: highScoreFlash ? "#84cc16" : "" }}
+          >
+            Your Best Streak: {bestStreak}
+            <a id="start"></a>
+          </div>
+          <div
+            className="p-4 bg-accent-dark text-light min-w-lg max-w-lg"
+            style={{ background: highScoreFlash ? "#84cc16" : "" }}
+          >
+            {isRunning ? (
+              // Timer is running, so show movement squares
+              // and hide the prompt text/start button
+              <div className="space-y-4">
+                <div className="flex flex-row items-center">
+                  <Switch.Group>
+                    <Switch
+                      checked={moveHint}
+                      onChange={setMoveHint}
+                      className={`${
+                        moveHint ? "bg-primary" : "bg-gray-200"
+                      } relative inline-flex items-center h-6 rounded-full w-11`}
                     >
-                      Current Streak: {streak}
-                    </div>
-
-                    <div
-                      className="font-bold transition-all"
-                      style={{ color: colorFlash ? "#84cc16" : "" }}
-                    >
-                      Get your knight to:{" "}
                       <span
-                        className="text-primary transition-all"
-                        style={{ color: colorFlash ? "#84cc16" : "" }}
-                      >
-                        {endSquare}
+                        className={`${
+                          moveHint ? "translate-x-6" : "translate-x-1"
+                        } inline-block w-4 h-4 transform bg-white rounded-full`}
+                      />
+                    </Switch>
+                    <Switch.Label className="ml-2 flex flex-row items-center space-x-2">
+                      <span>Show Move Hint:</span>
+                      <span className={moveHint ? "block" : "hidden"}>
+                        {minJumps} Moves
                       </span>
-                    </div>
-                  </div>
-                ) : (
-                  // Timer is not running
-                  <div className="flex flex-col space-y-2">
-                    <p>
-                      You'll have 1 minute to move your knight to the indicated
-                      square in as few moves as possible, as many times as
-                      possible. See how high of a streak you can get!
-                    </p>
-                    <button
-                      onClick={startTimer}
-                      className="w-fit inline-block text-sm md:text-lg py-1 px-2 md:py-2 md:px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200"
-                    >
-                      Start
-                    </button>
-                  </div>
-                )}
+                    </Switch.Label>
+                  </Switch.Group>
+                </div>
+                <div>
+                  <span>
+                    Timer: 0{minutes}:{seconds == 0 ? "00" : seconds}
+                  </span>
+                </div>
+                <div
+                  className="transition-all"
+                  style={{ color: colorFlash ? "#84cc16" : "" }}
+                >
+                  Current Streak: {streak}
+                </div>
+                <div
+                  className="font-bold transition-all text-2xl"
+                  style={{ color: colorFlash ? "#84cc16" : "" }}
+                >
+                  Get your knight to:{" "}
+                  <span
+                    className="text-dark transition-all"
+                    style={{ color: colorFlash ? "#84cc16" : "" }}
+                  >
+                    {endSquare}
+                  </span>
+                </div>
               </div>
-            </div>
+            ) : (
+              // Timer is not running
+              <div className="flex flex-col space-y-6">
+                <p>
+                  You'll have 1 minute to move your knight to the indicated
+                  square in as few moves as possible, as many times as possible.
+                  See how high of a streak you can get!
+                </p>
+                <button
+                  onClick={startTimer}
+                  className="px-4 py-2 bg-primary text-light hover:bg-accent-light hover:text-dark transition duration-200 w-fit"
+                >
+                  Start
+                </button>
+              </div>
+            )}
           </div>
-          <div className="flex flex-col items-center align-middle space-y-0">
-            <div
-              className={
-                colorFlash ? "shadow-xl shadow-[#84cc16] transition-all" : ""
-              }
-            >
-              <KnightsChess
-                knightSquare={moveSquare}
-                moveCheck={knightMoveCheck}
-                coords={false}
-              />
-            </div>
+          <div className="overflow-hidden">
+            <KnightsChess
+              knightSquare={moveSquare}
+              moveCheck={knightMoveCheck}
+              coords={false}
+            />
           </div>
-        </div>
+        </ContentBlock>
       </Layout>
     </div>
   )
