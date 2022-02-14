@@ -1,9 +1,9 @@
 // pages/_app.js
-import '../styles/globals.css'
-import { UserContext } from '../lib/context'
-import { useUserData } from '../lib/hooks'
-import { useEffect } from 'react'
-import { hotjar } from 'react-hotjar'
+import "../styles/globals.css"
+import { UserContext } from "../lib/context"
+import { useUserData } from "../lib/hooks"
+import { useEffect } from "react"
+import { hotjar } from "react-hotjar"
 
 export default function App({
   Component,
@@ -17,7 +17,9 @@ export default function App({
 
   return (
     <UserContext.Provider value={userData}>
-      <Component {...pageProps} />
+      <div className="font-serif">
+        <Component {...pageProps} />
+      </div>
     </UserContext.Provider>
   )
 }

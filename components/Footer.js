@@ -2,7 +2,7 @@ import Link from "next/link"
 
 function Footer() {
   return (
-    <div className="p-10 w-screen bg-dark text-light flex flex-col md:flex-row items-center justify-center gap-4 mt-auto border-t-4 border-primary">
+    <div className="p-10 w-screen bg-black text-light flex flex-col md:flex-row items-center justify-center gap-4 mt-auto border-t-4 border-primary">
       <div className="px-4 py-2 bg-accent-light text-dark hover:bg-primary hover:text-light transition duration-200 hover:cursor-pointer">
         <Link href="/about">
           <p>Learn More About Us</p>
