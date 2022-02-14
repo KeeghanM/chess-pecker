@@ -83,18 +83,11 @@ export default function PuzzleSetList(props) {
 
   return (
     <div>
-      <div className="flex space-x-2">
-        <h2 className="text-4xl font-bold text-accent-dark">
-          Your Training Sets
-        </h2>
-        {puzzleSetList.length < 3 ? (
-          <div>
-            <CreateSetForm saveSet={createSet} />
-          </div>
-        ) : (
-          <></>
-        )}
-      </div>
+      {puzzleSetList.length < 3 && (
+        <div>
+          <CreateSetForm saveSet={createSet} />
+        </div>
+      )}
       <div className="overflow-y-auto max-h-[500px]">
         {puzzleSetList.map((set, index) => {
           return (
