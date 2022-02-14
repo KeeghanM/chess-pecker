@@ -2,20 +2,20 @@ import Link from 'next/link'
 
 function Footer() {
   return (
-    <div className="p-10 w-screen bg-dark text-light flex items-center justify-between">
-      <div className="">
+    <div className="p-10 w-screen bg-dark text-light flex items-center justify-center space-x-4">
+      <div className="px-4 py-2 bg-accent-light text-dark hover:bg-primary hover:text-light transition duration-200">
+        <Link href="/about">
+          <p>Learn More About Us</p>
+        </Link>
+      </div>
+      <div>
         <a href="https://www.buymeacoffee.com/KeeghanM" target="_blank">
-          <button className="inline-block text-sm md:text-lg py-1 px-2 md:py-2 md:px-4 text-dark font-bold bg-accent-light hover:bg-accent-dark hover:text-light rounded-full transition duration-200">
-            Buy me a coffee!
+          <button className="px-4 py-2 bg-accent-dark text-light hover:bg-primary hover:text-light transition duration-200">
+            Support Us
           </button>
         </a>
       </div>
-      <div className="text-lg hover:text-primary hover:cursor-pointer">
-        <Link href="/about">
-          <p>Learn more about us</p>
-        </Link>
-      </div>
-      <div className="text-lg hover:text-primary">
+      <div className="px-4 py-2 bg-accent-light text-dark hover:bg-primary hover:text-light transition duration-200">
         <a href="mailto:contact@chesstraining.app">Contact Us</a>
       </div>
     </div>

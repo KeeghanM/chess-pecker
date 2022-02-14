@@ -17,25 +17,25 @@ const Header = (props) => {
 
   return (
     <div>
-      <section className="py-8 px-4 lg:px-10 bg-dark">
+      <section className="py-2 px-4 lg:px-24 lg:px-10 bg-dark">
         <nav className="flex flex-row justify-between items-center space-x-2">
           <div className="flex flex-row items-center space-x-4 md:space-x-10">
             <div>
               <Logo text={props.name} />
             </div>
-            <div style={{ display: router.pathname == '/' ? 'none' : 'block' }}>
-              <Link href="/">
-                <div className="text-light hover:text-primary hover:cursor-pointer text-2xl md:text-4xl font-bold flex items-center space-x-2">
-                  <ArrowCircleLeftIcon className="w-5 h-5 md:w-10 md:h-10" />
-                  <p>Back</p>
-                </div>
-              </Link>
-            </div>
+          </div>
+          <div style={{ display: router.pathname == '/' ? 'none' : 'block' }}>
+            <Link href="/">
+              <div className="text-light hover:text-primary hover:cursor-pointer text-xl font-bold flex items-center space-x-2">
+                <ArrowCircleLeftIcon className="w-5 h-5" />
+                <p>Back</p>
+              </div>
+            </Link>
           </div>
           <div className="ml-6">
             {!props.noCTA && !user && (
               <Link href="/login">
-                <button className="inline-block text-sm md:text-lg py-1 px-2 md:py-2 md:px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200">
+                <button className="px-4 py-2 bg-primary text-light hover:bg-accent-light hover:text-dark transition duration-200">
                   Log In / Sign Up
                 </button>
               </Link>
@@ -49,14 +49,14 @@ const Header = (props) => {
 
                   <Link href="/profile">
                     <div>
-                      <CogIcon className="w-5 h-5 hover:cursor-pointer hover:text-primary hover:h-10 hover:w-10 transition-all duration-200" />
+                      <CogIcon className="w-5 h-5 hover:cursor-pointer hover:text-primary transition duration-200" />
                     </div>
                   </Link>
                 </div>
 
                 <button
                   onClick={signOutNow}
-                  className="inline-block text-sm md:text-lg py-1 px-2 md:py-2 md:px-4 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200"
+                  className="px-4 py-2 bg-primary text-light hover:bg-accent-light hover:text-dark transition duration-200"
                 >
                   Log Out
                 </button>

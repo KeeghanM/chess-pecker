@@ -5,11 +5,11 @@ const Logo = (props) => (
     <Image
       src="/chesstrainingapplogo.png"
       alt="ChessTraining.app Logo"
-      width="130px"
-      height="130px"
+      width="90px"
+      height="90px"
     />
     <p
-      className="text-light text-xl md:text-2xl lg:text-4xl font-bold hidden md:block"
+      className="text-light text-xl font-bold hidden md:block"
       style={{ visibility: props.text ? 'visible' : 'hidden' }}
     >
       ChessTraining.app{props.text && ' - ' + props.text}
