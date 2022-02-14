@@ -1,15 +1,29 @@
 import Layout from "../components/layout/Layout"
 import FeatureRow from "../components/index/FeatureRow"
-import HeroBanner from "../components/index/HeroBanner"
-import ContentBlock from "../components/index/ContentBlock"
+import HeroBanner from "../components/utils/HeroBanner"
+import ContentBlock from "../components/utils/ContentBlock"
 import Image from "next/image"
 
 export default function Home() {
   return (
     <Layout name="Home">
-      <HeroBanner />
+      <HeroBanner
+        title="ChessTraining.app"
+        image="/chessBackground.jpg"
+        cta="Sign Up Now"
+        target="/login"
+        height="650px"
+      >
+        <p className="max-w-md font-bold pb-12 mx-auto">
+          Are you ready to bring your chess to the next level?
+        </p>
+        <p className="max-w-md text-lg italic pb-12 mx-auto">
+          Use our powerful training tools, backed by science and Grand Master
+          training methods, to shape up your chess and bring in the wins!
+        </p>
+      </HeroBanner>
       <FeatureRow />
-      <ContentBlock title="About Us">
+      <ContentBlock title="About Us" color="dark">
         <div className="mb-6 space-y-1">
           <p>
             <span className="font-bold">ChessTraining.app</span> is designed to
