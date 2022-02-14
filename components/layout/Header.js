@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Logo from "./Logo"
+import Logo from "../utils/Logo"
 import { ArrowCircleLeftIcon, CogIcon } from "@heroicons/react/solid"
 import { useRouter } from "next/router"
 import { useContext } from "react"

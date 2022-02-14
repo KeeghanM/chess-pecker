@@ -29,12 +29,12 @@ const profile = () => {
   return (
     <div>
       <Layout name="Profile">
-        <div className="flex flex-col items-center p-6 text-lg text-dark">
+        <div className="flex flex-col items-center p-6 text-lg text-light">
           {!user ? (
             <p>You must be signed in to view your profile</p>
           ) : (
-            <form onSubmit={saveDetails} className="w-full max-w-sm">
-              <div className="space-y-2">
+            <form onSubmit={saveDetails} className="w-full max-w-lg">
+              <div className="space-y-6">
                 <h1 className="text-4xl font-bold text-primary">
                   Personal Details
                 </h1>
@@ -49,7 +49,7 @@ const profile = () => {
                   </div>
                   <div className="md:w-2/3">
                     <input
-                      className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
+                      className="text-dark bg-gray-200 appearance-none border-4 border-accent-light  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                       id="displayName"
                       type="text"
                       defaultValue={user.displayName}
@@ -67,7 +67,7 @@ const profile = () => {
                   </div>
                   <div className="md:w-2/3">
                     <input
-                      className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
+                      className="text-dark bg-gray-200 appearance-none border-4 border-accent-light  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                       id="email"
                       type="email"
                       defaultValue={user.email}
@@ -75,7 +75,7 @@ const profile = () => {
                   </div>
                 </div>
               </div>
-              <div className="pt-6">
+              <div className="pt-6 space-y-6">
                 <h1 className="text-4xl font-bold text-primary">
                   Chess Details
                 </h1>
@@ -90,7 +90,7 @@ const profile = () => {
                   </div>
                   <div className="md:w-2/3">
                     <input
-                      className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
+                      className="text-dark bg-gray-200 appearance-none border-4 border-accent-light  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
                       id="chessRating"
                       type="number"
                       defaultValue={user.chessRating}
@@ -107,7 +107,7 @@ const profile = () => {
                     </label>
                   </div>
                   <Tab.Group
-                    className="md:w-2/3"
+                    className="md:w-2/3 text-dark"
                     id="puzzleDifficulty"
                     defaultIndex={selectedDifficulty}
                     onChange={(index) => {
@@ -120,7 +120,7 @@ const profile = () => {
                           (selected
                             ? " border-primary bg-white  "
                             : " border-accent-light bg-gray-200 ") +
-                          "appearance-none border-2 border-r-0 rounded-r-none rounded w-1/3 py-2 leading-tight focus:outline-none focus:border-primary"
+                          "appearance-none border-4 border-r-0 -r-none  w-1/3 py-2 leading-tight focus:outline-none focus:border-primary"
                         }
                       >
                         Easy
@@ -130,7 +130,7 @@ const profile = () => {
                           (selected
                             ? " border-primary bg-white "
                             : " border-accent-light bg-gray-200 ") +
-                          "appearance-none border-y-2 rounded-y w-1/3 py-2 leading-tight focus:outline-none focus:border-primary"
+                          "appearance-none border-y-4 w-1/3 py-2 leading-tight focus:outline-none focus:border-primary"
                         }
                       >
                         Medium
@@ -140,7 +140,7 @@ const profile = () => {
                           (selected
                             ? " border-primary bg-white "
                             : " border-accent-light bg-gray-200 ") +
-                          "appearance-none border-2 border-l-0 rounded-l-none rounded w-1/3 py-2 leading-tight focus:outline-none focus:border-primary"
+                          "appearance-none border-4 border-l-0 -l-none  w-1/3 py-2 leading-tight focus:outline-none focus:border-primary"
                         }
                       >
                         Hard
@@ -152,7 +152,7 @@ const profile = () => {
               <div className="pt-6">
                 <button
                   type="submit"
-                  className="inline-block w-full py-2 px-12 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark rounded-full transition duration-200"
+                  className="inline-block w-full py-2 px-12 text-light font-bold bg-primary hover:bg-accent-light hover:text-dark -full transition duration-200"
                 >
                   Save
                 </button>

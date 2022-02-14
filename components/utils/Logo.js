@@ -10,6 +10,7 @@ export default function Logo(props) {
         alt="ChessTraining.app Logo"
         width="90px"
         height="90px"
+        priority
       />
       <p
         className="text-light text-xl font-bold hidden md:block"
