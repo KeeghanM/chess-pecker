@@ -1,10 +1,10 @@
-import Link from 'next/link'
-import Logo from './Logo'
-import { ArrowCircleLeftIcon, CogIcon } from '@heroicons/react/solid'
-import { useRouter } from 'next/router'
-import { useContext } from 'react'
-import { UserContext } from '../lib/context'
-import { auth } from '../lib/firebase'
+import Link from "next/link"
+import Logo from "./Logo"
+import { ArrowCircleLeftIcon, CogIcon } from "@heroicons/react/solid"
+import { useRouter } from "next/router"
+import { useContext } from "react"
+import { UserContext } from "../lib/context"
+import { auth } from "../lib/firebase"
 
 const Header = (props) => {
   const { user } = useContext(UserContext)
@@ -12,25 +12,29 @@ const Header = (props) => {
 
   function signOutNow() {
     auth.signOut()
-    if (router.pathname == '/profile') router.push('/')
+    if (router.pathname == "/profile") router.push("/")
   }
 
   return (
     <div>
       <section className="py-2 px-4 lg:px-24 lg:px-10 bg-dark">
-        <nav className="flex flex-row justify-between items-center space-x-2">
-          <div className="flex flex-row items-center space-x-4 md:space-x-10">
-            <div>
-              <Logo text={props.name} />
-            </div>
-          </div>
-          <div style={{ display: router.pathname == '/' ? 'none' : 'block' }}>
+        <nav className="flex flex-row justify-between items-center">
+          <div
+            style={{
+              visibility: router.pathname == "/" ? "hidden" : "visible",
+            }}
+          >
             <Link href="/">
               <div className="text-light hover:text-primary hover:cursor-pointer text-xl font-bold flex items-center space-x-2">
                 <ArrowCircleLeftIcon className="w-5 h-5" />
                 <p>Back</p>
               </div>
             </Link>
+          </div>
+          <div className="flex flex-row items-center space-x-4 md:space-x-10">
+            <div>
+              <Logo text={props.name} />
+            </div>
           </div>
           <div className="ml-6">
             {!props.noCTA && !user && (

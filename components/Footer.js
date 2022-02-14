@@ -1,9 +1,9 @@
-import Link from 'next/link'
+import Link from "next/link"
 
 function Footer() {
   return (
-    <div className="p-10 w-screen bg-dark text-light flex items-center justify-center space-x-4">
-      <div className="px-4 py-2 bg-accent-light text-dark hover:bg-primary hover:text-light transition duration-200">
+    <div className="p-10 w-screen bg-dark text-light flex items-center justify-center space-x-4 mt-auto">
+      <div className="px-4 py-2 bg-accent-light text-dark hover:bg-primary hover:text-light transition duration-200 hover:cursor-pointer">
         <Link href="/about">
           <p>Learn More About Us</p>
         </Link>
