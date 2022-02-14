@@ -12,7 +12,6 @@ export default function Home() {
         image="/chessBackground.jpg"
         cta="Sign Up Now"
         target="/login"
-        imgHeight="650px"
       >
         <p className="max-w-md font-bold pb-12 mx-auto">
           Are you ready to bring your chess to the next level?

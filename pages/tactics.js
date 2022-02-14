@@ -26,7 +26,6 @@ const tactics = () => {
             <HeroBanner
               title="Tactics Training"
               image="/chessBackground.jpg"
-              imgHeight="450px"
               cta="Start Now ↓"
               target="#start"
             >

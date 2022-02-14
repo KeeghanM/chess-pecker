@@ -2,12 +2,8 @@ import Link from "next/link"
 import Image from "next/image"
 
 export default function HeroBanner(props) {
-  let headerClass =
-    "h-[" +
-    props.imgHeight +
-    "] text-light flex flex-col justify-center items-center relative text-center"
   return (
-    <header className={headerClass}>
+    <header className="h-[650px] text-light flex flex-col justify-center items-center relative text-center">
       <div className="space-y-2 z-10 w-full">
         <h1 className="text-3xl md:text-5xl font-bold text-primary">
           {props.title}

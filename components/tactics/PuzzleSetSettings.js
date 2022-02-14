@@ -90,7 +90,10 @@ export default function PuzzleSetSettings(props) {
               </button>
               <button
                 className="px-4 py-2 bg-[red] text-dark hover:bg-primary hover:text-light transition duration-200"
-                onClick={() => deleteSet(set, user, props.updateList)}
+                onClick={() => {
+                  deleteSet(set, user, props.updateList)
+                  setDialogOpen(false)
+                }}
               >
                 Delete Set
               </button>
