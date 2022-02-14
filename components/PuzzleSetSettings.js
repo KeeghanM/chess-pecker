@@ -14,8 +14,11 @@ export default function PuzzleSetSettings(props) {
       return set.id == props.setId
     }
   )[0]
-  let prevRounds = []
 
+  let roundStats = []
+  for (let i = set.set.rounds.length - 1; i >= 0; i--) {
+    roundStats.push(<p key={i}>{set.set.rounds[i].completed}</p>)
+  }
   return (
     <>
       <button
@@ -46,9 +49,7 @@ export default function PuzzleSetSettings(props) {
             <h3 className="text-lg text-primary font-bold">
               {set.set.setName}
             </h3>
-            <p>Current Round: {set.set.rounds.length}/8</p>
-            <p>Previous Round Stats:</p>
-            {/* <div>{prevRounds}</div> */}
+            <div>{roundStats}</div>
             <div className="flex flex-row space-x-2 pt-3">
               <button
                 className="py-2 px-4 rounded text-dark bg-accent-dark hover:bg-primary font-bold"
