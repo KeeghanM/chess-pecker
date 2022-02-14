@@ -29,18 +29,11 @@ export default function PuzzleSetSettings(props) {
             Correct: {set.set.rounds[i].correct}/{set.set.rounds[i].completed}
           </p>
           <p>
-            (
-            {percentOf(
-              set.set.rounds[set.set.rounds.length - 1].correct,
-              set.set.rounds[set.set.rounds.length - 1].completed
-            )}{" "}
+            ({percentOf(set.set.rounds[i].correct, set.set.rounds[i].completed)}{" "}
             Accuracy)
           </p>
         </div>
-        <p>
-          Round Time:{" "}
-          {secondsToTime(set.set.rounds[set.set.rounds.length - 1].timeSpent)}
-        </p>
+        <p>Round Time: {secondsToTime(set.set.rounds[i].timeSpent)}</p>
       </div>
     )
   }
@@ -58,7 +51,7 @@ export default function PuzzleSetSettings(props) {
         className="fixed z-10 inset-0 overflow-y-auto font-serif"
       >
         <div className="flex items-center justify-center min-h-screen">
-          <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+          <Dialog.Overlay className="fixed inset-0 bg-black opacity-80" />
 
           <div className="relative bg-white px-24 py-12 mx-auto">
             <div className="w-full flex flex-row justify-end left-[-50px] md:left-[-5px] top-[5px] absolute">
