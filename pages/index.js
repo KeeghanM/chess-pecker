@@ -3,14 +3,17 @@ import FeatureRow from "../components/index/FeatureRow"
 import HeroBanner from "../components/utils/HeroBanner"
 import ContentBlock from "../components/utils/ContentBlock"
 import Image from "next/image"
+import { useContext } from "react"
+import { UserContext } from "../lib/context"
 
 export default function Home() {
+  const { user } = useContext(UserContext)
   return (
     <Layout name="Home">
       <HeroBanner
         title="ChessTraining.app"
         image="/chessBackground.jpg"
-        cta="Sign Up Now"
+        cta={!user ? "Sign Up Now" : false}
         target="/login"
       >
         <p className="max-w-md font-bold pb-12 mx-auto">
