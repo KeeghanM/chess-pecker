@@ -9,15 +9,13 @@ export default function FeatureRow() {
           Smith, and Hans Tikkanen.
         </p>
         <p>
-          The quick explanation of the Woodpecker Method is that you need to
-          solve a large number of puzzles in a row; then solve the same puzzles
-          again and again, only faster.
+          Re-program your unconscious mind. With benefits including sharper
+          tactical vision, fewer blunders, and better play when in time trouble
+          as well as improved intuition.
         </p>
-        <p>It’s not a lazy shortcut to success – hard work is required.</p>
         <p>
-          But the reward can be re-programming your unconscious mind. Benefits
-          include sharper tactical vision, fewer blunders, better play when in
-          time trouble and improved intuition.
+          Generate puzzle sets and train on them, while the site takes care of
+          tracking your accuracy & time spent.
         </p>
       </FeatureCard>
       <FeatureCard
