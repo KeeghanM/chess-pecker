@@ -84,47 +84,44 @@ export default function VisualiseChess(props) {
 
   let windowSize = useWindowSize()
   return (
-    <div className="mb-10">
-      <div className="flex flex-row items-baseline space-x-2 max-w-2xl mb-4 flex-wrap">
+    <div className="mb-10 text-light pl-6">
+      <div className="flex flex-row items-baseline gap-2 min-w-xl max-w-xl mb-4 flex-wrap">
         {movesList}
       </div>
       <form
         onSubmit={moveCheck}
-        className="flex flex-col md:flex-row md:items-center space-y-2 space-x-4 mb-4"
+        className="flex flex-col md:flex-row md:items-center gap-2 pb-6"
         autoComplete="off"
       >
-        <div className="flex flex-row items-center space-x-2">
-          <p>Your Answer:</p>
-          <input
-            autoComplete="off"
-            type="text"
-            id="move"
-            className="bg-gray-200 appearance-none border-2 border-accent-light rounded w-32 py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-primary"
-          />
-        </div>
-        <div className="flex flex-row items-center space-x-2">
-          <button
-            onClick={() => (clicked = "check")}
-            className="inline-block w-fit py-2 px-12 text-light font-bold bg-primary hover:bg-accent-dark hover:text-light rounded-full transition duration-200"
-          >
-            Check
-          </button>
-          <button
-            onClick={() => (clicked = "skip")}
-            className="text-sm inline-block w-fit py-2 px-6 text-dark font-bold bg-accent-light hover:bg-accent-dark hover:text-light rounded-full transition duration-200"
-          >
-            Skip Puzzle
-          </button>
-        </div>
+        <input
+          autoComplete="off"
+          placeholder="Your Answer"
+          type="text"
+          id="move"
+          className="w-[150px] bg-gray-200 appearance-none border-4 border-primary py-2 focus:outline-none focus:bg-white text-dark text-center"
+        />
+        <button
+          onClick={() => (clicked = "check")}
+          className="w-[150px] py-3 bg-primary text-light hover:bg-accent-dark hover:text-light transition duration-200"
+        >
+          Check
+        </button>
+        <button
+          onClick={() => (clicked = "skip")}
+          className="w-[150px] py-3 bg-accent-light text-dark hover:bg-accent-dark hover:text-light transition duration-200"
+        >
+          Skip Puzzle
+        </button>
       </form>
 
       <div
         className={
-          colorFlash
+          "pb-6 overflow-hidden" +
+          (colorFlash
             ? "shadow-xl shadow-[#84cc16] transition-all"
             : errorFlash
             ? "shadow-xl shadow-[#cc2b16] transition-all"
-            : ""
+            : "")
         }
       >
         <Chessground
