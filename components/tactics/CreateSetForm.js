@@ -83,8 +83,8 @@ export default function CreateSetForm(props) {
         open={dialogOpen}
         onClose={() => {
           setdisable(false)
-          setdialogOpen(false)
           seterrorMsg(false)
+          setdialogOpen(false)
         }}
         className="fixed z-10 inset-0 overflow-y-auto font-serif"
       >
