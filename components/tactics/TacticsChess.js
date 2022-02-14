@@ -112,7 +112,7 @@ export default function TacticsChess(props) {
   return (
     <div>
       {puzzle && (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center my-12">
           <div className="bg-dark rounded text-light p-4 space-y-2 h-fit flex flex-col">
             <div className="flex flex-row space-x-4">
               <p className="font-bold">
@@ -130,7 +130,7 @@ export default function TacticsChess(props) {
             </p>
             <div className="flex flex-row space-x-2">
               <button
-                className="py-2 px-4 rounded bg-accent-dark hover:bg-accent-light text-dark font-bold w-full text-center"
+                className="w-full px-4 py-2 bg-accent-light text-dark hover:bg-accent-dark hover:text-light transition duration-200"
                 onClick={() => {
                   saveSet()
                   props.stopSession()
@@ -141,18 +141,20 @@ export default function TacticsChess(props) {
               {error && (
                 <>
                   <button
-                    className="py-2 px-4 rounded bg-primary hover:bg-accent-light text-dark font-bold w-full text-center"
+                    className="w-full px-4 py-2 bg-primary text-light hover:bg-accent-dark transition duration-200"
                     onClick={nextPuzzle}
                   >
                     Next Puzzle
                   </button>
-                  <a
-                    href={"https://lichess.org/training/" + puzzle.puzzleid}
-                    className="py-2 px-4 rounded bg-accent-dark hover:bg-accent-light text-dark font-bold w-full  text-center"
-                    target="_blank"
-                  >
-                    Analysis Board
-                  </a>
+                  {puzzle.puzzleid && (
+                    <a
+                      href={"https://lichess.org/training/" + puzzle.puzzleid}
+                      className="w-full py-2 bg-accent-light text-dark hover:bg-accent-dark hover:text-light transition duration-200 text-center"
+                      target="_blank"
+                    >
+                      Analysis Board
+                    </a>
+                  )}
                 </>
               )}
             </div>
