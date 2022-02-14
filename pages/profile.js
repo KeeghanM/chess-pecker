@@ -1,9 +1,9 @@
-import { Tab } from '@headlessui/react'
-import Layout from '../components/Layout'
-import { useContext } from 'react'
-import { UserContext } from '../lib/context'
-import { setDoc, doc } from 'firebase/firestore'
-import { firestore } from '../lib/firebase'
+import { Tab } from "@headlessui/react"
+import Layout from "../components/layout/Layout"
+import { useContext } from "react"
+import { UserContext } from "../lib/context"
+import { setDoc, doc } from "firebase/firestore"
+import { firestore } from "../lib/firebase"
 
 const profile = () => {
   const { user } = useContext(UserContext)
@@ -20,7 +20,7 @@ const profile = () => {
       puzzleDifficulty: selectedDifficulty,
     }
     // Ship the details off to Firebase
-    const userRef = doc(firestore, 'users', user.uid)
+    const userRef = doc(firestore, "users", user.uid)
     setDoc(userRef, newDetails, { merge: true }).then(() => {
       // TODO: Handle the saving
     })
@@ -118,9 +118,9 @@ const profile = () => {
                       <Tab
                         className={({ selected }) =>
                           (selected
-                            ? ' border-primary bg-white  '
-                            : ' border-accent-light bg-gray-200 ') +
-                          'appearance-none border-2 border-r-0 rounded-r-none rounded w-1/3 py-2 leading-tight focus:outline-none focus:border-primary'
+                            ? " border-primary bg-white  "
+                            : " border-accent-light bg-gray-200 ") +
+                          "appearance-none border-2 border-r-0 rounded-r-none rounded w-1/3 py-2 leading-tight focus:outline-none focus:border-primary"
                         }
                       >
                         Easy
@@ -128,9 +128,9 @@ const profile = () => {
                       <Tab
                         className={({ selected }) =>
                           (selected
-                            ? ' border-primary bg-white '
-                            : ' border-accent-light bg-gray-200 ') +
-                          'appearance-none border-y-2 rounded-y w-1/3 py-2 leading-tight focus:outline-none focus:border-primary'
+                            ? " border-primary bg-white "
+                            : " border-accent-light bg-gray-200 ") +
+                          "appearance-none border-y-2 rounded-y w-1/3 py-2 leading-tight focus:outline-none focus:border-primary"
                         }
                       >
                         Medium
@@ -138,9 +138,9 @@ const profile = () => {
                       <Tab
                         className={({ selected }) =>
                           (selected
-                            ? ' border-primary bg-white '
-                            : ' border-accent-light bg-gray-200 ') +
-                          'appearance-none border-2 border-l-0 rounded-l-none rounded w-1/3 py-2 leading-tight focus:outline-none focus:border-primary'
+                            ? " border-primary bg-white "
+                            : " border-accent-light bg-gray-200 ") +
+                          "appearance-none border-2 border-l-0 rounded-l-none rounded w-1/3 py-2 leading-tight focus:outline-none focus:border-primary"
                         }
                       >
                         Hard

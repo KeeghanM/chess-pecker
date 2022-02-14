@@ -1,6 +1,6 @@
-import { useState, useContext, useEffect } from 'react'
-import { UserContext } from '../lib/context'
-import { firestore } from '../lib/firebase'
+import { useState, useContext, useEffect } from "react"
+import { UserContext } from "../../lib/context"
+import { firestore } from "../../lib/firebase"
 import {
   collection,
   getDocs,
@@ -8,8 +8,8 @@ import {
   Timestamp,
   doc,
   deleteDoc,
-} from 'firebase/firestore'
-import CreateSetForm from './CreateSetForm'
+} from "firebase/firestore"
+import CreateSetForm from "./CreateSetForm"
 
 export default function PuzzleSetList(props) {
   const { user } = useContext(UserContext)
@@ -20,7 +20,7 @@ export default function PuzzleSetList(props) {
 
   function getSetList() {
     let setList = []
-    getDocs(collection(firestore, 'users', user.uid, 'tactics-sets')).then(
+    getDocs(collection(firestore, "users", user.uid, "tactics-sets")).then(
       (docs) => {
         docs.forEach((doc) => {
           setList.push({ id: doc.id, set: doc.data() })
@@ -35,7 +35,7 @@ export default function PuzzleSetList(props) {
           }
         }
         setpuzzleSetList(setList)
-        localStorage.setItem('tactics-set-list', JSON.stringify(setList))
+        localStorage.setItem("tactics-set-list", JSON.stringify(setList))
       }
     )
   }
@@ -55,10 +55,10 @@ export default function PuzzleSetList(props) {
       puzzles: props.puzzles,
     }
 
-    addDoc(collection(firestore, 'users', user.uid, 'tactics-sets'), set).then(
+    addDoc(collection(firestore, "users", user.uid, "tactics-sets"), set).then(
       (doc) => {
         let newSetList = [...puzzleSetList, { id: doc.id, set }]
-        localStorage.setItem('tactics-set-list', JSON.stringify(newSetList))
+        localStorage.setItem("tactics-set-list", JSON.stringify(newSetList))
         setpuzzleSetList(newSetList)
       }
     )
@@ -70,14 +70,14 @@ export default function PuzzleSetList(props) {
     var result = prompt('Type set name "' + name + '" to confirm deletion')
 
     if (result == name) {
-      let saved = JSON.parse(localStorage.getItem('tactics-set-list'))
+      let saved = JSON.parse(localStorage.getItem("tactics-set-list"))
       let cleared = saved.filter((set) => {
         return set.id != id
       })
       setpuzzleSetList(cleared)
 
-      localStorage.setItem('tactics-set-list', JSON.stringify(cleared))
-      deleteDoc(doc(firestore, 'users', user.uid, 'tactics-sets', id))
+      localStorage.setItem("tactics-set-list", JSON.stringify(cleared))
+      deleteDoc(doc(firestore, "users", user.uid, "tactics-sets", id))
     }
   }
 
@@ -119,12 +119,12 @@ function SetListItem(props) {
         {set.setName} - {set.rounds.length}/8
       </p>
       <p>
-        Finished {set.rounds[set.rounds.length - 1].completed} of {set.setSize}{' '}
+        Finished {set.rounds[set.rounds.length - 1].completed} of {set.setSize}{" "}
         puzzles (
         {percentOf(
           set.rounds[set.rounds.length - 1].correct,
           set.rounds[set.rounds.length - 1].completed
-        )}{' '}
+        )}{" "}
         Accuracy)
       </p>
       <p>
@@ -155,8 +155,8 @@ function secondsToTime(seconds) {
 
 function percentOf(a, b) {
   // if (b == 0) return '100%'
-  if (a == 0 || b == 0) return '0%'
+  if (a == 0 || b == 0) return "0%"
 
   let p = Math.round((a / b) * 100)
-  return p + '%'
+  return p + "%"
 }

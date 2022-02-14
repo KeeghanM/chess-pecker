@@ -1,4 +1,4 @@
-import Layout from "../components/Layout"
+import Layout from "../components/layout/Layout"
 import FeatureRow from "../components/index/FeatureRow"
 import HeroBanner from "../components/index/HeroBanner"
 import ContentBlock from "../components/index/ContentBlock"

@@ -1,12 +1,12 @@
-import { useState, useEffect, useContext } from 'react'
-import Layout from '../components/Layout'
-import getPuzzle from '../components/PuzzleHandler'
-import { Tab, Switch } from '@headlessui/react'
-import Spinner from '../components/Spinner'
-import VisualiseChess from '../components/VisualiseChess'
-import { UserContext } from '../lib/context'
-import { collection, addDoc, Timestamp } from 'firebase/firestore'
-import { firestore } from '../lib/firebase'
+import { useState, useEffect, useContext } from "react"
+import Layout from "../components/layout/Layout"
+import getPuzzle from "../components/utils/PuzzleHandler"
+import { Tab, Switch } from "@headlessui/react"
+import Spinner from "../components/utils/Spinner"
+import VisualiseChess from "../components/visualise/VisualiseChess"
+import { UserContext } from "../lib/context"
+import { collection, addDoc, Timestamp } from "firebase/firestore"
+import { firestore } from "../lib/firebase"
 
 export default function visualise() {
   const { user } = useContext(UserContext)
@@ -30,14 +30,14 @@ export default function visualise() {
 
   useEffect(() => {
     let saved =
-      JSON.parse(localStorage.getItem('visualisation-puzzle-list')) || []
+      JSON.parse(localStorage.getItem("visualisation-puzzle-list")) || []
     if (saved.length > 0 && !currentPuzzle) {
       // On first load, grab from Local
       setpuzzles(saved)
     }
 
     if (puzzles.length > 0) {
-      localStorage.setItem('visualisation-puzzle-list', JSON.stringify(puzzles))
+      localStorage.setItem("visualisation-puzzle-list", JSON.stringify(puzzles))
       if (!currentPuzzle) setcurrentPuzzle(puzzles[0])
       if (puzzles.length < 5 && saved.length < 5)
         fetchPuzzles(5, rating, playerMoves)
@@ -52,23 +52,23 @@ export default function visualise() {
   }
 
   function puzzleSuccess() {
-    logPuzzle('success')
+    logPuzzle("success")
     nextPuzzle()
   }
 
   function puzzleError() {
-    logPuzzle('error')
+    logPuzzle("error")
   }
 
   function puzzleSkip() {
-    logPuzzle('skip')
+    logPuzzle("skip")
     // TODO: Display puzzle solution and a "Move On" button
     nextPuzzle()
   }
 
   function logPuzzle(type) {
     if (user) {
-      addDoc(collection(firestore, 'users', user.uid, 'vis-' + type), {
+      addDoc(collection(firestore, "users", user.uid, "vis-" + type), {
         date: Timestamp.fromDate(new Date()),
         puzzleRating: currentPuzzle.rating.toString(),
         puzzleId: currentPuzzle.puzzleid,
@@ -93,7 +93,7 @@ export default function visualise() {
   }
 
   function reset() {
-    localStorage.setItem('visualisation-puzzle-list', JSON.stringify([]))
+    localStorage.setItem("visualisation-puzzle-list", JSON.stringify([]))
     setcurrentPuzzle()
     setpuzzles([])
   }
@@ -126,7 +126,7 @@ export default function visualise() {
             <div className="italic">
               Please note: Answers need to be entered in Algebraic Notation.
               This includes + for "check" and # for "checkmate". Learn more
-              about Algebraic Notation{' '}
+              about Algebraic Notation{" "}
               <a
                 href="https://www.ichess.net/wp-content/uploads/2021/10/chess-notation-infographic-906x2048.jpg"
                 className="text-accent-dark underline hover:text-primary"
@@ -153,7 +153,7 @@ export default function visualise() {
                 <PuzzleSetupForm submit={formSubmit} error={errorMsg} />
                 <div
                   className="pt-4 italic text-danger"
-                  style={{ display: errorMsg ? 'block' : 'none' }}
+                  style={{ display: errorMsg ? "block" : "none" }}
                 >
                   <p>
                     Error: Please try again. If the error persists, please
@@ -250,9 +250,9 @@ function PuzzleSetupForm(props) {
                   <Tab
                     className={({ selected }) =>
                       (selected
-                        ? ' border-primary bg-white  '
-                        : ' border-accent-light bg-gray-200 ') +
-                      'appearance-none border-2 border-r-0 rounded-r-none rounded  w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary'
+                        ? " border-primary bg-white  "
+                        : " border-accent-light bg-gray-200 ") +
+                      "appearance-none border-2 border-r-0 rounded-r-none rounded  w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary"
                     }
                   >
                     Easy
@@ -260,9 +260,9 @@ function PuzzleSetupForm(props) {
                   <Tab
                     className={({ selected }) =>
                       (selected
-                        ? ' border-primary bg-white '
-                        : ' border-accent-light bg-gray-200 ') +
-                      'appearance-none border-y-2 rounded-y w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary'
+                        ? " border-primary bg-white "
+                        : " border-accent-light bg-gray-200 ") +
+                      "appearance-none border-y-2 rounded-y w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary"
                     }
                   >
                     Medium
@@ -270,9 +270,9 @@ function PuzzleSetupForm(props) {
                   <Tab
                     className={({ selected }) =>
                       (selected
-                        ? ' border-primary bg-white '
-                        : ' border-accent-light bg-gray-200 ') +
-                      'appearance-none border-2 border-l-0 rounded-l-none rounded  w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary'
+                        ? " border-primary bg-white "
+                        : " border-accent-light bg-gray-200 ") +
+                      "appearance-none border-2 border-l-0 rounded-l-none rounded  w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary"
                     }
                   >
                     Hard
@@ -318,12 +318,12 @@ function PuzzleSetupForm(props) {
                     checked={strictModeEnabled}
                     onChange={() => setStrictModeEnabled(!strictModeEnabled)}
                     className={`${
-                      strictModeEnabled ? 'bg-primary' : 'bg-gray-200'
+                      strictModeEnabled ? "bg-primary" : "bg-gray-200"
                     } relative inline-flex items-center h-6 rounded-full w-11`}
                   >
                     <span
                       className={`${
-                        strictModeEnabled ? 'translate-x-6' : 'translate-x-1'
+                        strictModeEnabled ? "translate-x-6" : "translate-x-1"
                       } inline-block w-4 h-4 transform bg-white rounded-full`}
                     />
                   </Switch>
@@ -346,7 +346,7 @@ function PuzzleSetupForm(props) {
         </fieldset>
       </form>
 
-      <div className="pt-4" style={{ display: disable ? 'block' : 'none' }}>
+      <div className="pt-4" style={{ display: disable ? "block" : "none" }}>
         <Spinner text="Fetching your puzzles..." />
       </div>
     </div>

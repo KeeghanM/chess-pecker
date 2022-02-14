@@ -1,9 +1,9 @@
-import Layout from '../components/Layout'
-import { useState, useContext } from 'react'
-import { UserContext } from '../lib/context'
-import LoginForm from '../components/LoginForm'
-import PuzzleSetList from '../components/PuzzleSetList'
-import TacticsChess from '../components/TacticsChess'
+import Layout from "../components/layout/Layout"
+import { useState, useContext } from "react"
+import { UserContext } from "../lib/context"
+import LoginForm from "../components/login/LoginForm"
+import PuzzleSetList from "../components/tactics/PuzzleSetList"
+import TacticsChess from "../components/tactics/TacticsChess"
 
 const tactics = () => {
   const { user } = useContext(UserContext)

@@ -1,5 +1,5 @@
-import Layout from '../components/Layout'
-import LoginForm from '../components/LoginForm'
+import Layout from "../components/layout/Layout"
+import LoginForm from "../components/LoginForm"
 
 const Login = () => {
   return (
@@ -9,7 +9,7 @@ const Login = () => {
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-wrap items-center -mx-10">
               <div className="w-full lg:w-1/2 px-10">
-                <LoginForm redirect={'/profile'} />
+                <LoginForm redirect={"/profile"} />
               </div>
               <div className="w-full lg:w-1/2 px-10 mb-16 lg:mb-0 order-first lg:order-last">
                 <div className="max-w-md">

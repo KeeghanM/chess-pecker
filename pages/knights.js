@@ -1,21 +1,21 @@
-import Layout from '../components/Layout'
-import { useState, useEffect, useContext } from 'react'
-import KnightsChess from '../components/KnightsChess'
-import { Switch } from '@headlessui/react'
-import { minKnightJumps } from '../lib/knightJumps'
-import { useTimer } from 'react-timer-hook'
-import useSound from 'use-sound'
-import { UserContext } from '../lib/context'
-import { setDoc, doc } from 'firebase/firestore'
-import { firestore } from '../lib/firebase'
+import Layout from "../components/layout/Layout"
+import { useState, useEffect, useContext } from "react"
+import KnightsChess from "../components/knights/KnightsChess"
+import { Switch } from "@headlessui/react"
+import { minKnightJumps } from "../lib/knightJumps"
+import { useTimer } from "react-timer-hook"
+import useSound from "use-sound"
+import { UserContext } from "../lib/context"
+import { setDoc, doc } from "firebase/firestore"
+import { firestore } from "../lib/firebase"
 
 function knights() {
   const { user } = useContext(UserContext)
 
   // Helper function to generate squares for the puzzle
   function generateSquare() {
-    let rows = '12345678'
-    let cols = 'abcdefgh'
+    let rows = "12345678"
+    let cols = "abcdefgh"
 
     let randC = cols.charAt(Math.floor(Math.random() * cols.length))
     let randR = rows.charAt(Math.floor(Math.random() * rows.length))
@@ -42,10 +42,10 @@ function knights() {
     let storedBest = 0
     if (!user) {
       storedBest =
-        JSON.parse(sessionStorage.getItem('best-knight-vision-streak')) || 0
+        JSON.parse(sessionStorage.getItem("best-knight-vision-streak")) || 0
     } else {
       let localBest =
-        JSON.parse(sessionStorage.getItem('best-knight-vision-streak')) || 0
+        JSON.parse(sessionStorage.getItem("best-knight-vision-streak")) || 0
       let dbBest = user.knightHighscore
       storedBest = Math.max(localBest, dbBest)
     }
@@ -53,9 +53,9 @@ function knights() {
   })
 
   // Setup SFX
-  const [playCorrect] = useSound('/sounds/correct.mp3', { volume: 0.25 })
-  const [playIncorrect] = useSound('/sounds/incorrect.mp3', { volume: 0.25 })
-  const [playHighScore] = useSound('/sounds/highscore.mp3', { volume: 0.25 })
+  const [playCorrect] = useSound("/sounds/correct.mp3", { volume: 0.25 })
+  const [playIncorrect] = useSound("/sounds/incorrect.mp3", { volume: 0.25 })
+  const [playHighScore] = useSound("/sounds/highscore.mp3", { volume: 0.25 })
 
   // Setup the timer with 60 seconds
   const {
@@ -119,7 +119,7 @@ function knights() {
     // Check if current streak is better than the
     // best streak in local storage
     let currentSavedStreak =
-      JSON.parse(sessionStorage.getItem('best-knight-vision-streak')) || 0
+      JSON.parse(sessionStorage.getItem("best-knight-vision-streak")) || 0
     if (streak > currentSavedStreak) {
       playHighScore()
       showhighScoreFlash(true)
@@ -131,11 +131,11 @@ function knights() {
       // Always store locally, because we use that for display
       // but also update the database
       sessionStorage.setItem(
-        'best-knight-vision-streak',
+        "best-knight-vision-streak",
         JSON.stringify(streak)
       )
       if (user) {
-        const userRef = doc(firestore, 'users', user.uid)
+        const userRef = doc(firestore, "users", user.uid)
         setDoc(userRef, { knightHighscore: streak }, { merge: true })
       }
     }
@@ -164,7 +164,7 @@ function knights() {
       <Layout name="Knight Vision">
         <div
           className="flex flex-col lg:flex-row p-4 md:p-6 lg:p-12 space-4 lg:space-x-6 text-lg text-dark"
-          style={{ background: highScoreFlash ? '#84cc16' : '' }}
+          style={{ background: highScoreFlash ? "#84cc16" : "" }}
         >
           <div className="space-y-2 lg:w-1/3">
             <h1 className="text-4xl font-bold text-primary">Knight Vision</h1>
@@ -176,13 +176,13 @@ function knights() {
             <div className="">
               Coordinates have been intentionally left off to help reinforce
               your own internalisation of the squares. The board is setup from
-              Whites perspective, so remember:{' '}
+              Whites perspective, so remember:{" "}
               <span className="font-bold">A to H, 1 to 8</span>
             </div>
             <div className="flex flex-col space-y-2">
               <div
                 className="py-4 text-accent-dark font-bold text-xl"
-                style={{ color: highScoreFlash ? '#84cc16' : '' }}
+                style={{ color: highScoreFlash ? "#84cc16" : "" }}
               >
                 Your Best Streak: {bestStreak}
               </div>
@@ -197,18 +197,18 @@ function knights() {
                           checked={moveHint}
                           onChange={setMoveHint}
                           className={`${
-                            moveHint ? 'bg-primary' : 'bg-gray-200'
+                            moveHint ? "bg-primary" : "bg-gray-200"
                           } relative inline-flex items-center h-6 rounded-full w-11`}
                         >
                           <span
                             className={`${
-                              moveHint ? 'translate-x-6' : 'translate-x-1'
+                              moveHint ? "translate-x-6" : "translate-x-1"
                             } inline-block w-4 h-4 transform bg-white rounded-full`}
                           />
                         </Switch>
                         <Switch.Label className="ml-2 flex flex-row items-center space-x-2">
                           <span>Show Move Hint:</span>
-                          <span className={moveHint ? 'block' : 'hidden'}>
+                          <span className={moveHint ? "block" : "hidden"}>
                             {minJumps} Moves
                           </span>
                         </Switch.Label>
@@ -216,24 +216,24 @@ function knights() {
                     </div>
                     <div>
                       <span>
-                        Timer: 0{minutes}:{seconds == 0 ? '00' : seconds}
+                        Timer: 0{minutes}:{seconds == 0 ? "00" : seconds}
                       </span>
                     </div>
                     <div
                       className="transition-all"
-                      style={{ color: colorFlash ? '#84cc16' : '' }}
+                      style={{ color: colorFlash ? "#84cc16" : "" }}
                     >
                       Current Streak: {streak}
                     </div>
 
                     <div
                       className="font-bold transition-all"
-                      style={{ color: colorFlash ? '#84cc16' : '' }}
+                      style={{ color: colorFlash ? "#84cc16" : "" }}
                     >
-                      Get your knight to:{' '}
+                      Get your knight to:{" "}
                       <span
                         className="text-primary transition-all"
-                        style={{ color: colorFlash ? '#84cc16' : '' }}
+                        style={{ color: colorFlash ? "#84cc16" : "" }}
                       >
                         {endSquare}
                       </span>
@@ -261,7 +261,7 @@ function knights() {
           <div className="flex flex-col items-center align-middle space-y-0">
             <div
               className={
-                colorFlash ? 'shadow-xl shadow-[#84cc16] transition-all' : ''
+                colorFlash ? "shadow-xl shadow-[#84cc16] transition-all" : ""
               }
             >
               <KnightsChess

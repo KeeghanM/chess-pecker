@@ -1,14 +1,14 @@
-import dynamic from 'next/dynamic.js'
-const Chessground = dynamic(() => import('react-chessground'), { ssr: false })
-import 'react-chessground/dist/styles/chessground.css'
-import { useWindowSize } from '../lib/hooks'
-import Chess from '../lib/chess'
-import { useState, useEffect } from 'react'
-import useSound from 'use-sound'
+import dynamic from "next/dynamic.js"
+const Chessground = dynamic(() => import("react-chessground"), { ssr: false })
+import "react-chessground/dist/styles/chessground.css"
+import { useWindowSize } from "../../lib/hooks"
+import Chess from "../../lib/chess"
+import { useState, useEffect } from "react"
+import useSound from "use-sound"
 
 export default function VisualiseChess(props) {
-  const [playCorrect] = useSound('/sounds/correct.mp3', { volume: 0.25 })
-  const [playIncorrect] = useSound('/sounds/incorrect.mp3', { volume: 0.25 })
+  const [playCorrect] = useSound("/sounds/correct.mp3", { volume: 0.25 })
+  const [playIncorrect] = useSound("/sounds/incorrect.mp3", { volume: 0.25 })
 
   const [orientation, setorientation] = useState()
   const [fen, setFen] = useState()
@@ -19,15 +19,15 @@ export default function VisualiseChess(props) {
 
   let puzzle = props.puzzle
   let chess = new Chess()
-  let clicked = ''
+  let clicked = ""
 
   useEffect(() => {
     chess.load(puzzle.fen)
     setFen(puzzle.fen)
-    setorientation(puzzle.fen.split(' ')[1] === 'w' ? 'black' : 'white')
+    setorientation(puzzle.fen.split(" ")[1] === "w" ? "black" : "white")
     puzzle.moves.map((move) => chess.move(move, { sloppy: true }))
     setfinalMove(chess.undo()?.san)
-    let pgnUnits = chess.pgn({ newline_char: ' ' }).split(']')[2].split(' ')
+    let pgnUnits = chess.pgn({ newline_char: " " }).split("]")[2].split(" ")
     let moves = []
     pgnUnits.map((unit, index) => {
       moves.push(
@@ -48,18 +48,18 @@ export default function VisualiseChess(props) {
 
   function moveCheck(e) {
     e.preventDefault()
-    if (clicked === 'check') {
+    if (clicked === "check") {
       let playerMove = e.target.move.value
       let checkMove = finalMove
 
       if (!props.strictMode) {
-        playerMove = playerMove.replace(/[^0-9a-z]/gi, '')
-        checkMove = checkMove.replace(/[^0-9a-z]/gi, '')
+        playerMove = playerMove.replace(/[^0-9a-z]/gi, "")
+        checkMove = checkMove.replace(/[^0-9a-z]/gi, "")
       }
 
       if (playerMove.toLowerCase() == checkMove.toLowerCase()) {
         playCorrect()
-        e.target.move.value = ''
+        e.target.move.value = ""
 
         showFlash(true)
         setTimeout(() => {
@@ -76,8 +76,8 @@ export default function VisualiseChess(props) {
 
         props.onError()
       }
-    } else if (clicked === 'skip') {
-      e.target.move.value = ''
+    } else if (clicked === "skip") {
+      e.target.move.value = ""
       props.onSkip()
     }
   }
@@ -104,13 +104,13 @@ export default function VisualiseChess(props) {
         </div>
         <div className="flex flex-row items-center space-x-2">
           <button
-            onClick={() => (clicked = 'check')}
+            onClick={() => (clicked = "check")}
             className="inline-block w-fit py-2 px-12 text-light font-bold bg-primary hover:bg-accent-dark hover:text-light rounded-full transition duration-200"
           >
             Check
           </button>
           <button
-            onClick={() => (clicked = 'skip')}
+            onClick={() => (clicked = "skip")}
             className="text-sm inline-block w-fit py-2 px-6 text-dark font-bold bg-accent-light hover:bg-accent-dark hover:text-light rounded-full transition duration-200"
           >
             Skip Puzzle
@@ -121,26 +121,26 @@ export default function VisualiseChess(props) {
       <div
         className={
           colorFlash
-            ? 'shadow-xl shadow-[#84cc16] transition-all'
+            ? "shadow-xl shadow-[#84cc16] transition-all"
             : errorFlash
-            ? 'shadow-xl shadow-[#cc2b16] transition-all'
-            : ''
+            ? "shadow-xl shadow-[#cc2b16] transition-all"
+            : ""
         }
       >
         <Chessground
           width={
             windowSize.width < 1024
               ? windowSize.width < 768
-                ? '85vw'
-                : '65vw'
-              : '60vh'
+                ? "85vw"
+                : "65vw"
+              : "60vh"
           }
           height={
             windowSize.width < 1024
               ? windowSize.width < 768
-                ? '85vw'
-                : '65vw'
-              : '60vh'
+                ? "85vw"
+                : "65vw"
+              : "60vh"
           }
           turnColor={orientation}
           orientation={orientation}

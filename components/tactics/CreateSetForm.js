@@ -1,10 +1,10 @@
-import { useState, useContext } from 'react'
-import { UserContext } from '../lib/context'
-import { Dialog, Tab } from '@headlessui/react'
-import getPuzzle from './PuzzleHandler'
-import Spinner from './Spinner'
-import Select from 'react-select'
-import { themeOptions } from './data'
+import { useState, useContext } from "react"
+import { UserContext } from "../../lib/context"
+import { Dialog, Tab } from "@headlessui/react"
+import getPuzzle from "../utils/PuzzleHandler"
+import Spinner from "../utils/Spinner"
+import Select from "react-select"
+import { themeOptions } from "../utils/data"
 
 export default function CreateSetForm(props) {
   const { user } = useContext(UserContext)
@@ -145,9 +145,9 @@ export default function CreateSetForm(props) {
                         <Tab
                           className={({ selected }) =>
                             (selected
-                              ? ' border-primary bg-white  '
-                              : ' border-accent-light bg-gray-200 ') +
-                            'appearance-none border-2 border-r-0 rounded-r-none rounded  w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary'
+                              ? " border-primary bg-white  "
+                              : " border-accent-light bg-gray-200 ") +
+                            "appearance-none border-2 border-r-0 rounded-r-none rounded  w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary"
                           }
                         >
                           Easy
@@ -155,9 +155,9 @@ export default function CreateSetForm(props) {
                         <Tab
                           className={({ selected }) =>
                             (selected
-                              ? ' border-primary bg-white '
-                              : ' border-accent-light bg-gray-200 ') +
-                            'appearance-none border-y-2 rounded-y w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary'
+                              ? " border-primary bg-white "
+                              : " border-accent-light bg-gray-200 ") +
+                            "appearance-none border-y-2 rounded-y w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary"
                           }
                         >
                           Medium
@@ -165,9 +165,9 @@ export default function CreateSetForm(props) {
                         <Tab
                           className={({ selected }) =>
                             (selected
-                              ? ' border-primary bg-white '
-                              : ' border-accent-light bg-gray-200 ') +
-                            'appearance-none border-2 border-l-0 rounded-l-none rounded  w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary'
+                              ? " border-primary bg-white "
+                              : " border-accent-light bg-gray-200 ") +
+                            "appearance-none border-2 border-l-0 rounded-l-none rounded  w-fit px-2 py-2 leading-tight focus:outline-none focus:border-primary"
                           }
                         >
                           Hard
@@ -247,13 +247,13 @@ export default function CreateSetForm(props) {
             </form>
             <div
               className="pt-4"
-              style={{ display: disable ? 'block' : 'none' }}
+              style={{ display: disable ? "block" : "none" }}
             >
               <Spinner text="Building your Puzzle Set..." />
             </div>
             <div
               className="pt-4 italic text-danger"
-              style={{ display: errorMsg ? 'block' : 'none' }}
+              style={{ display: errorMsg ? "block" : "none" }}
             >
               <p>
                 Error: Please try again. If the error persists, please contact

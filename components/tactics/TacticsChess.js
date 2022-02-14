@@ -1,18 +1,18 @@
-import { useState, useContext, useEffect } from 'react'
-import { UserContext } from '../lib/context'
-import Chessboard from './TacticsChessboard'
-import { firestore } from '../lib/firebase'
-import { doc, setDoc } from 'firebase/firestore'
-import useSound from 'use-sound'
-import { useStopwatch } from 'react-timer-hook'
+import { useState, useContext, useEffect } from "react"
+import { UserContext } from "../../lib/context"
+import Chessboard from "./TacticsChessboard"
+import { firestore } from "../../lib/firebase"
+import { doc, setDoc } from "firebase/firestore"
+import useSound from "use-sound"
+import { useStopwatch } from "react-timer-hook"
 
 export default function TacticsChess(props) {
   const { seconds, minutes, hours, days, isRunning, start, pause, reset } =
     useStopwatch({ autoStart: true })
 
-  const [playCorrect] = useSound('/sounds/correct.mp3', { volume: 0.25 })
-  const [playIncorrect] = useSound('/sounds/incorrect.mp3', { volume: 0.25 })
-  const [playHighScore] = useSound('/sounds/highscore.mp3', { volume: 0.25 })
+  const [playCorrect] = useSound("/sounds/correct.mp3", { volume: 0.25 })
+  const [playIncorrect] = useSound("/sounds/incorrect.mp3", { volume: 0.25 })
+  const [playHighScore] = useSound("/sounds/highscore.mp3", { volume: 0.25 })
 
   const [startTime, setstartTime] = useState(Date.now())
   const [error, setError] = useState(false)
@@ -21,7 +21,7 @@ export default function TacticsChess(props) {
 
   const { user } = useContext(UserContext)
   const [currentSet, setcurrentSet] = useState(() => {
-    let saved = JSON.parse(localStorage.getItem('tactics-set-list'))
+    let saved = JSON.parse(localStorage.getItem("tactics-set-list"))
     return saved.find((set) => {
       return set.id == props.setId
     })
@@ -41,7 +41,7 @@ export default function TacticsChess(props) {
     let history = chess.history({ verbose: true })
     let moveIndex = history.length - 1
     let last = history[moveIndex]
-    let move = last.from + last.to + (last.promotion || '')
+    let move = last.from + last.to + (last.promotion || "")
 
     if (move == puzzle.moves[moveIndex] || chess.in_checkmate()) {
       showFlash(true)
@@ -51,20 +51,20 @@ export default function TacticsChess(props) {
 
       if (moveIndex != puzzle.moves.length - 1) {
         playCorrect()
-        return 'next'
+        return "next"
       }
 
       currentSet.set.rounds[currentSet.set.rounds.length - 1].correct += 1
       playHighScore()
       nextPuzzle()
-      return 'finished'
+      return "finished"
     } else {
       showError(true)
       setTimeout(() => {
         showError(false)
       }, 500)
       playIncorrect()
-      return 'error'
+      return "error"
     }
   }
 
@@ -80,7 +80,7 @@ export default function TacticsChess(props) {
       currentSet.set.rounds[currentSet.set.rounds.length - 1].completed ===
       currentSet.set.setSize
     ) {
-      console.log('Add Set')
+      console.log("Add Set")
       currentSet.set.rounds.push({ completed: 0, correct: 0, timeSpent: 0 })
       saveSet()
       props.stopSession()
@@ -96,15 +96,15 @@ export default function TacticsChess(props) {
     let dif = (currentTime - startTime) / 1000
     currentSet.set.rounds[currentSet.set.rounds.length - 1].timeSpent += dif
 
-    let saved = JSON.parse(localStorage.getItem('tactics-set-list'))
+    let saved = JSON.parse(localStorage.getItem("tactics-set-list"))
     saved.forEach(function (set, i) {
       if (set.id == currentSet.id) {
         saved[i] = currentSet
       }
     })
-    localStorage.setItem('tactics-set-list', JSON.stringify(saved))
+    localStorage.setItem("tactics-set-list", JSON.stringify(saved))
     setDoc(
-      doc(firestore, 'users', user.uid, 'tactics-sets', currentSet.id),
+      doc(firestore, "users", user.uid, "tactics-sets", currentSet.id),
       currentSet.set
     )
   }
@@ -116,10 +116,10 @@ export default function TacticsChess(props) {
           <div className="bg-dark rounded text-light p-4 space-y-2 h-fit flex flex-col">
             <div className="flex flex-row space-x-4">
               <p className="font-bold">
-                {puzzle.fen.split(' ')[1] == 'w' ? 'Black' : 'White'} to move
+                {puzzle.fen.split(" ")[1] == "w" ? "Black" : "White"} to move
               </p>
               <p>
-                Puzzle{' '}
+                Puzzle{" "}
                 {currentSet.set.rounds[currentSet.set.rounds.length - 1]
                   .completed + 1}
                 /{currentSet.set.setSize}
@@ -147,7 +147,7 @@ export default function TacticsChess(props) {
                     Next Puzzle
                   </button>
                   <a
-                    href={'https://lichess.org/training/' + puzzle.puzzleid}
+                    href={"https://lichess.org/training/" + puzzle.puzzleid}
                     className="py-2 px-4 rounded bg-accent-dark hover:bg-accent-light text-dark font-bold w-full  text-center"
                     target="_blank"
                   >
@@ -160,10 +160,10 @@ export default function TacticsChess(props) {
           <div
             className={
               colorFlash
-                ? 'shadow-xl shadow-[#84cc16] transition-all'
+                ? "shadow-xl shadow-[#84cc16] transition-all"
                 : errorFlash
-                ? 'shadow-xl shadow-[#cc2b16] transition-all'
-                : ''
+                ? "shadow-xl shadow-[#cc2b16] transition-all"
+                : ""
             }
           >
             <Chessboard

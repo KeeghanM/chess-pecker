@@ -1,11 +1,11 @@
-import Image from 'next/image'
-import { useState, useRef, useEffect } from 'react'
-import { Dialog } from '@headlessui/react'
-import dynamic from 'next/dynamic.js'
-const Chessground = dynamic(() => import('react-chessground'), { ssr: false })
-import 'react-chessground/dist/styles/chessground.css'
-import Chess from '../lib/chess.js'
-import { useWindowSize } from '../lib/hooks.js'
+import Image from "next/image"
+import { useState, useRef, useEffect } from "react"
+import { Dialog } from "@headlessui/react"
+import dynamic from "next/dynamic.js"
+const Chessground = dynamic(() => import("react-chessground"), { ssr: false })
+import "react-chessground/dist/styles/chessground.css"
+import Chess from "../../lib/chess.js"
+import { useWindowSize } from "../../lib/hooks.js"
 
 const Chessboard = (props) => {
   let moveDelay = 600
@@ -32,13 +32,13 @@ const Chessboard = (props) => {
     const moves = chess.moves({ verbose: true })
     for (let i = 0, len = moves.length; i < len; i++) {
       /* eslint-disable-line */
-      if (moves[i].flags.indexOf('p') !== -1 && moves[i].from === from) {
+      if (moves[i].flags.indexOf("p") !== -1 && moves[i].from === from) {
         setPendingMove([from, to])
         setPromotionVisible(true)
         return
       }
     }
-    makeMove(from, to, 'q', true)
+    makeMove(from, to, "q", true)
   }
 
   const promotion = (p) => {
@@ -50,7 +50,7 @@ const Chessboard = (props) => {
   function puzzleMove(i) {
     let from = puzzle.moves[i].substring(0, 2)
     let to = puzzle.moves[i].substring(2, 4)
-    let promo = puzzle.moves[i].substring(4) || ''
+    let promo = puzzle.moves[i].substring(4) || ""
     makeMove(from, to, promo, false)
   }
 
@@ -62,11 +62,11 @@ const Chessboard = (props) => {
       setPromotionVisible(false)
       if (player) {
         let check = props.moveCheck(chess)
-        if (check === 'next') {
+        if (check === "next") {
           setTimeout(() => {
             puzzleMove(chess.history().length)
           }, moveDelay)
-        } else if (check === 'error') {
+        } else if (check === "error") {
           let moveIndex = chess.history().length - 1
           chess.undo()
           setFen(chess.fen())
@@ -90,7 +90,7 @@ const Chessboard = (props) => {
   }
 
   const turnColor = () => {
-    return props.puzzle.fen.split(' ')[1] === 'w' ? 'black' : 'white'
+    return props.puzzle.fen.split(" ")[1] === "w" ? "black" : "white"
   }
 
   const calcMovable = () => {
@@ -118,16 +118,16 @@ const Chessboard = (props) => {
             width={
               windowSize.width < 1024
                 ? windowSize.width < 768
-                  ? '85vw'
-                  : '65vw'
-                : '60vh'
+                  ? "85vw"
+                  : "65vw"
+                : "60vh"
             }
             height={
               windowSize.width < 1024
                 ? windowSize.width < 768
-                  ? '85vw'
-                  : '65vw'
-                : '60vh'
+                  ? "85vw"
+                  : "65vw"
+                : "60vh"
             }
             turnColor={turnColor()}
             orientation={turnColor()}
@@ -149,16 +149,16 @@ const Chessboard = (props) => {
         <div className="flex items-center justify-center min-h-screen">
           <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
           <div className="relative bg-white rounded max-w-sm mx-auto p-3 space-x-2">
-            <button onClick={() => promotion('q')} ref={queenRef}>
+            <button onClick={() => promotion("q")} ref={queenRef}>
               <Image src="/chessPieces/wQ.svg" width="50px" height="50px" />
             </button>
-            <button onClick={() => promotion('r')}>
+            <button onClick={() => promotion("r")}>
               <Image src="/chessPieces/wR.svg" width="50px" height="50px" />
             </button>
-            <button onClick={() => promotion('b')}>
+            <button onClick={() => promotion("b")}>
               <Image src="/chessPieces/wB.svg" width="50px" height="50px" />
             </button>
-            <button onClick={() => promotion('n')}>
+            <button onClick={() => promotion("n")}>
               <Image src="/chessPieces/wN.svg" width="50px" height="50px" />
             </button>
           </div>
