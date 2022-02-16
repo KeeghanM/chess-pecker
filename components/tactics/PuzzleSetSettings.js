@@ -10,12 +10,7 @@ import { percentOf, secondsToTime } from "../../lib/utils"
 export default function PuzzleSetSettings(props) {
   const { user } = useContext(UserContext)
   const [dialogOpen, setDialogOpen] = useState(false)
-  let set = JSON.parse(localStorage.getItem("tactics-set-list")).filter(
-    (set) => {
-      return set.id == props.setId
-    }
-  )[0]
-
+  let set = props.set
   let roundStats = []
   for (let i = set.set.rounds.length - 1; i >= 0; i--) {
     roundStats.push(

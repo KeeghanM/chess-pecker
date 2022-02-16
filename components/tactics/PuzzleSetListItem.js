@@ -28,7 +28,7 @@ export default function SetListItem(props) {
           Train Set
         </button>
 
-        <PuzzleSetSettings setId={props.set.id} updateList={props.updateList} />
+        <PuzzleSetSettings set={props.set} updateList={props.updateList} />
       </div>
     </div>
   )

@@ -117,18 +117,18 @@ export default function PuzzleSetupForm(props) {
                   max={6}
                   onChange={(x) => setmoves(x.target.value)}
                 />
-                <ul class="flex justify-between w-full px-[10px]">
+                <ul className="flex justify-between w-full px-[10px]">
                   <li class="flex justify-center relative">
-                    <span class="absolute">3</span>
+                    <span className="absolute">3</span>
                   </li>
-                  <li class="flex justify-center relative">
-                    <span class="absolute">4</span>
+                  <li className="flex justify-center relative">
+                    <span className="absolute">4</span>
                   </li>
-                  <li class="flex justify-center relative">
-                    <span class="absolute">5</span>
+                  <li className="flex justify-center relative">
+                    <span className="absolute">5</span>
                   </li>
-                  <li class="flex justify-center relative">
-                    <span class="absolute">6</span>
+                  <li className="flex justify-center relative">
+                    <span className="absolute">6</span>
                   </li>
                 </ul>
               </div>
