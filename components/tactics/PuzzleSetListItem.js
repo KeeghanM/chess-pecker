@@ -21,13 +21,15 @@ export default function SetListItem(props) {
         Round Time: {secondsToTime(set.rounds[set.rounds.length - 1].timeSpent)}
       </p>
       <div className="flex flex-row gap-6 pt-6">
-        <button
-          onClick={props.onSelect}
-          className="px-4 py-2 bg-primary text-light hover:bg-accent-light hover:text-dark transition duration-200"
-        >
-          Train Set
-        </button>
-
+        {set.rounds.length <= 8 &&
+          set.rounds[set.rounds.length - 1].completed < set.setSize && (
+            <button
+              onClick={props.onSelect}
+              className="px-4 py-2 bg-primary text-light hover:bg-accent-light hover:text-dark transition duration-200"
+            >
+              Train Set
+            </button>
+          )}
         <PuzzleSetSettings set={props.set} updateList={props.updateList} />
       </div>
     </div>

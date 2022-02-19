@@ -80,8 +80,10 @@ export default function TacticsChess(props) {
       currentSet.set.rounds[currentSet.set.rounds.length - 1].completed ===
       currentSet.set.setSize
     ) {
-      console.log("Add Set")
-      currentSet.set.rounds.push({ completed: 0, correct: 0, timeSpent: 0 })
+      if (currentSet.set.rounds.length < 8) {
+        console.log("Add Set")
+        currentSet.set.rounds.push({ completed: 0, correct: 0, timeSpent: 0 })
+      }
       saveSet()
       props.stopSession()
     } else {
