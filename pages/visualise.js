@@ -8,6 +8,7 @@ import { firestore } from "../lib/firebase"
 import HeroBanner from "../components/utils/HeroBanner"
 import ContentBlock from "../components/utils/ContentBlock"
 import PuzzleSetupForm from "../components/visualise/PuzzleSetupForm"
+import { difficultyAdjuster } from "../lib/utils"
 
 export default function visualise() {
   const { user } = useContext(UserContext)
@@ -75,10 +76,6 @@ export default function visualise() {
         puzzleId: currentPuzzle.puzzleid,
       })
     }
-  }
-
-  function difficultyAdjuster(d) {
-    return d == 0 ? 0.8 : d == 1 ? 1 : 1.2
   }
 
   function formSubmit(e) {
