@@ -18,6 +18,20 @@ export default function FeatureRow() {
           tracking your accuracy & time spent.
         </p>
       </FeatureCard>
+      <FeatureCard title="Endgame Practice" cta="Train Now" target="/endgames">
+        <p>
+          Fundamental to the game of chess, endgames are an area of chess which
+          many players neglect in their training.
+        </p>
+        <p>
+          Not as exciting as openings, not as sexy as middlegame tactics, but
+          arguably much more important than either.
+        </p>
+        <p>
+          Pick from Queen, Rook, Knight, Bishop, or Pawn endgames. Or let fate
+          decide.
+        </p>
+      </FeatureCard>
       <FeatureCard
         title="Visualisation & Calculation"
         cta="Train Now"
