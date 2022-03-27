@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react"
 import { UserContext } from "../../lib/context"
-import Chessboard from "./TacticsChessboard"
+import Chessboard from "../utils/Chessboard"
 import { firestore } from "../../lib/firebase"
 import { doc, setDoc } from "firebase/firestore"
 import useSound from "use-sound"

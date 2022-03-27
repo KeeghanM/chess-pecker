@@ -7,7 +7,7 @@ import "react-chessground/dist/styles/chessground.css"
 import Chess from "../../lib/chess.js"
 import { useWindowSize } from "../../lib/hooks.js"
 
-const Chessboard = (props) => {
+export default function Chessboard(props) {
   let moveDelay = 600
   let puzzle = props.puzzle
   const [chess, setChess] = useState(null)
@@ -167,5 +167,3 @@ const Chessboard = (props) => {
     </>
   )
 }
-
-export default Chessboard
