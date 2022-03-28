@@ -3,13 +3,34 @@ import { XCircleIcon } from "@heroicons/react/outline"
 import { UserContext } from "../../lib/context"
 import Spinner from "../utils/Spinner"
 import { Dialog } from "@headlessui/react"
+import axios from "axios"
 
 export default function ImportSet() {
   const { user } = useContext(UserContext)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [loading, setloading] = useState(false)
+  const [errorMessage, seterrorMessage] = useState(null)
 
-  function loadFile() {
-    alert()
+  function loadFile(e) {
+    e.preventDefault()
+    setloading(true)
+    seterrorMessage(null)
+
+    let formData = new FormData(e.target)
+
+    fetch("/api/setUpload", { method: "POST", body: formData })
+      .then((res) => {
+        if (res.status == 200) {
+          console.log(res.data)
+        } else {
+          res.text().then((t) => seterrorMessage(t))
+        }
+        setloading(false)
+      })
+      .catch((err) => {
+        setloading(false)
+        seterrorMessage(err.message)
+      })
   }
 
   return (
@@ -40,10 +61,9 @@ export default function ImportSet() {
               </button>
             </div>
             <form
-              method="post"
-              action="/api/setUpload"
-              encType="multipart/form-data"
+              onSubmit={loadFile}
               className="flex flex-row gap-2"
+              encType="multipart/form-data"
             >
               <input name="setFile" type="file" accept=".json" required />
               <button
@@ -53,6 +73,13 @@ export default function ImportSet() {
                 Import
               </button>
             </form>
+
+            {loading && <Spinner text="Processing set, please be patient..." />}
+            {errorMessage && (
+              <p className="text-danger mt-2">
+                {errorMessage} - Please fix and try again
+              </p>
+            )}
           </div>
         </div>
       </Dialog>
