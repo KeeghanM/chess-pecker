@@ -10,12 +10,12 @@ handler.post(async (req, res) => {
   try {
     let setFile = req.files.setFile[0]
     if (setFile.originalFilename.split(".").pop() != "json") {
-      res.status(400).send({ error: "Incorrect File Format" })
+      res.status(400).send("Incorrect File Format")
       return
     }
     fs.readFile(setFile.path, "utf8", (err, jsonString) => {
       if (err) {
-        res.status(500).send({ error: err.message })
+        res.status(500).send(err.message)
         return
       }
       let set = JSON.parse(jsonString)
@@ -26,15 +26,13 @@ handler.post(async (req, res) => {
         Object.keys(set).includes("puzzles") == false ||
         Object.keys(set).includes("setName") == false
       ) {
-        res.status(400).send({ error: "Invalid Set Format" })
+        res.status(400).send("Invalid Set Format")
         return
       }
 
       // validation of puzzles
       if (set.puzzles.length > 1000) {
-        res
-          .status(400)
-          .send({ error: "Too many puzzles. Must not exceed 1000 puzzles." })
+        res.status(400).send("Too many puzzles. Must not exceed 1000 puzzles.")
         return
       }
 
@@ -53,27 +51,27 @@ handler.post(async (req, res) => {
           Object.keys(puzzle).includes("fen") == false ||
           Object.keys(puzzle).includes("moves") == false
         ) {
-          res.status(400).send({ error: "Invalid Puzzle Format" })
+          res.status(400).send("Invalid Puzzle Format")
           return
         }
 
         // Check for no extra fields
         for (let key of Object.keys(puzzle)) {
           if (validateFields.includes(key) == false) {
-            res.status(400).send({ error: "Invalid Puzzle Format" })
+            res.status(400).send("Invalid Puzzle Format")
             return
           }
         }
 
         if (chess.load(puzzle.fen) == false) {
-          res.status(400).send({ error: "Invalid FEN in puzzle" })
+          res.status(400).send("Invalid FEN in puzzle")
           return
         }
 
         // Check all moves in puzzle are valid
         for (let mv in puzzle.moves) {
           if (chess.move(puzzle.moves[mv], { sloppy: true }) === null) {
-            res.status(400).send({ error: "Invalid move in puzzle" })
+            res.status(400).send("Invalid move in puzzle")
             return
           }
         }
@@ -82,7 +80,7 @@ handler.post(async (req, res) => {
       res.status(200).send(set)
     })
   } catch (err) {
-    res.status(500).send({ error: err.message })
+    res.status(500).send(err.message)
   }
 })
 
