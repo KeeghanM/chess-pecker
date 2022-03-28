@@ -45,7 +45,7 @@ export default function ImportSet() {
               encType="multipart/form-data"
               className="flex flex-row gap-2"
             >
-              <input name="setFile" type="file" accept=".json" />
+              <input name="setFile" type="file" accept=".json" required />
               <button
                 type="submit"
                 className="px-4 py-2 bg-primary text-light hover:bg-accent-dark transition duration-200"
