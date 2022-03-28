@@ -77,7 +77,7 @@ export default function CreateSetForm(props) {
         }}
         className="px-4 py-2 bg-accent-light text-dark hover:bg-primary hover:text-light transition duration-200"
       >
-        Add Set
+        Create Set
       </button>
       <Dialog
         open={dialogOpen}

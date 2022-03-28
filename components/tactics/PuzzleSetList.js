@@ -4,6 +4,7 @@ import { firestore } from "../../lib/firebase"
 import { collection, getDocs, addDoc, Timestamp } from "firebase/firestore"
 import CreateSetForm from "./CreateSetForm"
 import SetListItem from "./PuzzleSetListItem"
+import ImportSet from "./ImportSet"
 
 export default function PuzzleSetList(props) {
   const { user } = useContext(UserContext)
@@ -73,8 +74,9 @@ export default function PuzzleSetList(props) {
         })}
       </div>
       {puzzleSetList.length < 3 && (
-        <div className="mt-6">
+        <div className="mt-6 flex flex-row gap-6">
           <CreateSetForm saveSet={createSet} />
+          <ImportSet />
         </div>
       )}
     </div>
