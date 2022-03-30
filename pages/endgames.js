@@ -1,8 +1,7 @@
 import { Tab } from "@headlessui/react"
 import { useContext, useState } from "react"
-import useSound from "use-sound"
+import EndgameChess from "../components/endgames/EndgameChess"
 import Layout from "../components/layout/Layout"
-import Chessboard from "../components/utils/Chessboard"
 import ContentBlock from "../components/utils/ContentBlock"
 import HeroBanner from "../components/utils/HeroBanner"
 import getPuzzle from "../components/utils/PuzzleHandler"
@@ -22,7 +21,6 @@ export default function Endgames() {
   const [puzzles, setpuzzles] = useState([])
   const [currentPuzzle, setcurrentPuzzle] = useState(null)
   const [errorMsg, seterrorMsg] = useState(false)
-  const [wrongSolution, setwrongSolution] = useState(false)
   const themes = [
     "endgame",
     "queenEndgame",
@@ -31,12 +29,6 @@ export default function Endgames() {
     "knightEndgame",
     "pawnEndgame",
   ]
-
-  const [playCorrect] = useSound("/sounds/correct.mp3", { volume: 0.25 })
-  const [playIncorrect] = useSound("/sounds/incorrect.mp3", { volume: 0.25 })
-  const [playHighScore] = useSound("/sounds/highscore.mp3", { volume: 0.25 })
-  const [colorFlash, showFlash] = useState(false)
-  const [errorFlash, showError] = useState(false)
 
   function formSubmit(e) {
     e.preventDefault()
@@ -65,39 +57,7 @@ export default function Endgames() {
       })
   }
 
-  function moveCheck(chess) {
-    let history = chess.history({ verbose: true })
-    let moveIndex = history.length - 1
-    let last = history[moveIndex]
-    let move = last.from + last.to + (last.promotion || "")
-
-    if (move == currentPuzzle.moves[moveIndex] || chess.in_checkmate()) {
-      showFlash(true)
-      setTimeout(() => {
-        showFlash(false)
-      }, 500)
-
-      if (moveIndex != currentPuzzle.moves.length - 1) {
-        playCorrect()
-        return "next"
-      }
-
-      playHighScore()
-      nextPuzzle()
-      return "finished"
-    } else {
-      showError(true)
-      setTimeout(() => {
-        showError(false)
-      }, 500)
-      playIncorrect()
-      return "error"
-    }
-  }
-
   function nextPuzzle() {
-    setwrongSolution(false)
-
     setcurrentPuzzle(puzzles.shift())
 
     if (puzzles.length < 5) {
@@ -113,62 +73,16 @@ export default function Endgames() {
   function endSession() {
     setcurrentPuzzle(null)
     setpuzzles([])
-    setwrongSolution(false)
   }
 
   return (
     <Layout name="Endgames">
       {currentPuzzle ? (
-        <div className="flex flex-col items-center my-12">
-          <h2 className="mb-6 text-4xl font-bold text-light">
-            {(currentPuzzle.fen.split(" ")[1] == "w" ? "Black" : "White") +
-              " To Move"}
-          </h2>
-          <div className="w-full flex flex-row gap-2 justify-center">
-            <button
-              className="w-fit px-4 py-2 bg-accent-light text-dark hover:bg-accent-dark hover:text-light transition duration-200 text-center"
-              onClick={endSession}
-            >
-              End Session
-            </button>
-            {wrongSolution && (
-              <>
-                <button
-                  className="w-fit px-4 py-2 bg-primary text-light hover:bg-accent-dark transition duration-200"
-                  onClick={nextPuzzle}
-                >
-                  Next Puzzle
-                </button>
-                <a
-                  href={
-                    "https://lichess.org/training/" + currentPuzzle.puzzleid
-                  }
-                  className="w-fit px-4 py-2 bg-accent-light text-dark hover:bg-accent-dark hover:text-light transition duration-200 text-center"
-                  target="_blank"
-                >
-                  Analysis Board
-                </a>
-              </>
-            )}
-          </div>
-          <div
-            className={
-              colorFlash
-                ? "shadow-xl shadow-[#84cc16] transition-all"
-                : errorFlash
-                ? "shadow-xl shadow-[#cc2b16] transition-all"
-                : ""
-            }
-          >
-            <Chessboard
-              puzzle={currentPuzzle}
-              moveCheck={moveCheck}
-              showNext={() => {
-                setwrongSolution(true)
-              }}
-            />
-          </div>
-        </div>
+        <EndgameChess
+          puzzle={currentPuzzle}
+          nextPuzzle={nextPuzzle}
+          endSession={endSession}
+        />
       ) : (
         <>
           <HeroBanner
