@@ -6,6 +6,7 @@ import Spinner from "../utils/Spinner"
 import Select from "react-select"
 import { themeOptions } from "../utils/data"
 import { XCircleIcon } from "@heroicons/react/outline"
+import { createSet } from "../../lib/utils"
 
 export default function CreateSetForm(props) {
   const { user } = useContext(UserContext)
@@ -25,7 +26,7 @@ export default function CreateSetForm(props) {
     return d == 0 ? 0.9 : d == 1 ? 1 : 1.2
   }
 
-  function createSet(e) {
+  function formSubmit(e) {
     e.preventDefault()
     setdisable(true)
     let form = e.target
@@ -50,10 +51,12 @@ export default function CreateSetForm(props) {
         count: settings.count,
         themes,
       }).then((response) => {
-        props.saveSet({
-          puzzles: response.data.puzzles,
-          name: settings.form.setName.value,
-        })
+        let name = settings.form.setName.value
+        let puzzles = response.data.puzzles
+
+        createSet(name, puzzles, user.uid)
+        props.onSave()
+
         setdisable(false)
         setdialogOpen(false)
         attempts = 0
@@ -103,7 +106,7 @@ export default function CreateSetForm(props) {
                 <XCircleIcon className="w-10 h-10" />
               </button>
             </div>
-            <form onSubmit={createSet}>
+            <form onSubmit={formSubmit}>
               <fieldset disabled={disable}>
                 <div className="space-y-2">
                   <div>

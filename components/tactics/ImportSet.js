@@ -3,9 +3,9 @@ import { XCircleIcon } from "@heroicons/react/outline"
 import { UserContext } from "../../lib/context"
 import Spinner from "../utils/Spinner"
 import { Dialog } from "@headlessui/react"
-import axios from "axios"
+import { createSet } from "../../lib/utils"
 
-export default function ImportSet() {
+export default function ImportSet(props) {
   const { user } = useContext(UserContext)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [loading, setloading] = useState(false)
@@ -20,11 +20,20 @@ export default function ImportSet() {
 
     fetch("/api/setUpload", { method: "POST", body: formData })
       .then((res) => {
-        if (res.status == 200) {
-          console.log(res.data)
-        } else {
-          res.text().then((t) => seterrorMessage(t))
-        }
+        res.text().then((data) => {
+          if (res.status == 200) {
+            let set = JSON.parse(data)
+            let name = set.setName
+            let puzzles = set.puzzles
+            createSet(name, puzzles, user.uid)
+            props.onSave()
+
+            setDialogOpen(false)
+          } else {
+            seterrorMessage(data)
+          }
+        })
+
         setloading(false)
       })
       .catch((err) => {
@@ -43,7 +52,11 @@ export default function ImportSet() {
       </button>
       <Dialog
         open={dialogOpen}
-        onClose={() => setDialogOpen(false)}
+        onClose={() => {
+          setloading(false)
+          setDialogOpen(false)
+          seterrorMessage(null)
+        }}
         className="fixed z-10 inset-0 overflow-y-auto font-serif"
       >
         <div className="flex items-center justify-center min-h-screen">
@@ -54,7 +67,9 @@ export default function ImportSet() {
               <button
                 className="text-dark hover:text-primary"
                 onClick={() => {
+                  setloading(false)
                   setDialogOpen(false)
+                  seterrorMessage(null)
                 }}
               >
                 <XCircleIcon className="w-10 h-10" />
@@ -62,16 +77,18 @@ export default function ImportSet() {
             </div>
             <form
               onSubmit={loadFile}
-              className="flex flex-row gap-2"
+              className="flex flex-row gap-2 items-center"
               encType="multipart/form-data"
             >
-              <input name="setFile" type="file" accept=".json" required />
-              <button
-                type="submit"
-                className="px-4 py-2 bg-primary text-light hover:bg-accent-dark transition duration-200"
-              >
-                Import
-              </button>
+              <fieldset disabled={loading}>
+                <input name="setFile" type="file" accept=".json" required />
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-primary text-light hover:bg-accent-dark transition duration-200"
+                >
+                  Import
+                </button>
+              </fieldset>
             </form>
 
             {loading && <Spinner text="Processing set, please be patient..." />}

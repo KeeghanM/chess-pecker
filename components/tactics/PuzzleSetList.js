@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react"
 import { UserContext } from "../../lib/context"
 import { firestore } from "../../lib/firebase"
-import { collection, getDocs, addDoc, Timestamp } from "firebase/firestore"
+import { collection, getDocs } from "firebase/firestore"
 import CreateSetForm from "./CreateSetForm"
 import SetListItem from "./PuzzleSetListItem"
 import ImportSet from "./ImportSet"
@@ -35,30 +35,6 @@ export default function PuzzleSetList(props) {
     )
   }
 
-  function createSet(props) {
-    let set = {
-      setName: props.name,
-      setSize: props.puzzles.length,
-      creationDate: Timestamp.fromDate(new Date()),
-      rounds: [
-        {
-          completed: 0,
-          correct: 0,
-          timeSpent: 0,
-        },
-      ],
-      puzzles: props.puzzles,
-    }
-
-    addDoc(collection(firestore, "users", user.uid, "tactics-sets"), set).then(
-      (doc) => {
-        let newSetList = [...puzzleSetList, { id: doc.id, set }]
-        localStorage.setItem("tactics-set-list", JSON.stringify(newSetList))
-        setpuzzleSetList(newSetList)
-      }
-    )
-  }
-
   return (
     <div>
       <div>
@@ -75,8 +51,8 @@ export default function PuzzleSetList(props) {
       </div>
       {puzzleSetList.length < 3 && (
         <div className="mt-6 flex flex-row gap-6">
-          <CreateSetForm saveSet={createSet} />
-          <ImportSet />
+          <CreateSetForm onSave={getSetList} />
+          <ImportSet onSave={getSetList} />
         </div>
       )}
     </div>
