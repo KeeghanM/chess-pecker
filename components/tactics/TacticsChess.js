@@ -55,7 +55,6 @@ export default function TacticsChess(props) {
       }
 
       currentSet.set.rounds[currentSet.set.rounds.length - 1].correct += 1
-      console.log(currentSet)
       playHighScore()
       nextPuzzle()
       return "finished"
