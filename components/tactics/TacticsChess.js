@@ -55,6 +55,7 @@ export default function TacticsChess(props) {
       }
 
       currentSet.set.rounds[currentSet.set.rounds.length - 1].correct += 1
+      console.log(currentSet)
       playHighScore()
       nextPuzzle()
       return "finished"
@@ -74,41 +75,27 @@ export default function TacticsChess(props) {
 
   function nextPuzzle() {
     setError(false)
-    currentSet.set.rounds[currentSet.set.rounds.length - 1].completed += 1
-
-    if (
-      currentSet.set.rounds[currentSet.set.rounds.length - 1].completed ===
-      currentSet.set.setSize
-    ) {
-      if (currentSet.set.rounds.length < 8) {
-        console.log("Add Set")
-        currentSet.set.rounds.push({ completed: 0, correct: 0, timeSpent: 0 })
-      }
-      saveSet()
-      props.stopSession()
-    } else {
-      changePuzzle(
-        currentSet.set.rounds[currentSet.set.rounds.length - 1].completed
-      )
-    }
-  }
-
-  function saveSet() {
     let currentTime = Date.now()
     let dif = (currentTime - startTime) / 1000
+
+    currentSet.set.rounds[currentSet.set.rounds.length - 1].completed += 1
     currentSet.set.rounds[currentSet.set.rounds.length - 1].timeSpent += dif
 
-    let saved = JSON.parse(localStorage.getItem("tactics-set-list"))
-    saved.forEach(function (set, i) {
-      if (set.id == currentSet.id) {
-        saved[i] = currentSet
-      }
-    })
-    localStorage.setItem("tactics-set-list", JSON.stringify(saved))
     setDoc(
       doc(firestore, "users", user.uid, "tactics-sets", currentSet.id),
       currentSet.set
-    )
+    ).then(() => {
+      if (
+        currentSet.set.rounds[currentSet.set.rounds.length - 1].completed ===
+        currentSet.set.setSize
+      ) {
+        props.stopSession()
+      } else {
+        changePuzzle(
+          currentSet.set.rounds[currentSet.set.rounds.length - 1].completed
+        )
+      }
+    })
   }
 
   return (

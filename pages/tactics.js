@@ -80,13 +80,11 @@ const tactics = () => {
                 {!user ? (
                   <LoginForm redirect="/tactics" />
                 ) : (
-                  !puzzleSetId && (
-                    <PuzzleSetList
-                      onSelect={(id) => {
-                        setpuzzleSetId(id)
-                      }}
-                    />
-                  )
+                  <PuzzleSetList
+                    onSelect={(id) => {
+                      setpuzzleSetId(id)
+                    }}
+                  />
                 )}
               </ContentBlock>
             </>
