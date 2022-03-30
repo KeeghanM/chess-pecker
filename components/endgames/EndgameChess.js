@@ -30,7 +30,7 @@ export default function EndgameChess(props) {
       }
 
       playHighScore()
-      showNext()
+      showNext("success")
       return "finished"
     } else {
       showError(true)
@@ -42,9 +42,9 @@ export default function EndgameChess(props) {
     }
   }
 
-  function showNext() {
+  function showNext(type) {
     setwrongSolution(false)
-    props.nextPuzzle()
+    props.nextPuzzle(type)
   }
 
   return (
@@ -64,7 +64,7 @@ export default function EndgameChess(props) {
           <>
             <button
               className="w-fit px-4 py-2 bg-primary text-light hover:bg-accent-dark transition duration-200"
-              onClick={showNext}
+              onClick={() => showNext("error")}
             >
               Next Puzzle
             </button>

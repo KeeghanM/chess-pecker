@@ -1,4 +1,5 @@
 import { Tab } from "@headlessui/react"
+import { addDoc, collection, Timestamp } from "firebase/firestore"
 import { useContext, useState } from "react"
 import EndgameChess from "../components/endgames/EndgameChess"
 import Layout from "../components/layout/Layout"
@@ -7,6 +8,7 @@ import HeroBanner from "../components/utils/HeroBanner"
 import getPuzzle from "../components/utils/PuzzleHandler"
 import Spinner from "../components/utils/Spinner"
 import { UserContext } from "../lib/context"
+import { firestore } from "../lib/firebase"
 import { difficultyAdjuster } from "../lib/utils"
 
 export default function Endgames() {
@@ -57,8 +59,19 @@ export default function Endgames() {
       })
   }
 
-  function nextPuzzle() {
+  function nextPuzzle(type) {
+    let puzzleToSave = currentPuzzle
     setcurrentPuzzle(puzzles.shift())
+
+    // Save the puzzle results to DB for Stats
+    if (user) {
+      addDoc(collection(firestore, "users", user.uid, "eg-" + type), {
+        date: Timestamp.fromDate(new Date()),
+        puzzleRating: puzzleToSave.rating.toString(),
+        puzzleId: puzzleToSave.puzzleid,
+        themes: puzzleToSave.themes,
+      })
+    }
 
     if (puzzles.length < 5) {
       fetchPuzzles(
