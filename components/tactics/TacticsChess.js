@@ -33,7 +33,6 @@ export default function TacticsChess(props) {
   }, [currentSet])
 
   function changePuzzle(i) {
-    // setstartTime(Date.now())
     setpuzzle(currentSet.set.puzzles[i])
   }
 
@@ -79,14 +78,17 @@ export default function TacticsChess(props) {
 
     currentSet.set.rounds[currentSet.set.rounds.length - 1].completed += 1
     currentSet.set.rounds[currentSet.set.rounds.length - 1].timeSpent += dif
-
+    saveSet(false)
+  }
+  function saveSet(endSession) {
     setDoc(
       doc(firestore, "users", user.uid, "tactics-sets", currentSet.id),
       currentSet.set
     ).then(() => {
       if (
         currentSet.set.rounds[currentSet.set.rounds.length - 1].completed ===
-        currentSet.set.setSize
+          currentSet.set.setSize ||
+        endSession
       ) {
         props.stopSession()
       } else {
@@ -120,8 +122,7 @@ export default function TacticsChess(props) {
               <button
                 className="w-full px-4 py-2 bg-accent-light text-dark hover:bg-accent-dark hover:text-light transition duration-200"
                 onClick={() => {
-                  saveSet()
-                  props.stopSession()
+                  saveSet(true)
                 }}
               >
                 End Session
