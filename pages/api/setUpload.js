@@ -18,7 +18,13 @@ handler.post(async (req, res) => {
         res.status(500).send(err.message)
         return
       }
-      let set = JSON.parse(jsonString)
+      let set = {}
+      try {
+        set = JSON.parse(jsonString)
+      } catch {
+        res.status(400).send("Invalid JSON")
+        return
+      }
 
       // Validation of set structure
       if (
