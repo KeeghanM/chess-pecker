@@ -145,7 +145,7 @@ export default function CreateSetForm(props) {
                         setselectedDifficulty(index)
                       }}
                     >
-                      <Tab.List className="space-x-2">
+                      <Tab.List>
                         <Tab
                           className={({ selected }) =>
                             (selected

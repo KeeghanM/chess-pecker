@@ -30,7 +30,7 @@ function GoogleSignInButton(props) {
   return (
     <button onClick={signInWithGoogle}>
       <div className="flex flex-row items-center p-2 bg-white text-dark pr-6 space-x-2">
-        <img src="/g-logo.png" width="50px" height="50px" alt="Google Logo" />
+        <img src="/g-logo.png" width="50" height="50" alt="Google Logo" />
         <p>Sign in with Google</p>
       </div>
     </button>

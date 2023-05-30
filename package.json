@@ -6,27 +6,27 @@
     "start": "next start"
   },
   "dependencies": {
-    "@headlessui/react": "^1.4.2",
+    "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^1.0.5",
-    "axios": "^0.24.0",
+    "@vercel/analytics": "^1.0.1",
+    "axios": "^1.4.0",
     "file-saver": "^2.0.5",
-    "firebase": "^9.6.2",
+    "firebase": "^9.22.1",
     "multiparty": "^4.2.3",
     "next": "latest",
-    "next-connect": "^0.12.2",
-    "react": "^17.0.2",
+    "next-connect": "^1.0.0",
+    "react": "^18.2.0",
     "react-chessground": "^1.5.0",
-    "react-dom": "^17.0.2",
-    "react-firebase-hooks": "^4.0.1",
-    "react-hotjar": "^4.0.0",
-    "react-select": "^5.2.2",
-    "react-timer-hook": "^3.0.5",
-    "swr": "0.5.5",
+    "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^5.1.1",
+    "react-select": "^5.7.3",
+    "react-timer-hook": "^3.0.6",
+    "swr": "2.1.5",
     "use-sound": "^4.0.1"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.0",
-    "postcss": "^8.4.4",
-    "tailwindcss": "^3.0.0"
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2"
   }
 }

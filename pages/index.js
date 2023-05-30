@@ -37,12 +37,7 @@ export default function Home() {
             <a className="group hover:text-accent-dark text-accent-light underline">
               I (Keeghan)
               <span className="hidden absolute group-visited:block group-hover:block ">
-                <Image
-                  priority
-                  src="/keeghan.jpg"
-                  width="240px"
-                  height="240px"
-                />
+                <Image priority src="/keeghan.jpg" width="240" height="240" />
               </span>
             </a>{" "}
             started working on this site, I focused on building tools that:

@@ -19,9 +19,11 @@ export default function HeroBanner(props) {
       </div>
       <Image
         src={props.image}
-        layout="fill"
-        objectFit="cover"
-        objectPosition="center"
+        fill
+        style={{
+          objectFit: "cover",
+          objectPosition: "center",
+        }}
         alt="Lone king chess piece, placed on a chessboard, against a dark background"
         className="z-0"
         priority

@@ -2,8 +2,7 @@
 import "../styles/globals.css"
 import { UserContext } from "../lib/context"
 import { useUserData } from "../lib/hooks"
-import { useEffect } from "react"
-import { hotjar } from "react-hotjar"
+import { Analytics } from "@vercel/analytics/react"
 
 export default function App({
   Component,
@@ -11,14 +10,11 @@ export default function App({
 }) {
   const userData = useUserData()
 
-  useEffect(() => {
-    hotjar.initialize(2807495, 6)
-  }, [])
-
   return (
     <UserContext.Provider value={userData}>
       <div className="font-serif">
         <Component {...pageProps} />
+        <Analytics />
       </div>
     </UserContext.Provider>
   )

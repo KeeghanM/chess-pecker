@@ -150,16 +150,16 @@ export default function Chessboard(props) {
           <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
           <div className="relative bg-white rounded max-w-sm mx-auto p-3 space-x-2">
             <button onClick={() => promotion("q")} ref={queenRef}>
-              <Image src="/chessPieces/wQ.svg" width="50px" height="50px" />
+              <Image src="/chessPieces/wQ.svg" width="50" height="50" />
             </button>
             <button onClick={() => promotion("r")}>
-              <Image src="/chessPieces/wR.svg" width="50px" height="50px" />
+              <Image src="/chessPieces/wR.svg" width="50" height="50" />
             </button>
             <button onClick={() => promotion("b")}>
-              <Image src="/chessPieces/wB.svg" width="50px" height="50px" />
+              <Image src="/chessPieces/wB.svg" width="50" height="50" />
             </button>
             <button onClick={() => promotion("n")}>
-              <Image src="/chessPieces/wN.svg" width="50px" height="50px" />
+              <Image src="/chessPieces/wN.svg" width="50" height="50" />
             </button>
           </div>
         </div>
