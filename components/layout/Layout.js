@@ -23,7 +23,7 @@ const Layout = (props) => {
         />
         <Script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7394948634783516"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7590862802355235"
           crossOrigin="anonymous"
         ></Script>
       </Head>
