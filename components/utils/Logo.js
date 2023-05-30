@@ -7,8 +7,8 @@ export default function Logo(props) {
     <Image
       src="/chesstrainingapplogo.png"
       alt="ChessTraining.app Logo"
-      width="90px"
-      height="90px"
+      width="90"
+      height="90"
       priority
     />
   )
