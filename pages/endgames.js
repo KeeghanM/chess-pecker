@@ -143,7 +143,7 @@ export default function Endgames() {
                           setThemeType(themes[index])
                         }}
                       >
-                        <Tab.List className="space-x-2">
+                        <Tab.List>
                           <Tab
                             className={({ selected }) =>
                               (selected
@@ -243,7 +243,7 @@ export default function Endgames() {
                           setselectedDifficulty(index)
                         }}
                       >
-                        <Tab.List className="space-x-2">
+                        <Tab.List>
                           <Tab
                             className={({ selected }) =>
                               (selected

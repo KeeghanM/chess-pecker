@@ -121,7 +121,7 @@ const profile = () => {
                           selectedDifficulty = index
                         }}
                       >
-                        <Tab.List className="">
+                        <Tab.List>
                           <Tab
                             className={({ selected }) =>
                               (selected
