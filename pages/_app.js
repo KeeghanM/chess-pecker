@@ -2,7 +2,7 @@
 import "../styles/globals.css"
 import { UserContext } from "../lib/context"
 import { useUserData } from "../lib/hooks"
-import { useEffect } from "react"
+import { Analytics } from "@vercel/analytics/react"
 
 export default function App({
   Component,
@@ -14,6 +14,7 @@ export default function App({
     <UserContext.Provider value={userData}>
       <div className="font-serif">
         <Component {...pageProps} />
+        <Analytics />
       </div>
     </UserContext.Provider>
   )
